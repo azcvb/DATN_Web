@@ -6,7 +6,6 @@ const publicRouters = [
     { path: config.routes.home, component: Home },
     { path: config.routes.trademark, component: Trademark }
 
-
 ]
 
 export { publicRouters };

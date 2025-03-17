@@ -1,0 +1,105 @@
+.products {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 80px;
+    .product {
+        width: 234px;
+    }
+    .img {
+        position: relative;
+        text-align: center;
+        min-height: 283px;
+        margin-bottom: 16px;
+        &:hover {
+            cursor: pointer;
+            transition: 0.3s ease-in-out color;
+        }
+        img {
+            width: 234px;
+            max-height: 290px;
+            transition: all 0.7s ease 0s;
+            &:hover {
+                transform: scale(1.05);
+                -webkit-transform: scale(1.05);
+            }
+        }
+        .discount {
+            position: absolute;
+            top: 0;
+            left: 5px;
+            width: 44px;
+            height: 44px;
+            background-color: #d30109;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 13px;
+        }
+        .gift {
+            position: absolute;
+            padding: 2px 10px;
+            background-color: #cf5600;
+            color: #fff;
+            bottom: 0;
+            left: 20px;
+            font-size: 13px;
+        }
+    }
+    .name {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        text-align: center;
+        text-transform: capitalize;
+        width: 100%;
+        color: #484646;
+        font-size: 14px;
+        span:nth-child(2) {
+            font-weight: 600;
+            font-size: 17px;
+            color: #000;
+        }
+    }
+    .description {
+        text-align: center;
+        span {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #484646;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+        span:nth-child(2) {
+            padding: 0px 5px;
+            color: #484646;
+            font-size: 13px;
+        }
+    }
+    .price {
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        font-size: 15px;
+        color: #646464;
+        margin-bottom: 8px;
+        text-decoration: line-through;
+    }
+    .promotion {
+        display: flex;
+        justify-content: center;
+        text-transform: uppercase;
+        font-size: 18px;
+        font-weight: 600;
+        color: #e10c00;
+        > span {
+            margin-right: 3px;
+        }
+    }
+}

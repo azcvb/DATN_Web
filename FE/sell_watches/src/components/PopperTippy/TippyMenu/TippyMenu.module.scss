@@ -1,0 +1,53 @@
+.tippyMenu {
+    position: absolute;
+    z-index: 10;
+    min-width: 100%;
+    top: 100%;
+    left: 0;
+    padding: 20px;
+    background-color: rgba($color: #796752, $alpha: 0.8);
+    border-radius: 0 0 10px 10px;
+}
+.tippyMenu_container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    font-size: 15px;
+    ::-webkit-scrollbar {
+        width: 8px;
+        border-radius: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #796752;
+        border-radius: 5px;
+        border: 1px solid #fff;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #ecf0f1;
+        border-radius: 5px;
+    }
+    .menuItem_list {
+        p {
+            text-transform: uppercase;
+            color: #fff;
+        }
+    }
+    .menuItem_img {
+        padding: 8px;
+        a {
+            img {
+                width: 100px;
+                border-radius: 5px;
+            }
+        }
+    }
+    .menuItem_item {
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        width: 210px;
+        max-height: 260px;
+    }
+}
