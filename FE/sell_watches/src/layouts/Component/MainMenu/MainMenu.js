@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { listTrademark } from '~/assets';
 import { useRef, useState } from 'react';
 import TippyMenu from '~/components/PopperTippy/TippyMenu';
-import { listClock, listOther, listWatch } from '~/data';
+import { listClock, listOther, listStrap, listWatch } from '~/data';
 
 const cx = classNames.bind(style)
 function MainMenu() {
@@ -38,7 +38,7 @@ function MainMenu() {
         <div className={`${cx('menu')}`}>
             <div className='container'>
                 <ul className={cx('ul_menu')}>
-                    <li className={cx('select')}><Link><IconHome /></Link></li>
+                    <li className={cx('select')}><Link to={'/'}><IconHome /></Link></li>
                     <li
                         ref={triggerRef}
                         onMouseEnter={() => handleMouseEnter(listTrademark, true)}
@@ -48,6 +48,7 @@ function MainMenu() {
 
                     </li>
                     <li
+                        className={cx('li-hover')}
                         ref={triggerRef}
                         onMouseEnter={() => handleMouseEnter(listWatch, true)}
                         onMouseLeave={handleMouseLeave}
@@ -77,7 +78,7 @@ function MainMenu() {
                     </li>
                     <li
                         ref={triggerRef}
-                        onMouseEnter={handleMouseEnter}
+                        onMouseEnter={() => handleMouseEnter(listStrap, true)}
                         onMouseLeave={handleMouseLeave}
                     >
                         <Link>Dây đồng hồ</Link>

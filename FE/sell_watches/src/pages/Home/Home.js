@@ -4,18 +4,42 @@ import { banner_img, imgWhyMe, listTrademark } from '~/assets';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Product from '~/layouts/Component/Product';
-import { IconDate, IconGoTop, IconMyShop1, IconMyShop2, IconMyShop3, IconMyShop4 } from '~/components/icon';
+import { IconGoTop, IconMyShop1, IconMyShop2, IconMyShop3, IconMyShop4 } from '~/components/icon';
+import { getListProductsHome } from '~/apiServices/getListProductsHome';
 
 const cx = classNames.bind(style)
 function Home() {
-    const [isVisibleBanner, setIsVisibleBanner] = useState(0)
+    // time banner
+    const [isVisibleBanner, setIsVisibleBanner] = useState(0);
+    // set create text
     const [delay, setDelay] = useState(10000);
-    const [delayText, setDelayText] = useState(500)
-    const lenghObjBanner = Object.keys(banner_img).length
-    const stringTextIntro = '70 năm kinh nghiệm về đồng hồ'
+    const [delayText, setDelayText] = useState(500);
+    const lenghObjBanner = Object.keys(banner_img).length;
+    const stringTextIntro = '70 năm kinh nghiệm về đồng hồ';
     const [displayedIndex, setDisplayedIndex] = useState(0);
     const [isDeleting, setIsDeleting] = useState(false);
 
+    // product
+    const [listProduct, setListProducts] = useState();
+    const [productsNew, setProductNew] = useState();
+    const [productsQua, setProductQua] = useState();
+    const [activeTypeProductNew, setActiveTypeProductNew] = useState('dong-ho-nam')
+    const [activeTypeProductQua, setActiveTypeProductQua] = useState('dong-ho-nam')
+    useEffect(() => {
+        async function fetchGetProducts() {
+            try {
+                const res = await getListProductsHome();
+                setListProducts(res.result)
+
+                setProductNew(res.result['newNam']);
+                setProductQua(res.result['quaNam']);
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        fetchGetProducts();
+
+    }, [])
     useEffect(() => {
 
         const interval = setInterval(() => {
@@ -48,7 +72,14 @@ function Home() {
         return () => clearInterval(interval);
     }, [lenghObjBanner])
 
-
+    const getTypeProductNew = (type, index) => {
+        setProductNew(listProduct[type])
+        setActiveTypeProductNew(index)
+    }
+    const getTypeProductQua = (type, index) => {
+        setProductQua(listProduct[type])
+        setActiveTypeProductQua(index)
+    }
     return (
         <div className="HomePage">
             <a href='/#' className={cx('goTop')}>
@@ -167,18 +198,22 @@ function Home() {
                     <div className={`mb-70 ${cx('list-product')}`}>
                         <span>Bán chạy nhất</span>
                         <div className={cx('navigation')}>
-                            <div className='active-product'>
-                                <Link >Đồng hồ nam</Link>
+                            <div className={activeTypeProductQua === 'dong-ho-nam' ? "active-product" : ""}>
+                                <Link onClick={() => { getTypeProductQua('quaNam', 'dong-ho-nam') }}>Đồng hồ nam</Link>
                             </div>
-                            <div>
-                                <Link>Đồng hồ nữ</Link>
+                            <div className={activeTypeProductQua === 'dong-ho-nu' ? "active-product" : ""}>
+                                <Link onClick={() => { getTypeProductQua('quaNu', 'dong-ho-nu') }}>Đồng hồ nữ</Link>
                             </div>
-                            <div>
-                                <Link>Đồng hồ đôi</Link>
+                            <div className={activeTypeProductQua === 'dong-ho-doi' ? "active-product" : ""}>
+                                <Link onClick={() => { getTypeProductQua('quaDoi', 'dong-ho-doi') }}>Đồng hồ đôi</Link>
                             </div>
                         </div>
                         <div className={cx('product')}>
-                            <Product />
+                            <Product
+                                products={productsQua}
+                                linkTo={activeTypeProductQua}
+
+                            />
                         </div>
                         <div className={cx('more')}>
                             <div className='line-full'></div>
@@ -188,18 +223,21 @@ function Home() {
                     <div className={`mb-70 ${cx('list-product')}`}>
                         <span>Sản phẩm mới</span>
                         <div className={cx('navigation')}>
-                            <div className={'active-product'}>
-                                <Link>Đồng hồ nam</Link>
+                            <div className={activeTypeProductNew === 'dong-ho-nam' ? "active-product" : ""}>
+                                <Link onClick={() => { getTypeProductNew('newNam', 'dong-ho-nam') }}>Đồng hồ nam</Link>
                             </div>
-                            <div>
-                                <Link>Đồng hồ nữ</Link>
+                            <div className={activeTypeProductNew === 'dong-ho-nu' ? "active-product" : ""}>
+                                <Link onClick={() => { getTypeProductNew('newNu', 'dong-ho-nu') }}>Đồng hồ nữ</Link>
                             </div>
-                            <div>
-                                <Link>Đồng hồ đôi</Link>
+                            <div className={activeTypeProductNew === 'dong-ho-doi' ? "active-product" : ""}>
+                                <Link onClick={() => { getTypeProductNew('newDoi', 'dong-ho-doi') }}>Đồng hồ đôi</Link>
                             </div>
                         </div>
                         <div className={cx('product')}>
-                            <Product />
+                            <Product
+                                products={productsNew}
+                                linkTo={activeTypeProductNew}
+                            />
                         </div>
                         <div className={cx('more')}>
                             <div className='line-full'></div>

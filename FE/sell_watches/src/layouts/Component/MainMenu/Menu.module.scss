@@ -51,7 +51,12 @@
 }
 .select {
     border-bottom: 4px solid #fff;
-}
-li.select:hover::after {
-    transform: scaleX(0) !important;
+    &::after {
+        height: 0 !important;
+    }
+    &:hover {
+        a {
+            color: #fff !important;
+        }
+    }
 }

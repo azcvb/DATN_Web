@@ -1,5 +1,5 @@
 const routes = {
     home: '/',
-    trademark: '/trademark'
+    product: '/:productType/:productId'
 };
 export default routes;

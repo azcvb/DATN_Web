@@ -57,6 +57,9 @@
 .introduce {
     position: relative;
     text-align: center;
+    img {
+        width: 100%;
+    }
     .text_container {
         position: absolute;
         top: 0;
@@ -237,7 +240,8 @@
 .product {
     a {
         text-decoration: none;
-        color: #000;
+        color: #333;
+        font-weight: bold;
     }
     .list-product {
         display: flex;
@@ -259,6 +263,12 @@
             div {
                 margin: 0 20px;
                 text-transform: uppercase;
+                padding-bottom: 3px;
+                &:hover,
+                &:hover a {
+                    color: var(--main-color);
+                    border-bottom: 3px solid var(--main-color);
+                }
                 a {
                     font-size: 15px;
                     padding: 7px 0;

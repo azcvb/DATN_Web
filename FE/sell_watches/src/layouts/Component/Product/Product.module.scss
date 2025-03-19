@@ -1,13 +1,16 @@
 .products {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
     width: 100%;
     margin-bottom: 80px;
     .product {
         width: 234px;
+        margin-right: 32px;
+    }
+    .product-group {
+        display: flex;
+        margin-bottom: 80px;
     }
     .img {
+        display: inline-block;
         position: relative;
         text-align: center;
         min-height: 283px;
@@ -54,12 +57,23 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         text-align: center;
         text-transform: capitalize;
         width: 100%;
         color: #484646;
         font-size: 14px;
+        font-weight: normal;
+        &:hover span:nth-child(2) {
+            color: var(--main-color);
+        }
+        span {
+            display: inline-block;
+            width: 200px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         span:nth-child(2) {
             font-weight: 600;
             font-size: 17px;

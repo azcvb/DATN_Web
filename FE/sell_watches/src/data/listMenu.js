@@ -86,3 +86,4 @@ export const listOther = {
         'Đồng hồ Thụy Sỹ', 'Đồng Hồ Nhật Bản', 'Trang sức DW', 'Dây đeo đồng hồ', 'Đồng hồ để bàn', 'Đồng hồ báo thức', 'Trang sức CALVIN KLEIN'
     ]
 }
+export const listStrap = {}

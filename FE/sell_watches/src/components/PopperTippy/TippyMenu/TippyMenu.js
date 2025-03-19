@@ -2,21 +2,17 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import style from './TippyMenu.module.scss';
 import { Link } from 'react-router-dom';
+import { validUrl } from '~/components/format';
 
 const cx = classNames.bind(style);
 
 const TippyMenu = React.forwardRef(({ content, onMouseEnter, onMouseLeave }, ref) => {
-    const validUrl = (urlValue) => {
-        urlValue = urlValue.toLowerCase();
-        urlValue = urlValue.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-        urlValue = urlValue.replace(/[()\\{}]/g, "");
-        urlValue = urlValue.split(" ").join("-");
-        return urlValue;
-    }
+
     return (
         <div
             ref={ref}
             className={`wrapper ${cx('tippyMenu')}`}
+            style={Object.keys(content) < 1 ? { display: 'none' } : { display: 'block' }}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
         >
