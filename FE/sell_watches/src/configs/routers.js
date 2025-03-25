@@ -1,5 +1,7 @@
 const routes = {
     home: '/',
-    product: '/:productType/:productId'
+    product: '/dong-ho/:productType/:productId',
+    cart: '/gio-hang',
+    pay: '/pay'
 };
 export default routes;

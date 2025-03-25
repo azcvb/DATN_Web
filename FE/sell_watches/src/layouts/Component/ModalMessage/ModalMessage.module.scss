@@ -1,0 +1,71 @@
+.container-modal {
+    .header {
+        display: flex;
+        svg {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+        }
+    }
+}
+
+.infor {
+    .header,
+    .body {
+        border: 1px solid #009cdb;
+        background-color: rgba($color: #009cdb, $alpha: 0.1);
+    }
+    .header {
+        color: #009cdb;
+    }
+    .body {
+        font-size: 18px;
+        text-align: center;
+        border-top: none;
+    }
+}
+.warning {
+    .header,
+    .body {
+        border: 1px solid #f7c700;
+        background-color: rgba($color: #f7c700, $alpha: 0.1);
+    }
+    .header {
+        color: #f7c700;
+    }
+    .body {
+        font-size: 18px;
+        text-align: center;
+        border-top: none;
+    }
+}
+.error {
+    .header,
+    .body {
+        border: 1px solid #ff1818;
+        background-color: rgba($color: #ff1818, $alpha: 0.1);
+    }
+    .header {
+        color: #ff1818;
+    }
+    .body {
+        font-size: 18px;
+        text-align: center;
+        border-top: none;
+    }
+}
+.success {
+    .header,
+    .body {
+        border: 1px solid #40c025;
+        background-color: rgba($color: #40c025, $alpha: 0.1);
+    }
+    .header {
+        color: #40c025;
+    }
+    .body {
+        font-size: 18px;
+        text-align: center;
+        border-top: none;
+    }
+}

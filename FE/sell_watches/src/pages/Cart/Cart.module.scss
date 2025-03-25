@@ -1,0 +1,174 @@
+.cart-empty {
+    width: 100%;
+    text-align: center;
+    font-size: 24px;
+}
+.content-container {
+    display: flex;
+    justify-content: space-between;
+}
+.left {
+    width: 48%;
+    .title {
+        text-transform: uppercase;
+        font-size: 23px;
+        margin-bottom: 30px;
+    }
+    input {
+        margin-bottom: 12px;
+        font-size: 14px;
+    }
+    .check-input {
+        display: flex;
+        font-size: 14px;
+        > div {
+            margin-right: 10px;
+        }
+    }
+    .purchase-provisions {
+        .title {
+            text-transform: uppercase;
+            background: #e8e8e8;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        .content {
+            overflow-y: scroll;
+            width: 100%;
+            height: 200px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+    }
+    .agree {
+        font-size: 16px;
+        color: var(--main-color);
+        font-weight: bold;
+        input[type='checkbox']:checked {
+            background-color: var(--main-color); /* Đổi màu khi checked */
+            border-color: var(--border-color);
+            box-shadow: 0 0 5px 1px var(--main-color);
+            position: relative;
+        }
+    }
+}
+.right {
+    width: 48%;
+    background-color: #efefef;
+    padding: 40px 10px 40px 40px;
+    box-sizing: border-box;
+
+    .products {
+        max-height: 435px;
+        overflow: auto;
+        li {
+            list-style-type: none;
+            display: flex;
+            width: 100%;
+            margin-bottom: 10px;
+            .name-product {
+                flex: 1;
+                margin-left: 10px;
+                font-size: 14px;
+                button {
+                    text-decoration: underline;
+                    border: none;
+                }
+            }
+            .name {
+                span {
+                    margin-right: 4px;
+                }
+            }
+            .price {
+                display: flex;
+                align-items: center;
+                > div {
+                    color: #ff1818;
+                    font-weight: 600;
+                    width: 100px;
+                    float: right;
+                    font-size: 16px;
+                    margin-top: 5px;
+                }
+            }
+            .sl {
+                height: 30px;
+                padding: 2px 5px;
+                border-radius: 4px;
+                border: 1px solid #d8d7d7;
+                color: #333;
+                text-align: center;
+                width: 50px;
+                margin-right: 15px;
+            }
+        }
+        img {
+            width: 88px;
+            height: 107px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+        }
+    }
+    .btn {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        a,
+        div {
+            padding: 10px 20px;
+            background-color: var(--main-color);
+            border-radius: 5px;
+            color: #fff;
+            text-decoration: none;
+            &:hover {
+                opacity: 0.8;
+                cursor: pointer;
+            }
+        }
+    }
+    .code-promotion {
+        padding: 20px 0px;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        box-sizing: border-box;
+        margin-bottom: 20px;
+        input {
+            width: calc(100% - 100px);
+            float: left;
+            height: 40px;
+            padding: 2px 6px;
+            box-sizing: border-box;
+            background: #fff;
+            border: none;
+        }
+        button {
+            background: var(--main-color);
+            border: none;
+            width: 100px;
+            box-sizing: border-box;
+            color: #fff;
+            height: 40px;
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+    }
+    .sum-price {
+        display: flex;
+        justify-content: space-between;
+        .title {
+            width: 120px;
+            font-size: 20px;
+        }
+        span {
+            text-align: right;
+            font-weight: 600;
+            color: #ff1818;
+            font-size: 20px;
+        }
+    }
+}

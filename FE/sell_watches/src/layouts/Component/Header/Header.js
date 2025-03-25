@@ -27,10 +27,10 @@ function Header() {
                         <Link className={cx('address')}>
                             <IconAddress />
                         </Link>
-                        <div className={cx('cart')}>
+                        <Link to={'/gio-hang'} className={cx('cart')}>
                             <IconCart />
                             <div className={cx('quantity')}>5</div>
-                        </div>
+                        </Link>
                         <div className={cx('user')}>
                             <IconUser />
                             <span>datcongh43</span>

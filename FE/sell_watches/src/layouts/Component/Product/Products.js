@@ -1,17 +1,15 @@
 import classNames from 'classnames/bind';
-import style from './Product.module.scss'
-import { Link, useParams } from 'react-router-dom';
-import { validUrl } from '~/components/format';
+import style from './Products.module.scss'
+import { Link } from 'react-router-dom';
+import { formatNumber, validUrl } from '~/components/format';
 
 const cx = classNames.bind(style)
-function Product({
+function Products({
     products,
     linkTo
 }) {
 
-    const formatNumber = (number) => {
-        return number.toLocaleString('vi-VN');
-    }
+
 
     return (
         <div className={cx('products')}>
@@ -29,7 +27,7 @@ function Product({
                     <div key={`group-${groupIndex}`} className={cx('product-group')}>
                         {group.map((value, index) => (
                             <div key={index} className={cx('product')}>
-                                <Link to={`${linkTo}/${value.id}`} className={cx('img')}>
+                                <Link to={`dong-ho/${linkTo}/${value.id}`} className={cx('img')}>
                                     <img
                                         src="https://donghoduyanh.com/images/products/2024/03/07/resized/l29094776_1709801936.jpg.webp"
                                         alt=""
@@ -37,7 +35,7 @@ function Product({
                                     <div className={cx('discount')}>-10%</div>
                                     <div className={cx('gift')}>Mua 1 tặng 1</div>
                                 </Link>
-                                <Link to={`${linkTo}/${validUrl(value.ten_san_pham)}-${validUrl(value.ma_san_pham)}`} className={cx('name')}>
+                                <Link to={`dong-ho/${linkTo}/${validUrl(value.ten_san_pham)}-${validUrl(value.ma_san_pham)}`} className={cx('name')}>
                                     <span>{value.ten_san_pham}</span>
                                     <span>{value.ma_san_pham}</span>
                                 </Link>
@@ -69,4 +67,4 @@ function Product({
     );
 }
 
-export default Product;
+export default Products;

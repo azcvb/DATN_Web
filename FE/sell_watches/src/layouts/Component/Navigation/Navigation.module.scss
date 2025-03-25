@@ -1,0 +1,25 @@
+.navigation {
+    margin-top: 15px;
+    margin-bottom: 44px;
+    text-transform: uppercase;
+    a {
+        font-size: 12px;
+        color: #434343;
+        text-decoration: none;
+        line-height: 23px;
+        font-weight: normal;
+        text-transform: uppercase;
+        margin-right: 10px;
+        &::after {
+            content: '>';
+            margin-left: 10px;
+            color: #888;
+        }
+    }
+    a:last-child {
+        color: #c50000;
+        &::after {
+            content: '';
+        }
+    }
+}

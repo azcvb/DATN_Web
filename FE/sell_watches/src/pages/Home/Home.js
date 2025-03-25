@@ -3,9 +3,9 @@ import style from './Home.module.scss'
 import { banner_img, imgWhyMe, listTrademark } from '~/assets';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Product from '~/layouts/Component/Product';
 import { IconGoTop, IconMyShop1, IconMyShop2, IconMyShop3, IconMyShop4 } from '~/components/icon';
 import { getListProductsHome } from '~/apiServices/getListProductsHome';
+import Products from '~/layouts/Component/Product';
 
 const cx = classNames.bind(style)
 function Home() {
@@ -209,7 +209,7 @@ function Home() {
                             </div>
                         </div>
                         <div className={cx('product')}>
-                            <Product
+                            <Products
                                 products={productsQua}
                                 linkTo={activeTypeProductQua}
 
@@ -234,7 +234,7 @@ function Home() {
                             </div>
                         </div>
                         <div className={cx('product')}>
-                            <Product
+                            <Products
                                 products={productsNew}
                                 linkTo={activeTypeProductNew}
                             />

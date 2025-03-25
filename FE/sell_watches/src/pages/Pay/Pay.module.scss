@@ -1,0 +1,180 @@
+.content-container {
+    display: flex;
+    justify-content: space-between;
+}
+.left {
+    width: 48%;
+    .title {
+        text-transform: uppercase;
+        font-size: 23px;
+        margin-bottom: 30px;
+    }
+    input {
+        margin-bottom: 12px;
+        font-size: 14px;
+    }
+    .check-input {
+        display: flex;
+        font-size: 14px;
+        > div {
+            margin-right: 10px;
+        }
+    }
+    .products {
+        max-height: 435px;
+        overflow: auto;
+        background-color: #efefef;
+        padding: 20px 20px 10px 20px;
+        box-sizing: border-box;
+        ul {
+            max-height: 160px;
+            overflow-y: auto;
+        }
+        li {
+            list-style-type: none;
+            display: flex;
+            width: 100%;
+            margin-bottom: 10px;
+            align-items: center;
+            .name-product {
+                flex: 1;
+                margin-left: 10px;
+                font-size: 14px;
+                > div:last-child {
+                    text-decoration: underline;
+                }
+            }
+            .name {
+                span {
+                    margin-right: 4px;
+                }
+            }
+            .price {
+                display: flex;
+                align-items: center;
+                input {
+                    margin-bottom: 0;
+                }
+                > div {
+                    color: #ff1818;
+                    font-weight: 600;
+                    width: 100px;
+                    float: right;
+                    font-size: 16px;
+                    margin-top: 5px;
+                }
+            }
+            .sl {
+                height: 30px;
+                padding: 2px 5px;
+                border-radius: 4px;
+                border: 1px solid #d8d7d7;
+                color: #333;
+                text-align: center;
+                width: 50px;
+                margin-right: 15px;
+            }
+        }
+        img {
+            width: 88px;
+            height: 107px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+        }
+    }
+}
+.right {
+    width: 48%;
+    display: inline-block;
+    .payment {
+        background-color: #efefef;
+        padding: 10px 10px 40px 40px;
+    }
+    .title {
+        text-transform: uppercase;
+        font-size: 23px;
+        margin-bottom: 30px;
+    }
+    .code-promotion {
+        padding: 20px 0px;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        box-sizing: border-box;
+        margin-bottom: 20px;
+        input {
+            width: calc(100% - 100px);
+            float: left;
+            height: 40px;
+            padding: 2px 6px;
+            box-sizing: border-box;
+            background: #fff;
+            border: none;
+        }
+        button {
+            background: var(--main-color);
+            border: none;
+            width: 100px;
+            box-sizing: border-box;
+            color: #fff;
+            height: 40px;
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+    }
+    .sum-price {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        .title {
+            width: 120px;
+            font-size: 18px;
+            margin: 0;
+        }
+        span {
+            text-align: right;
+            font-weight: 600;
+            color: #ff1818;
+            font-size: 20px;
+            margin-right: 5px;
+        }
+    }
+    .check-input {
+        display: flex;
+        .radio {
+            margin-right: 20px;
+        }
+    }
+    .btn {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        a {
+            font-size: 15px;
+            color: var(--main-color);
+        }
+    }
+    .order {
+        background: var(--main-color);
+        border-radius: 4px;
+        cursor: pointer;
+        border: none;
+        padding: 10px 20px;
+        color: #fff;
+        margin-right: 10px;
+        -moz-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        -ms-transition: all 0.5s ease;
+        transition: all 0.5sease;
+        margin-bottom: 20px;
+        font-weight: bold;
+        margin-top: 3px;
+        display: inline-block;
+        text-align: center;
+        text-decoration: none;
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+}

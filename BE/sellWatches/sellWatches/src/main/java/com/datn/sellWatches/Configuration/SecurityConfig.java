@@ -23,7 +23,7 @@ public class SecurityConfig {
             "/user"
     };
     private final String[] PUBLIC_GET_ENDPOINT = {
-            "/user"
+            "/products", "/products/**","payment"
     } ;
 
     @Bean
