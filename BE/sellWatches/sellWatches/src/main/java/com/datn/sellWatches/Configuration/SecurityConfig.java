@@ -20,7 +20,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableMethodSecurity
 public class SecurityConfig {
     private final String[] PUBLIC_POST_ENDPOINT = {
-            "/user"
+            "/user", "/order"
     };
     private final String[] PUBLIC_GET_ENDPOINT = {
             "/products", "/products/**","payment"

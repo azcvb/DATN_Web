@@ -38,10 +38,13 @@ public class Order {
 	
 	LocalDateTime ngay_dat;
 	long tong_gia;
+	String khac;
+	String muc_dich;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false, columnDefinition = "VARCHAR(255) DEFAULT 'PENDING'")
-	Status trang_thai;
+	@Builder.Default
+	Status trang_thai = Status.PENDING;
 	
 	@ManyToOne
 	@JoinColumn(name = "khach_hang_id")

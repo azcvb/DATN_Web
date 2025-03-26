@@ -36,7 +36,8 @@ public class Ship {
 	
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false, columnDefinition = "VARCHAR(255) DEFAULT 'PENDING'")
-	Status trang_thai;
+	@Builder.Default
+	Status trang_thai = Status.PENDING;
 	
 	@OneToOne
 	@JoinColumn(name = "don_hang_id")

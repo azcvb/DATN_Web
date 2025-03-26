@@ -1,10 +1,11 @@
 package com.datn.sellWatches.Entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,16 +28,15 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Customer {
 	@Id
-	@GeneratedValue(strategy = GenerationType.UUID)
-	String id;
+	@Column(name = "so_dien_thoai")
+    String soDienThoai;
 	
 	String ten_khach_hang;
 	String email;
-	String so_dien_thoai;
 	String mat_khau;
 	String dia_chi;
 	String gioi_tinh;
-	LocalDateTime ngay_sinh;
+	LocalDate ngay_sinh;
 	
 	@OneToMany(mappedBy = "khach_hang", cascade = CascadeType.ALL, orphanRemoval = true)
 	List<Order> orders = new ArrayList<>();

@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatusCode;
 @Getter
 public enum ErrorCode {
     UNCATEGORIZED_EXCEPTION(9999, "uncategorized error", HttpStatus.INTERNAL_SERVER_ERROR),
-    PRODUCT_NOT_EXIT(1001, "Không tìm thấy sản phẩm", HttpStatus.BAD_REQUEST)
+    PRODUCT_NOT_EXIT(1001, "Không tìm thấy sản phẩm", HttpStatus.BAD_REQUEST),
+    ORDER_NOT_EXIT(1001, "Không tìm thấy đơn hàng", HttpStatus.BAD_REQUEST),
+    CUSTOMER_NOT_EXIT(1001, "Không tìm thấy khách hàng", HttpStatus.BAD_REQUEST)
     ;
     private int code = 100;
     private String message;
