@@ -1,3 +1,5 @@
+import { parse, format } from "date-fns";
+
 export const validUrl = (urlValue) => {
     if (urlValue === null || typeof urlValue !== 'string') {
         return "";
@@ -50,4 +52,18 @@ export const validDob = (value) => {
         age--;
     }
     return age >= 18
+}
+export const formatDob = (value) => {
+    const formats = ["dd/MM/yyyy", "dd-MM-yyyy", "yyyy.MM.dd", "dd MM yyyy"];
+
+    for (const fmt of formats) {
+        try {
+            const parsedDate = parse(value, fmt, new Date());
+            return format(parsedDate, "yyyy-MM-dd");
+        } catch (error) {
+
+        }
+    }
+
+    return "Invalid Date";
 }

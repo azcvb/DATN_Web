@@ -30,7 +30,6 @@ function Cart() {
         if (cookies.cart) {
             setListProducts(cookies.cart)
         }
-
         if (sessionStorage.getItem('myInfor')) {
             try {
                 const infor = JSON.parse(sessionStorage.getItem('myInfor'))

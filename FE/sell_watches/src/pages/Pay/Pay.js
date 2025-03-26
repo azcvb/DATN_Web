@@ -3,14 +3,18 @@ import style from './Pay.module.scss'
 import { Link, useLocation } from 'react-router-dom';
 import Navigation from '~/layouts/Component/Navigation';
 import { useEffect, useState } from 'react';
-import { formatNumber } from '~/components/format';
+import { formatDob, formatNumber } from '~/components/format';
+import { order } from '~/apiServices/order';
+
 
 const cx = classNames.bind(style)
 function Pay() {
     const location = useLocation().pathname;
     const [products, setProducts] = useState()
-    const [infor, setInfor] = useState()
+    const [infor, setInfor] = useState();
     const [sum, setSum] = useState(0)
+    const [typePayment, setTypePayment] = useState("Thanh toán khi nhận hàng")
+    const [dataPayment, setDataPayment] = useState();
     useEffect(() => {
         window.scroll(0, 0)
         if (sessionStorage.getItem('myInfor') && sessionStorage.getItem('cart')) {
@@ -23,6 +27,7 @@ function Pay() {
                 console.log(err)
             }
         }
+
     }, [])
     useEffect(() => {
         if (products && products.length > 0) {
@@ -30,6 +35,52 @@ function Pay() {
             setSum(total);
         }
     }, [products]);
+    useEffect(() => {
+        if (infor) {
+            setDataPayment({
+                "orderRequest": {
+                    "tong_gia": Number(sum),
+                    "muc_dich": infor.kieu,
+                    "khac": infor.khac === "" ? null : infor.khac
+                },
+                "customerRequest": {
+                    "ten_khach_hang": infor.ten,
+                    "email": infor.email,
+                    "so_dien_thoai": infor.sdt,
+                    "dia_chi": infor.dia_chi,
+                    "ngay_sinh": formatDob(infor.ngay_sinh)
+                }
+            })
+        }
+        if (products) {
+            const newOrderDetails = Object.values(products).map(value => ({
+                "san_pham_id": value.id,
+                "so_luong": Number(value.so_luong),
+                "gia": Number(value.gia)
+            }));
+
+            setDataPayment(prev => ({
+                ...prev,
+                orderDetailRequest: newOrderDetails
+            }));
+        }
+    }, [products, infor, sum])
+    const handlerIpCheck = (value) => {
+        setTypePayment(value)
+    }
+    const handlerOrder = () => {
+        try {
+            async function fetch() {
+                const res = await order(dataPayment)
+                if (res && res.result.order) {
+                    console.log(res.result.order)
+                }
+            }
+            fetch()
+        } catch (err) {
+            console.log(err)
+        }
+    }
     return (
         <div className='container'>
             <Navigation
@@ -110,21 +161,37 @@ function Pay() {
                         </div>
                         <div className={`mb-30 ${cx('check-input')}`}>
                             <div className={`form-check ${cx('radio')}`}>
-                                <input checked className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={() => { }} />
-                                <label className="form-check-label" htmlFor="flexRadioDefault1">
+                                <input
+                                    className="form-check-input"
+                                    type="radio"
+                                    name="flexRadioDefault"
+                                    id="flexRadioDefault7"
+                                    value="Thanh toán khi nhận hàng"
+                                    checked={typePayment === "Thanh toán khi nhận hàng"}
+                                    onChange={(e) => handlerIpCheck(e.target.value)}
+                                />
+                                <label className="form-check-label" htmlFor="flexRadioDefault7">
                                     Thanh toán khi nhận hàng
                                 </label>
                             </div>
                             <div className={`form-check ${cx('radio')}`}>
-                                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" onChange={() => { }} />
-                                <label className="form-check-label" htmlFor="flexRadioDefault2">
-                                    Thanh toán bằng mã QR
+                                <input
+                                    className="form-check-input"
+                                    type="radio"
+                                    name="flexRadioDefault"
+                                    id="flexRadioDefault8"
+                                    value="Thanh toán online"
+                                    checked={typePayment === "Thanh toán online"}
+                                    onChange={(e) => handlerIpCheck(e.target.value)}
+                                />
+                                <label className="form-check-label" htmlFor="flexRadioDefault8">
+                                    Thanh toán online
                                 </label>
                             </div>
                         </div>
                         <div className={cx('btn')}>
                             <Link to='/gio-hang'>{`< Quay về giỏ hàng`}</Link>
-                            <button className={cx('order')}>Đặt hàng</button>
+                            <button onClick={() => { handlerOrder() }} className={cx('order')}>Đặt hàng</button>
                         </div>
                     </div>
                 </div>
