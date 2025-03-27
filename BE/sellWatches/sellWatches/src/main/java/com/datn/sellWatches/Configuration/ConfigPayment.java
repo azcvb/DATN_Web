@@ -19,12 +19,13 @@ import jakarta.servlet.http.HttpServletRequest;
 
 public class ConfigPayment {
 	  public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-	    public static String vnp_ReturnUrl = "http://donghotab.site/";
+	    public static String vnp_ReturnUrl = "http://localhost:3000/pay/check";
 	    public static String vnp_TmnCode = "9H22H671";
 	    public static String secretKey = "0YMKHO7NYQRU459J8S0ZYFQGJ7BH83FD";
 	    public static String vnp_ApiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
 	    public static String vnp_Version = "2.1.0";
 	    public static String vnp_Command = "pay";
+	    public static String vnp_QueryUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
 	    public static String md5(String message) {
 	        String digest = null;
 	        try {

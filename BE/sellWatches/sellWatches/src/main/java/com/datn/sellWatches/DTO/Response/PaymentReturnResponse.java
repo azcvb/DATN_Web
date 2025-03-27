@@ -1,20 +1,23 @@
-package com.datn.sellWatches.DTO.Request;
+package com.datn.sellWatches.DTO.Response;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
-@Data
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class SaveOrderRequest {
-	long tong_gia;
-	String muc_dich;
-	String khac;
-	String loai_thanh_toan;
+public class PaymentReturnResponse {
+	String status;
+    String message;
+    String orderId;
+    String amount;
+    String typePay;
 }

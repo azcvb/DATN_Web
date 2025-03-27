@@ -99,9 +99,14 @@ function Cart() {
     const removeProduct = (productId) => {
         setListProducts(prev => {
             const updatedList = prev.filter(item => item.id !== productId);
+            setCookie("cart", updatedList, { path: "/", expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) });
             return updatedList;
         });
+
     }
+    useEffect(() => {
+        sessionStorage.setItem('cart', JSON.stringify(cookies.cart))
+    }, [cookies.cart])
     // set đường link chuyển trang
     useEffect(() => {
         if (!agree) {
@@ -157,8 +162,6 @@ function Cart() {
             display: 'hidden'
         });
     };
-
-
     return (
         <div className="container">
             <Navigation

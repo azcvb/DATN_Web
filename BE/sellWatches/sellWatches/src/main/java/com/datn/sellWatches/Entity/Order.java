@@ -44,7 +44,7 @@ public class Order {
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false, columnDefinition = "VARCHAR(255) DEFAULT 'PENDING'")
 	@Builder.Default
-	Status trang_thai = Status.PENDING;
+	StatusOrder trang_thai = StatusOrder.PENDING;
 	
 	@ManyToOne
 	@JoinColumn(name = "khach_hang_id")
@@ -59,7 +59,7 @@ public class Order {
 	@OneToMany(mappedBy = "don_hang", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	List<OrderDetail> orderDetails;
 	
-	enum Status{
+	public enum StatusOrder{
 		PENDING, ACCEPT;
 	}
 }

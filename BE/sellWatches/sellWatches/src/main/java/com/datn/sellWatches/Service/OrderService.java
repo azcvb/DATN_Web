@@ -13,6 +13,7 @@ import com.datn.sellWatches.DTO.Response.SaveCustomerResponse;
 import com.datn.sellWatches.DTO.Response.SaveOrderResponse;
 import com.datn.sellWatches.Entity.Customer;
 import com.datn.sellWatches.Entity.Order;
+import com.datn.sellWatches.Entity.Order.StatusOrder;
 import com.datn.sellWatches.Exception.AppException;
 import com.datn.sellWatches.Exception.ErrorCode;
 import com.datn.sellWatches.Repository.CustomerRepository;
@@ -30,6 +31,7 @@ public class OrderService {
 	 private final CustomerRepository customerRepository;
 	 private final OrderDetailService orderDetailService;
 	 private final CustomerService customerService;
+	 private final PaymentService paymentService;
 
 
 	 @Transactional
@@ -41,6 +43,10 @@ public class OrderService {
 	        SaveCustomerResponse customerResponse;
 	        Customer customer;
 	        Order order;
+	        StatusOrder statusOrder = StatusOrder.PENDING;
+	        if(orderRequest.getLoai_thanh_toan().equals("Thanh toán online")) {
+	        	statusOrder = StatusOrder.ACCEPT;
+	        }
 
 	        customer = customerRepository.findById(customerRequest.getSo_dien_thoai()).orElse(null);
 	        if (customer == null || customer.getSoDienThoai() == null) {
@@ -63,6 +69,7 @@ public class OrderService {
 	                    .khach_hang(customer)
 	                    .muc_dich(orderRequest.getMuc_dich())
 	                    .khac(orderRequest.getKhac())
+	                    .trang_thai(statusOrder)
 	                    .build();
 	            ordersRepository.save(order);
 	        } catch (Exception e) {
@@ -80,6 +87,15 @@ public class OrderService {
 	            return SaveOrderResponse.builder()
 	                    .isOrder(false)
 	                    .errBy("saveOrderDetailByOrder")
+	                    .build();
+	        }
+	        try {
+	        	paymentService.savePayment(orderRequest.getLoai_thanh_toan(), orderRequest.getTong_gia(), order);
+	        }catch (Exception e) {
+	            log.info(e.toString());
+	            return SaveOrderResponse.builder()
+	                    .isOrder(false)
+	                    .errBy("savePayment")
 	                    .build();
 	        }
 	        return SaveOrderResponse.builder()

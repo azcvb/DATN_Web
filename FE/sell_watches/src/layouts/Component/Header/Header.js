@@ -3,9 +3,16 @@ import style from './Header.module.scss'
 import classNames from 'classnames/bind';
 import { IconAddress, IconCart, IconPhoneHeader, IconUser } from '~/components/icon/icon';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 
 const cx = classNames.bind(style)
 function Header() {
+    const [cart, setCart] = useState({});
+    const [cookies] = useCookies();
+    useEffect(() => {
+        setCart(cookies.cart)
+    }, [cookies.cart])
     return (
         <div className={cx('header')}>
             <div className={`container ${cx('header_')}`}>
@@ -29,9 +36,9 @@ function Header() {
                         </Link>
                         <Link to={'/gio-hang'} className={cx('cart')}>
                             <IconCart />
-                            <div className={cx('quantity')}>5</div>
+                            <div className={cx('quantity')}>{cart.length}</div>
                         </Link>
-                        <div className={cx('user')}>
+                        <div className={`hiden ${cx('user')}`}>
                             <IconUser />
                             <span>datcongh43</span>
                         </div>
