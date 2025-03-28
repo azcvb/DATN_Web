@@ -32,6 +32,10 @@ public class ProductService {
 	final ProductRepository productRepository;
 	final ProductsMapper productsMapper;
 	
+//	public Page<Products> getProductByName() {
+//		 Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).ascending());
+//		 return productRepository.findProductByName(pageable);
+//	}
 	public Map<String, List<GetListProductsHomeResponse>> getListProductHome() {
 	    Pageable pageable = PageRequest.of(0, 10);
 	    Map<String, List<GetListProductsHomeResponse>> result = new HashMap<>();
@@ -103,4 +107,5 @@ public class ProductService {
 		    }
 		    return null;
 	}
+	
 }

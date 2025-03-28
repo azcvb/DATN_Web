@@ -39,6 +39,9 @@ public interface ProductRepository extends JpaRepository<Products, String> {
 	            "WHERE l.ten_loai = :tenLoai",
 	    nativeQuery = true)
 		Page<Object[]> getProductsInTypeWhereQuantity(@Param("tenLoai") String tenLoai, Pageable pageable);
+		
+		@Query(value = "SELECT * FROM san_pham WHERE ten_san_pham COLLATE utf8mb4_unicode_ci LIKE CONCAT('%', :tenSanPham, '%')", nativeQuery = true)
+		Page<Products> findProductByName(@Param("tenSanPham") String tenSanPham, Pageable pageable);
 
 	
 }
