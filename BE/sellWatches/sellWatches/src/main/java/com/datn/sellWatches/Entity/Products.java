@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -58,6 +59,8 @@ public class Products {
 	String hinh_anh;
 	LocalDate ngay_tao;
 	String khac;
+	String thuong_hieu;
+	String gioi_tinh;
 	
 	@JsonManagedReference
 	@ManyToMany
@@ -68,6 +71,7 @@ public class Products {
 			)
 	List<Types> loai = new ArrayList<>();
 	
+	@JsonBackReference
 	@OneToOne(mappedBy = "products", cascade = CascadeType.ALL)
     Warehouse warehouse;
 	

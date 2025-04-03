@@ -9,8 +9,6 @@ function Products({
     linkTo
 }) {
 
-
-
     return (
         <div className={cx('products')}>
             {products && (() => {

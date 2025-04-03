@@ -13,6 +13,7 @@ function Header() {
     useEffect(() => {
         setCart(cookies.cart)
     }, [cookies.cart])
+
     return (
         <div className={cx('header')}>
             <div className={`container ${cx('header_')}`}>
@@ -36,7 +37,7 @@ function Header() {
                         </Link>
                         <Link to={'/gio-hang'} className={cx('cart')}>
                             <IconCart />
-                            <div className={cx('quantity')}>{cart.length}</div>
+                            <div className={cx('quantity')}>{cart ? cart.length : "0"}</div>
                         </Link>
                         <div className={`hiden ${cx('user')}`}>
                             <IconUser />

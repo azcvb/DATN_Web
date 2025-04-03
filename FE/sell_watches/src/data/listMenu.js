@@ -87,3 +87,55 @@ export const listOther = {
     ]
 }
 export const listStrap = {}
+
+export const listFilter = [
+    {
+        title: 'Giới tính',
+        data: ['Đồng hồ nam', 'Đồng hồ nữ', 'Đồng hồ đôi']
+    },
+    {
+        title: 'Thương hiệu',
+        data: listWatch['thương hiệu']
+    },
+    {
+        title: 'Mức giá',
+        data: listWatch['mức giá']
+
+    },
+    {
+        title: 'Khuyến mãi',
+
+    },
+    {
+        title: 'Loại máy',
+        data: listWatch['loại máy']
+    },
+    {
+        title: 'Đường kính'
+    },
+    {
+        title: 'Chất liệu dây',
+        data: listWatch['chất liệu dây']
+    },
+    {
+        title: 'Chất liệu vỏ'
+
+    },
+    {
+        title: 'Mặt kính'
+    },
+    {
+        title: 'Màu mặt'
+    },
+    {
+        title: 'Phong cách',
+        data: listWatch['phong cách']
+    },
+    {
+        title: 'Kiểu dáng'
+
+    },
+    {
+        title: 'Xuất xứ'
+    }
+]

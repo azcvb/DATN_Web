@@ -1,0 +1,94 @@
+.filter-value {
+    ul {
+        display: flex;
+        padding: 0;
+        li {
+            list-style-type: none;
+            background: #d96b00;
+            color: #fff !important;
+            margin-right: 2px;
+            padding: 3px 24px 3px 9px;
+            display: inline-block;
+            position: relative;
+            font-size: 12px;
+            margin-bottom: 2px;
+            text-transform: uppercase;
+            &::after {
+                content: 'X';
+                position: absolute;
+                top: 3px;
+                right: 2px;
+                width: 15px;
+                height: 13px;
+                color: #fff;
+                z-index: 1;
+                font-size: 12px;
+            }
+            &:hover {
+                cursor: pointer;
+            }
+        }
+        .delete-all {
+            background: #ec0202;
+        }
+    }
+}
+.product-filter {
+    display: flex;
+    .filter-menu {
+        display: flex;
+        justify-content: center;
+        position: relative;
+        width: 7.8%;
+        margin-right: 10px;
+        &:hover .filter,
+        .filter:hover {
+            display: block !important;
+        }
+        .title {
+            cursor: pointer;
+            font-weight: normal;
+            text-transform: uppercase;
+            font-size: 12px;
+            transition: 0.3s;
+        }
+        .filter {
+            position: absolute;
+            top: 18px;
+            left: 0;
+            max-width: 500px;
+            max-height: 400px;
+            display: none;
+            background-color: #fff;
+            z-index: 5;
+            column-count: 2;
+            column-gap: 20px;
+            padding: 0;
+            margin: 0;
+            li {
+                list-style-type: none;
+                padding: 8px 0 8px 8px;
+                font-weight: 500;
+                margin-left: 0px;
+                font-size: 14px;
+                width: 240px;
+                text-transform: uppercase;
+                a {
+                    text-decoration: none;
+                    color: #333;
+                    &:hover {
+                        color: red;
+                        font-weight: 600;
+                    }
+                }
+            }
+        }
+        svg {
+            width: 8px;
+            height: 10px;
+        }
+    }
+}
+.product {
+    margin-top: 40px;
+}

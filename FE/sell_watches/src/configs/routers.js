@@ -3,6 +3,7 @@ const routes = {
     product: '/dong-ho/:productType/:productId',
     cart: '/gio-hang',
     pay: '/pay',
-    payCheck: '/pay/check'
+    payCheck: '/pay/check',
+    search: '/search'
 };
 export default routes;

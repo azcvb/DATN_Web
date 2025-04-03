@@ -13,13 +13,23 @@ function Navigation({
         setNavigation(formatUrlToLink(path))
 
     }, [path])
+    const name = {
+        'search': 'tim kiem',
+        'cart': 'gio hang'
+    }
+    const vaidName = (value) => {
+        if (value && name[value]) {
+            value = name[value];
+        }
+        return value
+    }
     return (
         <div className={cx('navigation')}>
             <Link to='/'>trang chu</Link>
             {navigation !== undefined &&
                 navigation.map((value, index) => (
                     <Link key={index} to={formatLink(value)}>
-                        {value}
+                        {vaidName(value)}
                     </Link>
                 ))}
         </div>

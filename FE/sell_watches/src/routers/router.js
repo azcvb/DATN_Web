@@ -1,10 +1,11 @@
 import config from "~/configs"
-import Cart from "~/pages/Cart";
-import Home from "~/pages/Home"
-import Pay from "~/pages/Pay";
-import PaymentCheck from "~/pages/PaymentCheck";
-import ProductDetail from "~/pages/ProductDetail";
-import Trademark from "~/pages/Trademark";
+import Cart from "~/pages/Customer/Cart";
+import Home from "~/pages/Customer/Home"
+import Pay from "~/pages/Customer/Pay";
+import PaymentCheck from "~/pages/Customer/PaymentCheck";
+import ProductDetail from "~/pages/Customer/ProductDetail";
+import Search from "~/pages/Customer/Search";
+import Trademark from "~/pages/Customer/Trademark";
 
 const publicRouters = [
     { path: config.routes.home, component: Home },
@@ -12,7 +13,8 @@ const publicRouters = [
     { path: config.routes.product, component: ProductDetail },
     { path: config.routes.cart, component: Cart },
     { path: config.routes.pay, component: Pay },
-    { path: config.routes.payCheck, component: PaymentCheck }
+    { path: config.routes.payCheck, component: PaymentCheck },
+    { path: config.routes.search, component: Search }
 
 ]
 

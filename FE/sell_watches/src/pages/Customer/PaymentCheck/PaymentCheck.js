@@ -80,7 +80,7 @@ function PaymentCheck() {
             }
             fetch()
         }
-    }, [dataPayment, queryString]);
+    }, [dataPayment, queryString, removeCookie]);
     return (
         <div className={cx('container')}>
             <div className={cx(result.status)}>
@@ -104,7 +104,7 @@ function PaymentCheck() {
                             ? <li>
                                 <span className={cx('left')}>Tổng tiền:</span>
                                 <span>
-                                    <span>{formatNumber(result.tong_tien)}</span>
+                                    <span>{formatNumber(Number(result.tong_tien) / 100)}</span>
                                     <span >VND</span>
                                 </span>
                             </li> : null}

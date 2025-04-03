@@ -1,5 +1,7 @@
 package com.datn.sellWatches.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,6 +32,7 @@ public class Warehouse {
 	int da_ban;
 	int ton_kho;
 	
+	@JsonBackReference
 	@OneToOne
 	@JoinColumn(name = "san_pham_id")
 	Products products; 
