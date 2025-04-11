@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import style from './Menu.module.scss'
+import style from './Menu.module.scss';
 import { IconHome } from '~/components/icon';
 import { Link } from 'react-router-dom';
 import { listTrademark } from '~/assets';
@@ -7,45 +7,45 @@ import { useRef, useState } from 'react';
 import TippyMenu from '~/components/PopperTippy/TippyMenu';
 import { listClock, listOther, listStrap, listWatch } from '~/data';
 
-const cx = classNames.bind(style)
+const cx = classNames.bind(style);
 function MainMenu() {
-    const [isVisible, setIsVisible] = useState(false)
-    const [contentMenu, setContentMenu] = useState()
+    const [isVisible, setIsVisible] = useState(false);
+    const [contentMenu, setContentMenu] = useState();
     const tooltipRef = useRef(null);
     const triggerRef = useRef(null);
 
     const handleMouseEnter = (value, isValue) => {
         if (isValue) {
-            setContentMenu(value)
+            setContentMenu(value);
         }
-        setIsVisible(true)
-    }
+        setIsVisible(true);
+    };
     const handleMouseLeave = (e) => {
         const relatedTarget = e.relatedTarget;
         if (!relatedTarget || !(relatedTarget instanceof Node)) {
             setIsVisible(false);
             return;
         }
-        if (
-            !triggerRef.current?.contains(relatedTarget) &&
-            !tooltipRef.current?.contains(relatedTarget)
-        ) {
+        if (!triggerRef.current?.contains(relatedTarget) && !tooltipRef.current?.contains(relatedTarget)) {
             setIsVisible(false);
         }
-    }
+    };
 
     return (
         <div className={`${cx('menu')}`}>
-            <div className='container'>
+            <div className="container">
                 <ul className={cx('ul_menu')}>
-                    <li className={cx('select')}><Link to={'/'}><IconHome /></Link></li>
+                    <li className={cx('select')}>
+                        <Link to={'/'}>
+                            <IconHome />
+                        </Link>
+                    </li>
                     <li
                         ref={triggerRef}
                         onMouseEnter={() => handleMouseEnter(listTrademark, true)}
                         onMouseLeave={handleMouseLeave}
                     >
-                        <Link to='/tran'>Thương hiệu</Link>
-
+                        <Link to="/tran">Thương hiệu</Link>
                     </li>
                     <li
                         className={cx('li-hover')}
@@ -99,11 +99,10 @@ function MainMenu() {
                             ref={tooltipRef}
                             onMouseEnter={handleMouseEnter}
                             onMouseLeave={handleMouseLeave}
-                        />) : null}
-
+                        />
+                    ) : null}
                 </ul>
             </div>
-
         </div>
     );
 }

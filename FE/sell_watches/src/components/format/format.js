@@ -140,3 +140,10 @@ export const formatFilterValue = (value) => {
         .join("");
 
 }
+export const formatDateDashboard = (date) => {
+    if (!(date instanceof Date) || isNaN(date.getTime())) {
+        return '';
+    }
+
+    return date.toISOString().split('T')[0];
+};

@@ -1,0 +1,38 @@
+.sidebar {
+    padding-top: 20px;
+    background-color: var(--main-color);
+    width: 280px;
+    color: #fff;
+    height: 100%;
+    ul {
+        padding: 0;
+    }
+    span {
+        display: flex;
+    }
+    li {
+        list-style-type: none;
+        width: 100%;
+
+        svg {
+            width: 18px;
+            height: 18px;
+            margin-right: 10px;
+        }
+        div {
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            &:hover {
+                cursor: pointer;
+                background-color: #fff;
+                color: #333;
+            }
+        }
+    }
+    .chidrent {
+        div {
+            padding: 14px 40px;
+        }
+    }
+}

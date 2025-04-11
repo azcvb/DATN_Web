@@ -60,6 +60,6 @@ public class Order {
 	List<OrderDetail> orderDetails;
 	
 	public enum StatusOrder{
-		PENDING, ACCEPT;
+		PENDING, ACCEPT,CANCEL;
 	}
 }

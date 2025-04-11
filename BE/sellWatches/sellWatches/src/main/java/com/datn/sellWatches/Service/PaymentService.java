@@ -1,8 +1,10 @@
 package com.datn.sellWatches.Service;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,7 +18,12 @@ import java.util.TimeZone;
 import java.util.TreeMap;
 import org.springframework.stereotype.Service;
 import com.datn.sellWatches.Configuration.ConfigPayment;
+import com.datn.sellWatches.DTO.Request.DashboardDayRequest;
 import com.datn.sellWatches.DTO.Request.PaymentReturnRequest;
+import com.datn.sellWatches.DTO.Response.DashboardBottom;
+import com.datn.sellWatches.DTO.Response.DashboardProductResponse;
+import com.datn.sellWatches.DTO.Response.DayAndDataResponse;
+import com.datn.sellWatches.DTO.Response.PaymentDayAndDataResponse;
 import com.datn.sellWatches.DTO.Response.PaymentResponse;
 import com.datn.sellWatches.DTO.Response.PaymentReturnResponse;
 import com.datn.sellWatches.Entity.Order;
@@ -189,5 +196,20 @@ public class PaymentService {
 		 		}
 		 		
 		 	}
+		 	
+		 	public DashboardBottom dashboardPayment(DashboardDayRequest request) {
+				List<Object[]> payment = paymentRepository.getDashboardPayment(request.getStartDay(), request.getEndDay());
+				List<PaymentDayAndDataResponse> responsePayment = new ArrayList<>();
+				for(Object[] row : payment ) {
+					PaymentDayAndDataResponse dto = PaymentDayAndDataResponse.builder()
+							.day((Date) row[0])
+							.data((BigDecimal) row[1])
+							.build();
+					responsePayment.add(dto);
+				}
+				return DashboardBottom.builder()
+						.paymentResponse(responsePayment)
+						.build();
+			}
 
 }

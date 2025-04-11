@@ -1,14 +1,20 @@
 package com.datn.sellWatches.Service;
+import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.datn.sellWatches.DTO.Request.DashboardDayRequest;
 import com.datn.sellWatches.DTO.Request.OrderRequest;
 import com.datn.sellWatches.DTO.Request.SaveCustomerRequest;
 import com.datn.sellWatches.DTO.Request.SaveOrderDetailRequest;
 import com.datn.sellWatches.DTO.Request.SaveOrderRequest;
+import com.datn.sellWatches.DTO.Response.DashboardOrderResponse;
+import com.datn.sellWatches.DTO.Response.DashboardProductResponse;
+import com.datn.sellWatches.DTO.Response.DayAndDataResponse;
 import com.datn.sellWatches.DTO.Response.SaveCustomerResponse;
 import com.datn.sellWatches.DTO.Response.SaveOrderResponse;
 import com.datn.sellWatches.Entity.Customer;
@@ -102,4 +108,29 @@ public class OrderService {
 	                .isOrder(true)
 	                .build();
 	    }
+	 public DashboardOrderResponse dashboardOrder(DashboardDayRequest request) {
+			List<Object[]> orderAccept = ordersRepository.getOrderAccept(request.getStartDay(), request.getEndDay());
+			List<Object[]> orderCancel = ordersRepository.getOrderCancel(request.getStartDay(), request.getEndDay());
+			List<DayAndDataResponse> responseOrderAccept = new ArrayList<>();
+			List<DayAndDataResponse> responseOrderCancel = new ArrayList<>();
+			for(Object[] row : orderAccept ) {
+				DayAndDataResponse dto = DayAndDataResponse.builder()
+						.day((Date) row[0])
+						.data((long) row[1])
+						.build();
+				responseOrderAccept.add(dto);
+			}
+			for(Object[] row : orderCancel ) {
+				DayAndDataResponse dto = DayAndDataResponse.builder()
+						.day((Date) row[0])
+						.data((long) row[1])
+						.build();
+				responseOrderCancel.add(dto);
+			}
+			return DashboardOrderResponse.builder()
+					.orderAccept(responseOrderAccept)
+					.orderCancel(responseOrderCancel)
+					.build();
+		}
+	 
 }

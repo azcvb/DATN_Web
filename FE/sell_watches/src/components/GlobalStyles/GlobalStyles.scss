@@ -53,3 +53,9 @@ body {
 .block {
     display: block !important;
 }
+.flexBoxColumCenter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}

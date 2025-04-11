@@ -4,6 +4,8 @@ const routes = {
     cart: '/gio-hang',
     pay: '/pay',
     payCheck: '/pay/check',
-    search: '/search'
+    search: '/search',
+    login: '/login',
+    homeAdmin: '/admin/home'
 };
 export default routes;

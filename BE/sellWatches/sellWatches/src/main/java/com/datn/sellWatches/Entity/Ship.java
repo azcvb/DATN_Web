@@ -44,6 +44,6 @@ public class Ship {
 	Order don_hang;
 	
 	enum Status{
-		PENDING, DELIVERING,SUCCESS, RETURN;
+		PENDING, DELIVERING ,SUCCESS , RETURN;
 	}
 }
