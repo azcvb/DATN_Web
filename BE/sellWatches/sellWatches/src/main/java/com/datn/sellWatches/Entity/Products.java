@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -17,6 +18,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -63,17 +65,13 @@ public class Products {
 	String gioi_tinh;
 	
 	@JsonManagedReference
-	@ManyToMany
-	@JoinTable(
-			name = "loai_san_pham",
-			joinColumns = @JoinColumn(name = "san_pham_id"),
-			inverseJoinColumns = @JoinColumn(name = "loai_id")
-			)
-	List<Types> loai = new ArrayList<>();
+	@ManyToOne
+	@JoinColumn(name = "loai_id")
+	private Types loai;
 	
-	@JsonBackReference
-	@OneToOne(mappedBy = "products", cascade = CascadeType.ALL)
-    Warehouse warehouse;
+	@OneToMany(mappedBy = "products", cascade = CascadeType.ALL)
+	@JsonManagedReference
+	private List<Warehouse> warehouse;
 	
 	@OneToMany(mappedBy = "san_pham", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	List<OrderDetail> orderDetails;

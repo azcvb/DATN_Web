@@ -1,12 +1,19 @@
 package com.datn.sellWatches.Entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import java.time.LocalDate;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -28,12 +35,12 @@ public class Warehouse {
 	@GeneratedValue(strategy = GenerationType.UUID)
 	String id;
 	
-	int so_luong;
 	int da_ban;
 	int ton_kho;
+	LocalDate ngay_nhap;
 	
-	@JsonBackReference
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "san_pham_id")
-	Products products; 
+	@JsonBackReference
+	private Products products;
 }

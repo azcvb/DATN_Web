@@ -10,6 +10,7 @@ import Search from "~/pages/Customer/Search";
 import Trademark from "~/pages/Customer/Trademark";
 import PageAdmin from "~/pages/Admin/PageAdmin";
 import HomeAdmin from "~/pages/Admin/Layout/HomeAdmin";
+import ProductAdmin from "~/pages/Admin/Layout/ProductAdmin";
 
 const publicRouters = [
     { path: config.routes.home, component: Home, layout: DefaultLayout },
@@ -20,7 +21,8 @@ const publicRouters = [
     { path: config.routes.payCheck, component: PaymentCheck, layout: DefaultLayout },
     { path: config.routes.search, component: Search, layout: DefaultLayout },
     { path: config.routes.login, component: Login, layout: null },
-    { path: config.routes.homeAdmin, component: HomeAdmin, layout: PageAdmin }
+    { path: config.routes.homeAdmin, component: HomeAdmin, layout: PageAdmin },
+    { path: config.routes.productAdmin, component: ProductAdmin, layout: PageAdmin }
 
 ]
 

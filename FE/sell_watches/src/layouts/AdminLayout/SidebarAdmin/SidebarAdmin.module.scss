@@ -19,10 +19,12 @@
             height: 18px;
             margin-right: 10px;
         }
-        div {
+        a {
             padding: 14px 20px;
             display: flex;
             align-items: center;
+            text-decoration: none;
+            color: #fff;
             &:hover {
                 cursor: pointer;
                 background-color: #fff;
@@ -31,7 +33,7 @@
         }
     }
     .chidrent {
-        div {
+        a {
             padding: 14px 40px;
         }
     }

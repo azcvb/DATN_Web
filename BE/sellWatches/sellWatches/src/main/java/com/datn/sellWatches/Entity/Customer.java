@@ -9,7 +9,9 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -40,4 +42,8 @@ public class Customer {
 	
 	@OneToMany(mappedBy = "khach_hang", cascade = CascadeType.ALL, orphanRemoval = true)
 	List<Order> orders = new ArrayList<>();
+	
+	@OneToOne
+	@JoinColumn(name= "khach_hang")
+	Account tai_khoan_id;
 }

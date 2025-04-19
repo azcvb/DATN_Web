@@ -1,13 +1,13 @@
 import classNames from 'classnames/bind';
-import style from './Home.module.scss'
+import style from './Home.module.scss';
 import { banner_img, imgWhyMe, listTrademark } from '~/assets';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IconGoTop, IconMyShop1, IconMyShop2, IconMyShop3, IconMyShop4 } from '~/components/icon';
-import { getListProductsHome } from '~/apiServices/getListProductsHome';
+import { getListProductsHome } from '~/apiServices/Product/getListProductsHome';
 import Products from '~/layouts/Component/Product';
 
-const cx = classNames.bind(style)
+const cx = classNames.bind(style);
 function Home() {
     // time banner
     const [isVisibleBanner, setIsVisibleBanner] = useState(0);
@@ -23,42 +23,40 @@ function Home() {
     const [listProduct, setListProducts] = useState();
     const [productsNew, setProductNew] = useState();
     const [productsQua, setProductQua] = useState();
-    const [activeTypeProductNew, setActiveTypeProductNew] = useState('dong-ho-nam')
-    const [activeTypeProductQua, setActiveTypeProductQua] = useState('dong-ho-nam')
+    const [activeTypeProductNew, setActiveTypeProductNew] = useState('dong-ho-nam');
+    const [activeTypeProductQua, setActiveTypeProductQua] = useState('dong-ho-nam');
     useEffect(() => {
         async function fetchGetProducts() {
             try {
                 const res = await getListProductsHome();
-                setListProducts(res.result)
-
+                setListProducts(res.result);
+                console.log(res);
                 setProductNew(res.result['newNam']);
                 setProductQua(res.result['quaNam']);
             } catch (err) {
-                console.log(err)
+                console.log(err);
             }
         }
         fetchGetProducts();
-
-    }, [])
+    }, []);
     useEffect(() => {
-
         const interval = setInterval(() => {
             if (!isDeleting) {
                 if (displayedIndex < stringTextIntro.length) {
-                    setDisplayedIndex(prev => prev + 1);
+                    setDisplayedIndex((prev) => prev + 1);
                 } else {
                     setTimeout(() => {
                         setIsDeleting(true);
-                        setDelayText(100)
+                        setDelayText(100);
                     }, delayText * 5);
                 }
             } else {
                 if (displayedIndex > 0) {
-                    setDisplayedIndex(prev => prev - 1);
+                    setDisplayedIndex((prev) => prev - 1);
                 } else {
                     setTimeout(() => {
                         setIsDeleting(false);
-                        setDelayText(500)
+                        setDelayText(500);
                     }, delayText * 5);
                 }
             }
@@ -67,22 +65,22 @@ function Home() {
     }, [displayedIndex, isDeleting, stringTextIntro, delayText]);
     useEffect(() => {
         const interval = setInterval(() => {
-            setIsVisibleBanner(prev => (prev + 1) % lenghObjBanner)
-        }, delay)
+            setIsVisibleBanner((prev) => (prev + 1) % lenghObjBanner);
+        }, delay);
         return () => clearInterval(interval);
-    }, [lenghObjBanner])
+    }, [lenghObjBanner]);
 
     const getTypeProductNew = (type, index) => {
-        setProductNew(listProduct[type])
-        setActiveTypeProductNew(index)
-    }
+        setProductNew(listProduct[type]);
+        setActiveTypeProductNew(index);
+    };
     const getTypeProductQua = (type, index) => {
-        setProductQua(listProduct[type])
-        setActiveTypeProductQua(index)
-    }
+        setProductQua(listProduct[type]);
+        setActiveTypeProductQua(index);
+    };
     return (
         <div className="HomePage">
-            <a href='/#' className={cx('goTop')}>
+            <a href="/#" className={cx('goTop')}>
                 <IconGoTop />
             </a>
             <div className={cx('banner')}>
@@ -97,7 +95,7 @@ function Home() {
                 ))}
             </div>
             <div className={cx('introduce')}>
-                <img src='https://i.imgur.com/6aB8jrC.jpg' alt=''></img>
+                <img src="https://i.imgur.com/6aB8jrC.jpg" alt=""></img>
                 <div className={cx('text_container')}>
                     <div className={cx('text')}>
                         <span>Duy anh - </span>
@@ -109,7 +107,7 @@ function Home() {
                     <div className={`container ${cx('inner_')}`}>
                         <div>
                             <div>
-                                <img src='https://i.imgur.com/bhFgxYo.png' alt='' />
+                                <img src="https://i.imgur.com/bhFgxYo.png" alt="" />
                             </div>
                             <div className={cx('inner_text')}>
                                 <span className={cx('title')}>Phòng bảo hành đạt</span>
@@ -118,7 +116,7 @@ function Home() {
                         </div>
                         <div>
                             <div>
-                                <img src='https://i.imgur.com/SswrpRG.png' alt='' />
+                                <img src="https://i.imgur.com/SswrpRG.png" alt="" />
                             </div>
 
                             <div className={cx('inner_text')}>
@@ -128,7 +126,7 @@ function Home() {
                         </div>
                         <div>
                             <div>
-                                <img src='https://i.imgur.com/hPmGGJx.png' alt='' />
+                                <img src="https://i.imgur.com/hPmGGJx.png" alt="" />
                             </div>
                             <div className={cx('inner_text')}>
                                 <span className={cx('title')}>Đền 20 lần nếu bán</span>
@@ -140,30 +138,30 @@ function Home() {
             </div>
             <div className={`container ${cx('mt-60')}`}>
                 <div className={cx('banner-2')}>
-                    <Link className='wrapper'>
-                        <img src='https://i.imgur.com/SnYul8k.png' alt='' />
+                    <Link className="wrapper">
+                        <img src="https://i.imgur.com/SnYul8k.png" alt="" />
                     </Link>
-                    <Link className='wrapper'>
-                        <img src='https://i.imgur.com/yLuBIAt.png' alt='' />
+                    <Link className="wrapper">
+                        <img src="https://i.imgur.com/yLuBIAt.png" alt="" />
                     </Link>
                 </div>
-                <div
-                    className={`mb-30 ${cx('trademark')}`}>
-                    <div className={cx('trademark-track')}
+                <div className={`mb-30 ${cx('trademark')}`}>
+                    <div
+                        className={cx('trademark-track')}
                         style={{
                             transform: `translate3d(-1110px, 0px, 0px)`,
-                            transition: "0.25s"
+                            transition: '0.25s',
                         }}
                     >
                         {Object.values(listTrademark).map((value, index) => {
-                            if (!!value && typeof value === "string") {
+                            if (!!value && typeof value === 'string') {
                                 return (
                                     <div key={index} className={cx('trademark-img')}>
-                                        <Link >
-                                            <img src={value} alt='' />
+                                        <Link>
+                                            <img src={value} alt="" />
                                         </Link>
                                     </div>
-                                )
+                                );
                             }
                             return null;
                         })}
@@ -171,20 +169,21 @@ function Home() {
                 </div>
                 <div className={`wrapper mb-70 ${cx('banner-3')}`}>
                     <div className={cx('banner-3_')}>
-                        <img className={cx('imgBackground')} src='https://i.imgur.com/XqKY9rt.png' alt='' />
+                        <img className={cx('imgBackground')} src="https://i.imgur.com/XqKY9rt.png" alt="" />
                         <div className={cx('banner-img')}>
-                            <img src='https://i.imgur.com/zoIKFrs.png' alt='' />
+                            <img src="https://i.imgur.com/zoIKFrs.png" alt="" />
                         </div>
                         <div className={cx('content')}>
                             <div className={cx('content_')}>
                                 <div>
                                     <span className={cx('title')}>Pha lê, kim cương</span>
                                     <span className={cx('type')}>Bộ sưu tập đồng hồ nữ</span>
-                                    <span className={cx('description')}>Sang trọng cùng bộ sưu tập đồng hồ đính pha lê, kim cương dành cho phái đẹp</span>
+                                    <span className={cx('description')}>
+                                        Sang trọng cùng bộ sưu tập đồng hồ đính pha lê, kim cương dành cho phái đẹp
+                                    </span>
                                     <div>
                                         <Link>Vào cửa hàng</Link>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -198,84 +197,139 @@ function Home() {
                     <div className={`mb-70 ${cx('list-product')}`}>
                         <span>Bán chạy nhất</span>
                         <div className={cx('navigation')}>
-                            <div className={activeTypeProductQua === 'dong-ho-nam' ? "active-product" : ""}>
-                                <Link onClick={() => { getTypeProductQua('quaNam', 'dong-ho-nam') }}>Đồng hồ nam</Link>
+                            <div className={activeTypeProductQua === 'dong-ho-nam' ? 'active-product' : ''}>
+                                <Link
+                                    onClick={() => {
+                                        getTypeProductQua('quaNam', 'dong-ho-nam');
+                                    }}
+                                >
+                                    Đồng hồ nam
+                                </Link>
                             </div>
-                            <div className={activeTypeProductQua === 'dong-ho-nu' ? "active-product" : ""}>
-                                <Link onClick={() => { getTypeProductQua('quaNu', 'dong-ho-nu') }}>Đồng hồ nữ</Link>
+                            <div className={activeTypeProductQua === 'dong-ho-nu' ? 'active-product' : ''}>
+                                <Link
+                                    onClick={() => {
+                                        getTypeProductQua('quaNu', 'dong-ho-nu');
+                                    }}
+                                >
+                                    Đồng hồ nữ
+                                </Link>
                             </div>
-                            <div className={activeTypeProductQua === 'dong-ho-doi' ? "active-product" : ""}>
-                                <Link onClick={() => { getTypeProductQua('quaDoi', 'dong-ho-doi') }}>Đồng hồ đôi</Link>
+                            <div className={activeTypeProductQua === 'dong-ho-doi' ? 'active-product' : ''}>
+                                <Link
+                                    onClick={() => {
+                                        getTypeProductQua('quaDoi', 'dong-ho-doi');
+                                    }}
+                                >
+                                    Đồng hồ đôi
+                                </Link>
                             </div>
                         </div>
                         <div className={cx('product')}>
-                            <Products
-                                products={productsQua}
-                                linkTo={activeTypeProductQua}
-
-                            />
+                            <Products products={productsQua} linkTo={activeTypeProductQua} />
                         </div>
                         <div className={cx('more')}>
-                            <div className='line-full'></div>
+                            <div className="line-full"></div>
                             <Link>Xem thêm đồng hồ nam bán chạy</Link>
                         </div>
                     </div>
                     <div className={`mb-70 ${cx('list-product')}`}>
                         <span>Sản phẩm mới</span>
                         <div className={cx('navigation')}>
-                            <div className={activeTypeProductNew === 'dong-ho-nam' ? "active-product" : ""}>
-                                <Link onClick={() => { getTypeProductNew('newNam', 'dong-ho-nam') }}>Đồng hồ nam</Link>
+                            <div className={activeTypeProductNew === 'dong-ho-nam' ? 'active-product' : ''}>
+                                <Link
+                                    onClick={() => {
+                                        getTypeProductNew('newNam', 'dong-ho-nam');
+                                    }}
+                                >
+                                    Đồng hồ nam
+                                </Link>
                             </div>
-                            <div className={activeTypeProductNew === 'dong-ho-nu' ? "active-product" : ""}>
-                                <Link onClick={() => { getTypeProductNew('newNu', 'dong-ho-nu') }}>Đồng hồ nữ</Link>
+                            <div className={activeTypeProductNew === 'dong-ho-nu' ? 'active-product' : ''}>
+                                <Link
+                                    onClick={() => {
+                                        getTypeProductNew('newNu', 'dong-ho-nu');
+                                    }}
+                                >
+                                    Đồng hồ nữ
+                                </Link>
                             </div>
-                            <div className={activeTypeProductNew === 'dong-ho-doi' ? "active-product" : ""}>
-                                <Link onClick={() => { getTypeProductNew('newDoi', 'dong-ho-doi') }}>Đồng hồ đôi</Link>
+                            <div className={activeTypeProductNew === 'dong-ho-doi' ? 'active-product' : ''}>
+                                <Link
+                                    onClick={() => {
+                                        getTypeProductNew('newDoi', 'dong-ho-doi');
+                                    }}
+                                >
+                                    Đồng hồ đôi
+                                </Link>
                             </div>
                         </div>
                         <div className={cx('product')}>
-                            <Products
-                                products={productsNew}
-                                linkTo={activeTypeProductNew}
-                            />
+                            <Products products={productsNew} linkTo={activeTypeProductNew} />
                         </div>
                         <div className={cx('more')}>
-                            <div className='line-full'></div>
+                            <div className="line-full"></div>
                             <Link>Xem thêm đồng hồ nam mới</Link>
                         </div>
                     </div>
                 </div>
                 <div className={`mb-70 ${cx('trademarks')}`}>
                     <div className={cx('title')}>
-                        <div >
-                            Thương hiệu nổi bật
-                        </div>
+                        <div>Thương hiệu nổi bật</div>
                         <Link>Xem tất cả {'>>'} </Link>
                     </div>
                     <div className={cx('trademark')}>
                         <span className={cx('prev')}>‹</span>
                         <Link className={cx('item')}>
-                            <img className={cx('img')} src='https://donghoduyanh.com/images/products/menufactories/resized/hamilton_1612251962.jpg.webp' alt='' />
+                            <img
+                                className={cx('img')}
+                                src="https://donghoduyanh.com/images/products/menufactories/resized/hamilton_1612251962.jpg.webp"
+                                alt=""
+                            />
                             <div>
-                                <img src='https://donghoduyanh.com/images/products/menufactories/resized/logo_1717577425.png.webp' alt='' />
+                                <img
+                                    src="https://donghoduyanh.com/images/products/menufactories/resized/logo_1717577425.png.webp"
+                                    alt=""
+                                />
                             </div>
                         </Link>
                         <Link className={cx('item')}>
-                            <img className={cx('img')} src='https://donghoduyanh.com/images/products/menufactories/resized/hamilton_1612251962.jpg.webp' alt='' />
+                            <img
+                                className={cx('img')}
+                                src="https://donghoduyanh.com/images/products/menufactories/resized/hamilton_1612251962.jpg.webp"
+                                alt=""
+                            />
                             <div>
-                                <img src='https://donghoduyanh.com/images/products/menufactories/resized/logo_1717577425.png.webp' alt='' />
+                                <img
+                                    src="https://donghoduyanh.com/images/products/menufactories/resized/logo_1717577425.png.webp"
+                                    alt=""
+                                />
                             </div>
                         </Link>
                         <Link className={cx('item')}>
-                            <img className={cx('img')} src='https://donghoduyanh.com/images/products/menufactories/resized/hamilton_1612251962.jpg.webp' alt='' />
+                            <img
+                                className={cx('img')}
+                                src="https://donghoduyanh.com/images/products/menufactories/resized/hamilton_1612251962.jpg.webp"
+                                alt=""
+                            />
                             <div>
-                                <img src='https://donghoduyanh.com/images/products/menufactories/resized/logo_1717577425.png.webp' alt='' />
+                                <img
+                                    src="https://donghoduyanh.com/images/products/menufactories/resized/logo_1717577425.png.webp"
+                                    alt=""
+                                />
                             </div>
                         </Link>
                         <Link className={cx('item')}>
-                            <img className={cx('img')} src='https://donghoduyanh.com/images/products/menufactories/resized/hamilton_1612251962.jpg.webp' alt='' />
+                            <img
+                                className={cx('img')}
+                                src="https://donghoduyanh.com/images/products/menufactories/resized/hamilton_1612251962.jpg.webp"
+                                alt=""
+                            />
                             <div>
-                                <img src='https://donghoduyanh.com/images/products/menufactories/resized/logo_1717577425.png.webp' alt='' />
+                                <img
+                                    src="https://donghoduyanh.com/images/products/menufactories/resized/logo_1717577425.png.webp"
+                                    alt=""
+                                />
                             </div>
                         </Link>
                         <span className={cx('next')}>›</span>
@@ -308,34 +362,31 @@ function Home() {
                             <div className={cx('agent')}>
                                 <span>Đaị lý ủy quyền chính thức các thương hiệu lớn</span>
                                 <Link>Xem tất cả</Link>
-
                             </div>
                             <div className={cx('certify')}>
                                 <span>
-                                    Chứng nhận Duy Anh Watch là Đại lý ủy quyền chính thức thương hiệu LONGINES tại Việt Nam
-                                    (<Link>Xem ngay</Link>)
+                                    Chứng nhận Duy Anh Watch là Đại lý ủy quyền chính thức thương hiệu LONGINES tại Việt
+                                    Nam (<Link>Xem ngay</Link>)
                                 </span>
                             </div>
                             <div className={cx('trademark')}>
                                 <div className={cx('prev')}>‹</div>
                                 <div>
-                                    <img className={cx('active')} src='https://i.imgur.com/fZqCInX.jpg' alt='' />
-                                    <img src='https://i.imgur.com/fZqCInX.jpg' alt='' />
-                                    <img src='https://i.imgur.com/fZqCInX.jpg' alt='' />
+                                    <img className={cx('active')} src="https://i.imgur.com/fZqCInX.jpg" alt="" />
+                                    <img src="https://i.imgur.com/fZqCInX.jpg" alt="" />
+                                    <img src="https://i.imgur.com/fZqCInX.jpg" alt="" />
                                 </div>
                                 <div className={cx('next')}>›</div>
                             </div>
                         </div>
 
                         <div className={cx('body-right')}>
-                            <img src={imgWhyMe} alt='' />
+                            <img src={imgWhyMe} alt="" />
                         </div>
                     </div>
-
                 </div>
-
             </div>
-        </div >
+        </div>
     );
 }
 

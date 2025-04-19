@@ -13,6 +13,7 @@ import {
     IconUser,
     IconWarehouse,
 } from '~/components/icon';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(style);
 function SidebarAdmin() {
@@ -20,78 +21,78 @@ function SidebarAdmin() {
         <div className={cx('sidebar')}>
             <ul>
                 <li>
-                    <div>
+                    <Link to="/admin/trang-chu">
                         <IconHome />
                         <span>Trang chủ</span>
-                    </div>
+                    </Link>
                 </li>
                 <li>
-                    <div>
+                    <Link to="/admin/san-pham">
                         <IconStore />
                         <span>Sản phẩm</span>
-                    </div>
+                    </Link>
                     <ul className={cx('chidrent')}>
                         <li>
-                            <div>
+                            <Link to="/admin/">
                                 <IconStart />
                                 <span>Đánh giá</span>
-                            </div>
+                            </Link>
                         </li>
                         <li>
-                            <div>
+                            <Link to="/admin/">
                                 <IconFlag />
                                 <span>Khiếu nại</span>
-                            </div>
+                            </Link>
                         </li>
                         <li>
-                            <div>
+                            <Link to="/admin/">
                                 <IconTag />
                                 <span>Khuyến mãi</span>
-                            </div>
+                            </Link>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <div>
+                    <Link to="/admin/">
                         <IconCreditCard />
                         <span>Thanh toán</span>
-                    </div>
+                    </Link>
                 </li>
                 <li>
-                    <div>
+                    <Link to="/admin/">
                         <IconTruck />
                         <span>Đơn hàng</span>
-                    </div>
+                    </Link>
                 </li>
                 <li>
-                    <div>
+                    <Link to="/admin/">
                         <IconCart />
                         <span>Vận chuyển</span>
-                    </div>
+                    </Link>
                 </li>
                 <li>
-                    <div>
+                    <Link to="/admin/">
                         <IconWarehouse />
                         <span>Kho hàng</span>
-                    </div>
+                    </Link>
                 </li>
                 <li>
-                    <div>
+                    <Link to="/admin/">
                         <IconUser />
                         <span>Nhân viên</span>
-                    </div>
+                    </Link>
                 </li>
                 <li>
-                    <div>
+                    <Link to="/admin/">
                         <IconUser />
                         <span>Khách hàng</span>
-                    </div>
+                    </Link>
                 </li>
                 <li>
-                    <div>
+                    <Link to="/admin/">
                         <IconBrush />
                         <span>Tùy chỉnh trang</span>
-                    </div>
+                    </Link>
                 </li>
             </ul>
         </div>

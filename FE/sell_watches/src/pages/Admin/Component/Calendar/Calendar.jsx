@@ -4,7 +4,7 @@ import { formatDateDashboard } from '~/components/format';
 
 const cx = classNames.bind(style);
 
-function Calendar({ startDay, endDay, setStartDay, setEndDay }) {
+function Calendar({ startDay = new Date(), endDay = new Date(), setStartDay, setEndDay }) {
     const today = new Date();
 
     const getMinStartDay = (end) => {

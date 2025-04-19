@@ -3,10 +3,9 @@ import style from './HomeAdmin.module.scss';
 import { useEffect, useState } from 'react';
 import { BarChart, LineChart } from '@mui/x-charts';
 import Calendar from '~/pages/Admin/Component/Calendar';
-import { postDashboardTop } from '~/apiServices/postDashboardTop';
 import { formatDateDashboard, formatNumber } from '~/components/format';
-import { postDashboardBottom } from '~/apiServices/postDashboardBottom';
-import { paymentReturn } from '~/apiServices/paymentReturn';
+import { postDashboardTop } from '~/apiServices/Dashboard/postDashboardTop';
+import { postDashboardBottom } from '~/apiServices/Dashboard/postDashboardBottom';
 
 const cx = classNames.bind(style);
 
@@ -42,43 +41,46 @@ function HomeAdmin() {
     const [resultCustomer, setResultCustomer] = useState(null);
     const [resultOrder, setResultOrder] = useState(null);
     const [resultPayment, setResultPayment] = useState(null);
+    const [getTimeNow, setGetTimeNow] = useState();
+
     // Gọi API khi dashboardTopData thay đổi
     useEffect(() => {
-        async function fetchDashboardData() {
-            try {
-                const resTop = await postDashboardTop(dashboardTopDay);
-                const resBottom = await postDashboardBottom(dashboardBottomDay);
-                processProductData(resTop.productResponse);
-                processCustomerData(resTop.customerResponse);
-                processOrderData(resTop.orderResponse);
-                processPaymentData(resBottom.paymentResponse);
-            } catch (err) {
-                console.log(err);
+        if (getTimeNow) {
+            async function fetchDashboardData() {
+                try {
+                    const resTop = await postDashboardTop(dashboardTopDay);
+                    processProductData(resTop.productResponse);
+                    processCustomerData(resTop.customerResponse);
+                    processOrderData(resTop.orderResponse);
+                } catch (err) {
+                    console.log(err);
+                }
             }
-        }
-        // Nếu dữ liệu ngày chưa được xác định thì không gọi API
-        if (
-            dashboardTopDay.startDay &&
-            dashboardTopDay.endDay &&
-            dashboardBottomDay.startDay &&
-            dashboardBottomDay.endDay
-        ) {
-            fetchDashboardData();
+            // Nếu dữ liệu ngày chưa được xác định thì không gọi API
+            if (
+                dashboardTopDay.startDay &&
+                dashboardTopDay.endDay &&
+                dashboardBottomDay.startDay &&
+                dashboardBottomDay.endDay
+            ) {
+                fetchDashboardData();
+            }
         }
     }, [dashboardTopDay]);
     useEffect(() => {
-        async function fetchDashboardData() {
-            try {
-                const resBottom = await postDashboardBottom(dashboardBottomDay);
-                processPaymentData(resBottom.paymentResponse);
-                console.log(resBottom);
-            } catch (err) {
-                console.log(err);
+        if (getTimeNow) {
+            async function fetchDashboardData() {
+                try {
+                    const resBottom = await postDashboardBottom(dashboardBottomDay);
+                    processPaymentData(resBottom.paymentResponse);
+                } catch (err) {
+                    console.log(err);
+                }
             }
-        }
-        // Nếu dữ liệu ngày chưa được xác định thì không gọi API
-        if (dashboardBottomDay.startDay && dashboardBottomDay.endDay) {
-            fetchDashboardData();
+            // Nếu dữ liệu ngày chưa được xác định thì không gọi API
+            if (dashboardBottomDay.startDay && dashboardBottomDay.endDay) {
+                fetchDashboardData();
+            }
         }
     }, [dashboardBottomDay]);
     // Tính toán danh sách ngày cho phần top và bottom khi component khởi tạo
@@ -88,17 +90,28 @@ function HomeAdmin() {
     }, [endDayBottom, endDayTop, startDayBottom, startDayTop]);
 
     // Cập nhật lại dữ liệu cho dashboardTopData mỗi khi ngày thay đổi
+    const getCurrentTime = () => {
+        const currentTime = new Date();
+        const hours = String(currentTime.getHours()).padStart(2, '0');
+        const minutes = String(currentTime.getMinutes()).padStart(2, '0');
+        const seconds = String(currentTime.getSeconds()).padStart(2, '0');
+
+        setGetTimeNow(`${hours}:${minutes}:${seconds}`);
+    };
     useEffect(() => {
+        getCurrentTime();
+    }, []);
+    useEffect(() => {
+        getCurrentTime();
         setDashboardTopDay({
             startDay: formatDateDashboard(startDayTop),
-            endDay: formatDateDashboard(endDayTop),
+            endDay: formatDateDashboard(endDayTop) + ' ' + getTimeNow,
         });
         setDashboardBottomDay({
             startDay: formatDateDashboard(startDayBottom),
-            endDay: formatDateDashboard(endDayBottom),
+            endDay: formatDateDashboard(endDayBottom) + ' ' + getTimeNow,
         });
-    }, [startDayTop, endDayTop]);
-
+    }, [startDayTop, endDayTop, startDayBottom, endDayBottom, getTimeNow]);
     // Hàm lấy danh sách ngày giữa startDate và endDate với định dạng "dd/mm"
     const getDaysBetween = (startDate, endDate) => {
         const days = [];

@@ -6,6 +6,7 @@ const routes = {
     payCheck: '/pay/check',
     search: '/search',
     login: '/login',
-    homeAdmin: '/admin/home'
+    homeAdmin: '/admin/trang-chu',
+    productAdmin: '/admin/san-pham'
 };
 export default routes;

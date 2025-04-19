@@ -1,0 +1,93 @@
+.filterAdmin {
+    background-color: #fff;
+    margin: 0 40px;
+}
+.title {
+    padding: 10px 20px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+.content {
+    padding: 10px 20px;
+}
+.filter {
+    display: flex;
+    .search {
+        display: flex;
+        position: relative;
+        align-items: center;
+        border: 1px solid #ccc;
+        width: 40%;
+        border-radius: 5px;
+        input {
+            width: 95%;
+            background-color: #ffffff24;
+            padding: 5px 10px 5px 10px;
+            border: none;
+            border-radius: 10px;
+
+            &:focus {
+                outline: none;
+            }
+        }
+        .iconSearch {
+            position: absolute;
+            right: 0;
+            padding: 6px 8px;
+            border-radius: 10px;
+            svg {
+                width: 20px;
+                height: 20px;
+                color: #7f7f7f;
+            }
+        }
+    }
+    .type-filter {
+        ul {
+            display: flex;
+            margin: 0;
+            padding: 0 0 0 20px;
+            li {
+                display: flex;
+                list-style-type: none;
+                justify-content: center;
+                border: 1px solid #ccc;
+                padding: 5px 10px;
+                border-radius: 2px;
+                margin-right: 10px;
+                min-width: 75px;
+                &:hover {
+                    cursor: pointer;
+                }
+                svg {
+                    vertical-align: baseline;
+                    color: #555;
+                    width: 16px;
+                    height: 16px;
+                }
+            }
+        }
+    }
+}
+.filter-tag {
+    ul {
+        display: flex;
+        padding: 0;
+        margin-top: 10px;
+    }
+    li {
+        color: #333;
+        list-style-type: none;
+        margin-right: 10px;
+        background-color: rgba($color: #00baf3, $alpha: 0.2);
+        padding: 0 10px;
+        border-radius: 5px;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    .delete-all {
+        color: #fff;
+        background-color: #ff1818;
+    }
+}

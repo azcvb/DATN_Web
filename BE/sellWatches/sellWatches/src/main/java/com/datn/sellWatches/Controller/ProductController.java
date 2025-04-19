@@ -13,26 +13,38 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.HandlerMapping;
 
+import com.datn.sellWatches.DTO.Request.AddProductRequest;
+import com.datn.sellWatches.DTO.Request.FilterProductAdminRequest;
 import com.datn.sellWatches.DTO.Request.FilterProductsRequest;
+import com.datn.sellWatches.DTO.Request.IdProductRequest;
+import com.datn.sellWatches.DTO.Request.UpdateProductRequest;
 import com.datn.sellWatches.DTO.Response.ApiResponse;
 import com.datn.sellWatches.DTO.Response.FilterPageResponse;
 import com.datn.sellWatches.DTO.Response.GetListProductsHomeResponse;
 import com.datn.sellWatches.DTO.Response.GetProductByIdResponse;
+import com.datn.sellWatches.DTO.Response.GetProductForCar;
+import com.datn.sellWatches.DTO.Response.GetProductTableAdminResponse;
+import com.datn.sellWatches.DTO.Response.ListFilterProductAdminResponse;
 import com.datn.sellWatches.DTO.Response.PageAndSearchProductResponse;
 import com.datn.sellWatches.DTO.Response.SearchProductResponse;
 import com.datn.sellWatches.Entity.Products;
 import com.datn.sellWatches.Service.ProductService;
+import com.datn.sellWatches.Service.TypeService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
 @RequestMapping("/products")
+@Slf4j
 public class ProductController {
 	@Autowired
 	ProductService productService;
-	
+	@Autowired
+	TypeService typeService;
 	@GetMapping
 	public ApiResponse<Map<String, List<GetListProductsHomeResponse>>> getProductHome() {
 		Map<String, List<GetListProductsHomeResponse>> result = productService.getListProductHome();
@@ -70,5 +82,53 @@ public class ProductController {
 				.result(result)
 				.build();
 	}
-	
+	@PostMapping("/type")
+	public ApiResponse<List<String>> getDistinctType() {
+		List<String> result = typeService.getDistinctType();
+		return ApiResponse.<List<String>>builder()
+				.result(result)
+				.build();
+	}
+	@PostMapping("/filterAdmin")
+	public ApiResponse<ListFilterProductAdminResponse> filterProductsAdmin(@RequestBody FilterProductAdminRequest request) {
+		ListFilterProductAdminResponse result = productService.filterProductAdmin(request);
+		return ApiResponse.<ListFilterProductAdminResponse>builder()
+				.result(result)
+				.build();
+	}
+	@PostMapping("/addProduct")
+	public ApiResponse<Boolean> addProduct(@RequestBody AddProductRequest request) {
+		Boolean result = productService.addProduct(request);
+		return ApiResponse.<Boolean>builder()
+				.result(result)
+				.build();
+	}
+	@PostMapping("/forCart")
+	public ApiResponse<List<GetProductForCar>> getProductForCart(@RequestBody List<String> request) {
+		List<GetProductForCar> result = productService.getProductForCar(request);
+		return ApiResponse.<List<GetProductForCar>>builder()
+				.result(result)
+				.build();
+	}
+	@PostMapping("/remove")
+	public ApiResponse<Boolean> removeProduct(@RequestBody List<String> request) {
+		Boolean result = productService.removeProductId(request);
+		return ApiResponse.<Boolean>builder()
+				.result(result)
+				.build();
+	}
+	@PostMapping("/update")
+	public ApiResponse<Boolean> updateProduct(@RequestBody UpdateProductRequest request) {
+		Boolean result = productService.getProductUpdate(request);
+		return ApiResponse.<Boolean>builder()
+				.result(result)
+				.build();
+	}
+	@PostMapping("/idAdmin")
+	public ApiResponse<GetProductTableAdminResponse> getProductIdAdmin(@RequestBody IdProductRequest request) {
+		GetProductTableAdminResponse result = productService.getProductIdAdmin(request);
+		return ApiResponse.<GetProductTableAdminResponse>builder()
+				.result(result)
+				.build();
+	}
 }

@@ -1,5 +1,6 @@
 package com.datn.sellWatches.Configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,12 +21,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableMethodSecurity
 public class SecurityConfig {
     private final String[] PUBLIC_POST_ENDPOINT = {
-            "/products/filter", "/order", "/payment/**", "/dashboard/top", "/dashboard/bottom"
+            "/products/filter", "/order", "/payment/**", "/dashboard/top", "/dashboard/bottom",
+            "/auth/token", "/auth/introspect", "/auth/logout", "/auth/refresh", "/products/filterAdmin", "/products/type", "/products/addProduct",
+            "/products/forCart","/products/remove", "/products/update", "/products/idAdmin"
     };
     private final String[] PUBLIC_GET_ENDPOINT = {
             "/products", "/products/**","/payment/**"
     } ;
 
+    @Autowired
+    private CustomJwtDecoder customJwtDecoder;
     @Bean
 	public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.authorizeHttpRequests(
@@ -36,10 +41,12 @@ public class SecurityConfig {
 					.anyRequest()
 					.authenticated()
 				);
-//		httpSecurity.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwtConfigurer -> jwtConfigurer
-//							.decoder(null)
-//							.jwtAuthenticationConverter(jwtAuthenticationConverter()))
-//							);
+		httpSecurity.oauth2ResourceServer(oauth2 ->
+        oauth2.jwt(jwtConfigurer ->
+                jwtConfigurer.decoder(customJwtDecoder)
+                        .jwtAuthenticationConverter(jwtAuthenticationConverter()))
+                .authenticationEntryPoint(new JwtAuthenticationEntryPoint())
+);
 		httpSecurity.csrf(AbstractHttpConfigurer::disable);
 		return httpSecurity.build();
 	}

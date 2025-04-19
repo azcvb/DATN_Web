@@ -39,6 +39,6 @@ public class GetProductByIdResponse {
 	String hinh_anh;
 	LocalDate ngay_tao;
 	String khac;
-	List<Types> loai;
+	Types loai;
 
 }

@@ -1,15 +1,26 @@
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from 'react-router-dom';
 
-import style from './ProductDetail.module.scss'
-import classNames from "classnames/bind";
-import { formatNumber } from "~/components/format";
-import { useEffect, useState } from "react";
-import { getProductDetail } from "~/apiServices/getProductDetail";
-import { IconCheck, IconCheck2, IconClose, IconMyShop1, IconMyShop2, IconMyShop3, IconMyShop4, IconPhone, IconPlust, IconStart } from "~/components/icon";
-import Loading from "../Loading";
-import DefaultPage from "../DefaultPage";
-import Navigation from "~/layouts/Component/Navigation";
-import { useCookies } from "react-cookie";
+import style from './ProductDetail.module.scss';
+import classNames from 'classnames/bind';
+import { formatNumber } from '~/components/format';
+import { useEffect, useState } from 'react';
+import { getProductDetail } from '~/apiServices/Product/getProductDetail';
+import {
+    IconCheck,
+    IconCheck2,
+    IconClose,
+    IconMyShop1,
+    IconMyShop2,
+    IconMyShop3,
+    IconMyShop4,
+    IconPhone,
+    IconPlust,
+    IconStart,
+} from '~/components/icon';
+import Loading from '../Loading';
+import DefaultPage from '../DefaultPage';
+import Navigation from '~/layouts/Component/Navigation';
+import { useCookies } from 'react-cookie';
 
 const cx = classNames.bind(style);
 function ProductDetail() {
@@ -17,21 +28,21 @@ function ProductDetail() {
     const { productId } = useParams();
     const [productDetail, setProductDetail] = useState();
     const [isLoading, setIsLoading] = useState(true);
-    const [cookies, setCookie, removeCookie] = useCookies(["cart"]);
+    const [cookies, setCookie, removeCookie] = useCookies(['cart']);
     useEffect(() => {
         window.scrollTo(0, 0);
         async function fetch() {
             try {
                 const res = await getProductDetail(productId);
-                setProductDetail(res.result)
+                setProductDetail(res.result);
             } catch (err) {
-                console.log(err)
+                console.log(err);
             } finally {
-                setIsLoading(false)
+                setIsLoading(false);
             }
         }
         fetch();
-    }, [productId])
+    }, [productId]);
 
     if (isLoading) {
         return <Loading />;
@@ -46,36 +57,31 @@ function ProductDetail() {
             cartItems = Array.isArray(cookies.cart) ? cookies.cart : [cookies.cart];
         }
 
-        const existingProduct = cartItems.find(item => item.id === productDetail.id);
+        const existingProduct = cartItems.find((item) => item.id === productDetail.id);
 
         if (existingProduct) {
             existingProduct.so_luong += 1;
         } else {
             cartItems.push({
                 id: productDetail.id,
-                img: 'https://donghoduyanh.com/images/products/2024/03/07/large/l29094776_1709801936.jpg',
-                ten_san_pham: productDetail.ten_san_pham,
-                ma_san_pham: productDetail.ma_san_pham,
-                gia: productDetail.gia,
                 so_luong: 1,
-                loai: productDetail.loai[0].ten_loai
             });
         }
 
-        setCookie("cart", cartItems, { path: "/", expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) });
-
+        setCookie('cart', cartItems, { path: '/', expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) });
     };
     return (
         <div className={`container`}>
-            <Navigation
-                path={location.pathname}
-            />
-            {productDetail !== undefined
-                ? <div className={cx('top-product-detail')}>
+            <Navigation path={location.pathname} />
+            {productDetail !== undefined ? (
+                <div className={cx('top-product-detail')}>
                     <div className={`mb-30 ${cx('product')}`}>
                         <div className={cx('frame-left')}>
                             <div className={cx('img')}>
-                                <img src="https://donghoduyanh.com/images/products/2024/03/07/large/l29094776_1709801936.jpg" alt="" />
+                                <img
+                                    src="https://donghoduyanh.com/images/products/2024/03/07/large/l29094776_1709801936.jpg"
+                                    alt=""
+                                />
                                 <div className={cx('discount')}>-10%</div>
                                 <div className={cx('gift')}>Mua 1 tặng 1</div>
                             </div>
@@ -107,11 +113,21 @@ function ProductDetail() {
                                 </span>
                             </div>
                             <div className={cx('start')}>
-                                <span className={cx('on-start')}><IconStart /></span>
-                                <span className={cx('on-start')}><IconStart /></span>
-                                <span className={cx('on-start')}><IconStart /></span>
-                                <span className={cx('on-start')}><IconStart /></span>
-                                <span ><IconStart /></span>
+                                <span className={cx('on-start')}>
+                                    <IconStart />
+                                </span>
+                                <span className={cx('on-start')}>
+                                    <IconStart />
+                                </span>
+                                <span className={cx('on-start')}>
+                                    <IconStart />
+                                </span>
+                                <span className={cx('on-start')}>
+                                    <IconStart />
+                                </span>
+                                <span>
+                                    <IconStart />
+                                </span>
                                 <span>{`(1 đánh giá)`}</span>
                             </div>
                             <div>
@@ -131,7 +147,7 @@ function ProductDetail() {
                                     <IconCheck />
                                     <span> Sẵn hàng</span>
                                 </div>
-                                <div className={`hiden ${cx("out-stock")}`}>
+                                <div className={`hiden ${cx('out-stock')}`}>
                                     <IconClose />
                                     <span> Hết hàng</span>
                                 </div>
@@ -140,10 +156,10 @@ function ProductDetail() {
                                 <span className={cx('title')}>Khuyến mãi</span>
                                 <ul>
                                     <li>
-                                        <span><IconCheck2 /></span>
                                         <span>
-                                            Giảm
+                                            <IconCheck2 />
                                         </span>
+                                        <span>Giảm</span>
                                         <span className={cx('discount')}>10%</span>
                                         <span>toàn bộ thương hiệu</span>
                                         <span className={cx('text-bold')}>Longines</span>
@@ -151,45 +167,45 @@ function ProductDetail() {
                                         <span className={cx('text-bold')}>11.3 - 6.4.2025</span>
                                     </li>
                                     <li>
-                                        <span><IconCheck2 /></span>
                                         <span>
-                                            Giảm
+                                            <IconCheck2 />
                                         </span>
+                                        <span>Giảm</span>
                                         <span className={cx('discount')}>20%</span>
                                         <span>khi mua sản phẩm thứ 2 là đồng hồ</span>
                                         <Link>Casio</Link>
                                     </li>
                                     <li>
-                                        <span><IconCheck2 /></span>
                                         <span>
-                                            Ưu đãi
+                                            <IconCheck2 />
                                         </span>
+                                        <span>Ưu đãi</span>
                                         <span className={cx('text-bold', 'text-upper')}>mua 1 tặng 1</span>
                                         <span>tặng đồng đến</span>
                                         <span className={cx('text-bold')}>10 triệu</span>
                                         <Link className={cx('link-here')}>{`(Xem chi tiết tại đây)`}</Link>
                                     </li>
                                     <li>
-                                        <span><IconCheck2 /></span>
                                         <span>
-                                            Tặng ngay 1 trong 2 phần quà sau khi mua đồng hồ cơ
+                                            <IconCheck2 />
                                         </span>
+                                        <span>Tặng ngay 1 trong 2 phần quà sau khi mua đồng hồ cơ</span>
                                         <span className={cx('text-bold')}>Longines</span>
                                         <span>{`(số lượng có hạn)`}</span>
                                     </li>
                                 </ul>
                             </div>
                             <div className={cx('help')}>
-                                <span >Tư vấn</span>
+                                <span>Tư vấn</span>
                                 <div className={cx('input')}>
                                     <input placeholder="Để lại điện thoại..." />
                                     <select aria-label="Tỉnh/Thành phố">
-                                        <option >Tỉnh/Thành phố</option>
-                                        <option >Tỉnh/Thành phố</option>
-                                        <option >Tỉnh/Thành phố</option>
-                                        <option >Tỉnh/Thành phố</option>
-                                        <option >Tỉnh/Thành phố</option>
-                                        <option >Tỉnh/Thành phố</option>
+                                        <option>Tỉnh/Thành phố</option>
+                                        <option>Tỉnh/Thành phố</option>
+                                        <option>Tỉnh/Thành phố</option>
+                                        <option>Tỉnh/Thành phố</option>
+                                        <option>Tỉnh/Thành phố</option>
+                                        <option>Tỉnh/Thành phố</option>
                                     </select>
                                 </div>
                                 <button>Gửi</button>
@@ -197,7 +213,8 @@ function ProductDetail() {
                             <div>Khách hàng đã mua gần đây</div>
                         </div>
                         <div className={cx('frame-right')}>
-                            <div className={cx('price', 'text-line')}>{`giá ${formatNumber(productDetail.gia)}`}
+                            <div className={cx('price', 'text-line')}>
+                                {`giá ${formatNumber(productDetail.gia)}`}
                                 <span>₫</span>
                             </div>
                             <div className={cx('promotion')}>
@@ -208,9 +225,11 @@ function ProductDetail() {
                                 </div>
                                 <div className={cx('note-vat')}>{`(Giá trên đã bao gồm VAT)`}</div>
                             </div>
-                            <Link onClick={handlerBuy} to={'/gio-hang'} className={cx('btn', 'btn-buy')}>Mua ngay</Link>
+                            <Link onClick={handlerBuy} to={'/gio-hang'} className={cx('btn', 'btn-buy')}>
+                                Mua ngay
+                            </Link>
                             <Link className={cx('btn', 'btn-credit')}>
-                                <span >Trả góp qua thẻ</span>
+                                <span>Trả góp qua thẻ</span>
                                 <span>{`Tín Dụng (Credit Card)`}</span>
                             </Link>
                             <Link className={cx('btn', 'btn-instruct')}>
@@ -263,7 +282,7 @@ function ProductDetail() {
                     <div>sản phẩm liên quan</div>
                     <div>Bình luận đánh giá</div>
                 </div>
-                : null}
+            ) : null}
         </div>
     );
 }

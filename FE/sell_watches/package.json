@@ -19,6 +19,7 @@
     "charts.css": "^1.1.0",
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
+    "dayjs": "^1.11.13",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",

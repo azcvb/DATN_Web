@@ -5,11 +5,14 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -30,9 +33,9 @@ public class Types {
 	@GeneratedValue(strategy = GenerationType.UUID)
 	String id;
 	
-	String ten_loai;
+	String tenLoai;
 	
 	@JsonBackReference
-	@ManyToMany(mappedBy = "loai")
-	List<Products> products = new ArrayList<>();
+	@OneToMany(mappedBy = "loai", cascade = CascadeType.ALL)
+	private List<Products> products = new ArrayList<>();
 }

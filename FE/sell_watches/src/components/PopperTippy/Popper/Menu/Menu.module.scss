@@ -1,0 +1,53 @@
+// Menu wrapper
+.menu-list {
+    display: block;
+    min-width: 224px;
+    max-width: 350px;
+    .menu-item {
+        margin-left: 0;
+    }
+}
+
+.menu-popper {
+    padding-bottom: 8px;
+}
+
+.menu-body {
+    overflow-y: auto;
+}
+
+// Menu items
+.menu-item {
+    width: 100%;
+    justify-content: flex-start;
+    border-radius: 0;
+    padding: 11px 16px;
+    &:hover {
+        background-color: rgba(22, 24, 35, 0.03);
+        cursor: pointer;
+    }
+}
+.price {
+    // display: flex;
+    padding: 10px 20px;
+    input {
+        padding: 3px 8px;
+        width: 120px;
+    }
+    span {
+        margin: 0 10px;
+    }
+}
+.calender {
+    padding: 10px 20px;
+    div {
+        width: 100%;
+        display: flex;
+        input:nth-of-type(1) {
+            margin-right: 10px;
+        }
+    }
+    label {
+        display: none;
+    }
+}

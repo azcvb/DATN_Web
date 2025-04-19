@@ -27,6 +27,10 @@ export const formatLink = (link) => {
     return `/${link}`;
 }
 export const formatNumber = (number) => {
+    if (typeof number === 'string') {
+        number = Number(number.replace(/\D/g, ""));
+        return number.toLocaleString('vi-VN');
+    }
     return number.toLocaleString('vi-VN');
 }
 export const validEmail = (value) => {
@@ -79,7 +83,6 @@ export const fomatPriceFilter = (value) => {
         min: null,
         max: null
     }
-    console.log(value)
     const match = value.match(/(\d+(?:[.,]\d+)?)/);
     if (value.includes("dưới")) {
         if (match) {
@@ -131,6 +134,7 @@ export const formatDiameter = (value) => {
 export const formatFilterValue = (value) => {
     return value
         .normalize("NFD")
+        .replace(/đ/g, 'd').replace(/Đ/g, 'D')
         .replace(/[\u0300-\u036f]/g, "")
         .toLowerCase()
         .split(" ")
@@ -147,3 +151,7 @@ export const formatDateDashboard = (date) => {
 
     return date.toISOString().split('T')[0];
 };
+export const formatSnakeToCamle = (value) => {
+    return value.replace(/_([a-z])/g, (_, char) => char.toUpperCase());
+
+}

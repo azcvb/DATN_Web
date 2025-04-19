@@ -104,6 +104,7 @@ public class OrderService {
 	                    .errBy("savePayment")
 	                    .build();
 	        }
+	        log.info("thanhToan");
 	        return SaveOrderResponse.builder()
 	                .isOrder(true)
 	                .build();

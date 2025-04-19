@@ -18,11 +18,13 @@ import com.datn.sellWatches.Service.PaymentService;
 import com.datn.sellWatches.Service.ShipService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 
 @RestController
 @RequestMapping("/dashboard")
 @RequiredArgsConstructor
+@Slf4j
 public class DashboardController {
 
 	private final ShipService shipService;
@@ -32,6 +34,7 @@ public class DashboardController {
 	
 	@PostMapping("/top")
 	ApiResponse<DashboardTop> dashboardProductTop(@RequestBody DashboardDayRequest request) {
+		log.info(request.toString());
 		DashboardProductResponse dasProduct = shipService.dashboardProduct(request);
 		DasboardCustomerResponse dasCustomer = customerService.getDasboardCustomer(request);
 		DashboardOrderResponse dasOrder = orderService.dashboardOrder(request);

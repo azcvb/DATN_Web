@@ -1,0 +1,40 @@
+.tableManager {
+    margin: 0 40px;
+    thead {
+        th {
+            background-color: #f0f0f0;
+        }
+    }
+    tbody {
+        tr {
+            th,
+            td {
+                max-width: 150px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                max-height: 41px;
+            }
+            &:hover th {
+                background-color: #d8f0f8;
+            }
+            &:hover td {
+                background-color: #d8f0f8;
+            }
+            td:last-child {
+                text-align: center;
+                width: 70px;
+            }
+        }
+    }
+}
+.btn-update {
+    border: none;
+    background-color: #20c997;
+    color: #fff;
+    padding: 0 10px;
+    border-radius: 5px;
+    &:hover {
+        opacity: 0.8;
+    }
+}

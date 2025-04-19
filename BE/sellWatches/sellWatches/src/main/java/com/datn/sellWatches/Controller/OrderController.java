@@ -22,7 +22,6 @@ public class OrderController {
 	
 	@PostMapping()
 	public ApiResponse<SaveOrderResponse> saveOrder(@RequestBody OrderRequest request) {
-		log.info(request.toString());
 		SaveOrderResponse result = orderService.order(request);
 		return ApiResponse.<SaveOrderResponse>builder()
 				.result(result)
