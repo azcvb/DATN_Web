@@ -26,7 +26,7 @@ function FilterAdmin({ items, handlerFilter }) {
             return (
                 <Menu key={index} type={value.item} handlerAdd={handlerFilter}>
                     <li>
-                        <span>Giá</span>
+                        <span>{value.name}</span>
                         <IconSortDown />
                     </li>
                 </Menu>

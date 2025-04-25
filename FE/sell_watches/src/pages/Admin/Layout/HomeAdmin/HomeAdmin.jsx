@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import style from './HomeAdmin.module.scss';
 import { useEffect, useState } from 'react';
-import { BarChart, LineChart } from '@mui/x-charts';
+import { BarChart, LineChart, PieChart } from '@mui/x-charts';
 import Calendar from '~/pages/Admin/Component/Calendar';
 import { formatDateDashboard, formatNumber } from '~/components/format';
 import { postDashboardTop } from '~/apiServices/Dashboard/postDashboardTop';
@@ -38,8 +38,7 @@ function HomeAdmin() {
     });
     // Dữ liệu sản phẩm nhận được từ API
     const [resultProduct, setResultProduct] = useState(null);
-    const [resultCustomer, setResultCustomer] = useState(null);
-    const [resultOrder, setResultOrder] = useState(null);
+    const [resultRevenue, setResultRevenue] = useState(null);
     const [resultPayment, setResultPayment] = useState(null);
     const [getTimeNow, setGetTimeNow] = useState();
 
@@ -50,8 +49,7 @@ function HomeAdmin() {
                 try {
                     const resTop = await postDashboardTop(dashboardTopDay);
                     processProductData(resTop.productResponse);
-                    processCustomerData(resTop.customerResponse);
-                    processOrderData(resTop.orderResponse);
+                    processRevenueData(resTop.productSell);
                 } catch (err) {
                     console.log(err);
                 }
@@ -178,83 +176,20 @@ function HomeAdmin() {
         });
     };
 
-    const processCustomerData = (data) => {
+    const processRevenueData = (data) => {
         if (data) {
-            const totalCustomer = Array.isArray(data.customerRes)
-                ? data.customerRes.reduce((sum, item) => sum + item.data, 0)
-                : 0;
-            const CustomerData = [];
-
-            // Lặp theo từng ngày trong khoảng từ startDayTop đến endDayTop
-            for (let dt = new Date(startDayTop); dt <= endDayTop; dt.setDate(dt.getDate() + 1)) {
-                let foundSuccess = false;
-
-                for (const customer of data.customerRes) {
-                    if (customer.day === formatDateDashboard(dt)) {
-                        CustomerData.push(customer.data);
-                        foundSuccess = true;
-                        break;
-                    }
-                }
-                if (!foundSuccess) {
-                    CustomerData.push(0);
-                }
-            }
-
-            setResultCustomer({
-                customerData: CustomerData,
-                total: totalCustomer,
+            const giaBan = data.productSell.reduce((sum, { soLuong, giaBan }) => sum + soLuong * giaBan, 0);
+            const revenue = Number(giaBan) - Number(data.giaNhap);
+            setResultRevenue({
+                totalImportPrice: data.giaNhap,
+                totalSellingPrice: giaBan,
+                revenue,
             });
         }
     };
-    const processOrderData = (data) => {
-        const totalAccept = data.orderAccept.reduce((sum, item) => sum + item.data, 0);
-        const totalCancel = data.orderCancel.reduce((sum, item) => sum + item.data, 0);
 
-        const acceptData = [];
-        const cancelData = [];
-
-        // Lặp theo từng ngày trong khoảng từ startDayTop đến endDayTop
-        for (let dt = new Date(startDayTop); dt <= endDayTop; dt.setDate(dt.getDate() + 1)) {
-            let foundAccept = false;
-            let foundCancel = false;
-
-            for (const itemAccept of data.orderAccept) {
-                if (itemAccept.day === formatDateDashboard(dt)) {
-                    acceptData.push(itemAccept.data);
-                    foundAccept = true;
-                    break;
-                }
-            }
-            for (const itemCancel of data.orderCancel) {
-                if (itemCancel.day === formatDateDashboard(dt)) {
-                    cancelData.push(itemCancel.data);
-                    foundCancel = true;
-                    break;
-                }
-            }
-            if (!foundAccept) {
-                acceptData.push(0);
-            }
-            if (!foundCancel) {
-                cancelData.push(0);
-            }
-        }
-
-        setResultOrder({
-            accept: {
-                orderData: acceptData,
-                total: totalAccept,
-            },
-            cancel: {
-                orderData: cancelData,
-                total: totalCancel,
-            },
-        });
-    };
     const processPaymentData = (data) => {
         const totalPayment = data.reduce((sum, item) => sum + item.data, 0);
-
         const paymentData = [];
 
         // Lặp theo từng ngày trong khoảng từ startDayTop đến endDayTop
@@ -327,69 +262,45 @@ function HomeAdmin() {
                     </div>
 
                     <div className={`wrapper ${cx('order', 'box-component')}`}>
-                        <span>Đơn hàng</span>
+                        <span>Doanh thu bán hàng</span>
                         <div>
-                            <div>
-                                <div className={cx('title')}>
-                                    <div className={cx('box-title')}>
-                                        <div className={cx('block-color')}></div>
-                                        <span>
-                                            Chấp nhận: <span>{resultOrder ? resultOrder.accept.total : 0}</span>
-                                        </span>
+                            <div className={cx('box-pie')}>
+                                {daysTop.length > 0 && resultRevenue && (
+                                    <PieChart
+                                        series={[
+                                            {
+                                                data: [
+                                                    {
+                                                        id: 0,
+                                                        value: resultRevenue?.totalImportPrice ?? 0,
+                                                        label: 'Nhập hàng',
+                                                    },
+                                                    {
+                                                        id: 1,
+                                                        value: resultRevenue?.totalSellingPrice ?? 0,
+                                                        label: 'Bán hàng',
+                                                    },
+                                                ],
+                                            },
+                                        ]}
+                                        width={500}
+                                        height={250}
+                                    />
+                                )}
+                                <div className={cx('text')}>
+                                    <div>
+                                        <span>Nhập hàng: </span>
+                                        <span>{formatNumber(resultRevenue?.totalImportPrice ?? 0)}VND</span>
                                     </div>
-                                    <div className={cx('box-title')}>
-                                        <div className={cx('block-color')}></div>
-                                        <span>
-                                            Hủy: <span>{resultOrder ? resultOrder.cancel.total : 0}</span>
-                                        </span>
+                                    <div>
+                                        <span>Bán hàng: </span>
+                                        <span>{formatNumber(resultRevenue?.totalSellingPrice ?? 0)}VND</span>
+                                    </div>
+                                    <div>
+                                        <span>Lời/Lỗ: </span>
+                                        <span>{formatNumber(resultRevenue?.revenue ?? 0)}VND</span>
                                     </div>
                                 </div>
-                            </div>
-                            <div>
-                                {daysTop.length > 0 &&
-                                    resultOrder &&
-                                    resultOrder.accept?.orderData?.length === daysTop.length &&
-                                    resultOrder.cancel?.orderData?.length === daysTop.length && (
-                                        <BarChart
-                                            series={[
-                                                { data: resultOrder.accept.orderData },
-                                                { data: resultOrder.cancel.orderData },
-                                            ]}
-                                            height={250}
-                                            xAxis={[{ data: daysTop, scaleType: 'band' }]}
-                                            margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
-                                            colors={['#F39C12', '#27AE60', '#F368E0']}
-                                        />
-                                    )}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className={`wrapper ${cx('customer', 'box-component')}`}>
-                        <span>Khách hàng</span>
-                        <div>
-                            <div>
-                                <div className={cx('title')}>
-                                    <div className={cx('box-title')}>
-                                        <div className={cx('block-color')}></div>
-                                        <span>
-                                            Khách hàng mới: <span>{resultCustomer?.total || 0}</span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                {daysTop.length > 0 &&
-                                    resultCustomer &&
-                                    resultCustomer.customerData?.length === daysTop.length && (
-                                        <BarChart
-                                            series={[{ data: resultCustomer.customerData }]}
-                                            height={250}
-                                            xAxis={[{ data: daysTop, scaleType: 'band' }]}
-                                            margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
-                                            colors={['#34495e']}
-                                        />
-                                    )}
                             </div>
                         </div>
                     </div>

@@ -4,12 +4,16 @@ import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.datn.sellWatches.DTO.Request.DataPaymentAdminRequest;
 import com.datn.sellWatches.DTO.Request.PaymentReturnRequest;
 import com.datn.sellWatches.DTO.Response.ApiResponse;
+import com.datn.sellWatches.DTO.Response.PageDataPaymentAdminResponse;
 import com.datn.sellWatches.DTO.Response.PaymentResponse;
 import com.datn.sellWatches.DTO.Response.PaymentReturnResponse;
 import com.datn.sellWatches.Service.PaymentService;
@@ -20,7 +24,9 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/payment")
 @RequiredArgsConstructor
 public class PaymentController {
+
 	private final PaymentService paymentService;
+
 
     @GetMapping
     public ApiResponse<?> createPayment(@RequestParam("amount") long amount) throws UnsupportedEncodingException{
@@ -51,4 +57,13 @@ public class PaymentController {
                 .result(response)
                 .build();
     }
+    @PostMapping("/dataAdmin")
+    public ApiResponse<PageDataPaymentAdminResponse> getDataPaymentAdmin(@RequestBody DataPaymentAdminRequest request){
+    	PageDataPaymentAdminResponse result = paymentService.getDataPaymentAdmin(request);
+    	
+    	return ApiResponse.<PageDataPaymentAdminResponse>builder()
+    			.result(result)
+    			.build();
+    }
 }
+ 

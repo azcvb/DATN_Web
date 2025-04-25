@@ -3,6 +3,7 @@ import style from './SidebarAdmin.module.scss';
 import {
     IconBrush,
     IconCart,
+    IconChartPie,
     IconCreditCard,
     IconFlag,
     IconHome,
@@ -21,9 +22,9 @@ function SidebarAdmin() {
         <div className={cx('sidebar')}>
             <ul>
                 <li>
-                    <Link to="/admin/trang-chu">
-                        <IconHome />
-                        <span>Trang chủ</span>
+                    <Link to="/admin/thong-ke">
+                        <IconChartPie />
+                        <span>Thống kê</span>
                     </Link>
                 </li>
                 <li>
@@ -31,69 +32,69 @@ function SidebarAdmin() {
                         <IconStore />
                         <span>Sản phẩm</span>
                     </Link>
-                    <ul className={cx('chidrent')}>
+                    {/* <ul className={cx('chidrent')}>
                         <li>
-                            <Link to="/admin/">
+                            <Link to="/admin/danh-gia">
                                 <IconStart />
                                 <span>Đánh giá</span>
                             </Link>
                         </li>
                         <li>
-                            <Link to="/admin/">
+                            <Link to="/admin/khieu-nai">
                                 <IconFlag />
                                 <span>Khiếu nại</span>
                             </Link>
                         </li>
                         <li>
-                            <Link to="/admin/">
+                            <Link to="/admin/khuyen-mai">
                                 <IconTag />
                                 <span>Khuyến mãi</span>
                             </Link>
                         </li>
-                    </ul>
+                    </ul> */}
                 </li>
                 <li>
-                    <Link to="/admin/">
+                    <Link to="/admin/thanh-toan">
                         <IconCreditCard />
                         <span>Thanh toán</span>
                     </Link>
                 </li>
                 <li>
-                    <Link to="/admin/">
+                    <Link to="/admin/don-hang">
                         <IconTruck />
                         <span>Đơn hàng</span>
                     </Link>
                 </li>
-                <li>
-                    <Link to="/admin/">
+                {/* <li>
+                    <Link to="/admin/van-chuyen">
                         <IconCart />
                         <span>Vận chuyển</span>
                     </Link>
-                </li>
-                <li>
-                    <Link to="/admin/">
+                </li> */}
+                {/* <li>
+                    <Link to="/admin/kho-hang">
                         <IconWarehouse />
                         <span>Kho hàng</span>
                     </Link>
-                </li>
-                <li>
-                    <Link to="/admin/">
+                </li> */}
+                {/* <li>
+                    <Link to="/admin/nhan-vien">
                         <IconUser />
                         <span>Nhân viên</span>
                     </Link>
                 </li>
                 <li>
-                    <Link to="/admin/">
+                    <Link to="/admin/khach-hang">
                         <IconUser />
                         <span>Khách hàng</span>
                     </Link>
                 </li>
                 <li>
-                    <Link to="/admin/">
+                    <Link to="/admin/tuy-chinh-trang">
                         <IconBrush />
                         <span>Tùy chỉnh trang</span>
                     </Link>
-                </li>
+                </li> */}
             </ul>
         </div>
     );

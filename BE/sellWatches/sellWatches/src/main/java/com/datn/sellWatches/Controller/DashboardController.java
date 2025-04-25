@@ -10,12 +10,14 @@ import com.datn.sellWatches.DTO.Response.DasboardCustomerResponse;
 import com.datn.sellWatches.DTO.Response.DashboardBottom;
 import com.datn.sellWatches.DTO.Response.DashboardOrderResponse;
 import com.datn.sellWatches.DTO.Response.DashboardProductResponse;
+import com.datn.sellWatches.DTO.Response.DashboardRevenueTopResponse;
 import com.datn.sellWatches.DTO.Response.DashboardTop;
 import com.datn.sellWatches.DTO.Response.DayAndDataResponse;
 import com.datn.sellWatches.Service.CustomerService;
 import com.datn.sellWatches.Service.OrderService;
 import com.datn.sellWatches.Service.PaymentService;
 import com.datn.sellWatches.Service.ShipService;
+import com.datn.sellWatches.Service.WarehouseService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +33,7 @@ public class DashboardController {
 	private final CustomerService customerService;
 	private final OrderService orderService;
 	private final PaymentService paymentService; 
+	private final WarehouseService warehouseService;
 	
 	@PostMapping("/top")
 	ApiResponse<DashboardTop> dashboardProductTop(@RequestBody DashboardDayRequest request) {
@@ -38,10 +41,12 @@ public class DashboardController {
 		DashboardProductResponse dasProduct = shipService.dashboardProduct(request);
 		DasboardCustomerResponse dasCustomer = customerService.getDasboardCustomer(request);
 		DashboardOrderResponse dasOrder = orderService.dashboardOrder(request);
+		DashboardRevenueTopResponse dasProductSell = warehouseService.DashboardRevenueTop(request);
 		DashboardTop result = DashboardTop.builder()
 				.productResponse(dasProduct)
 				.orderResponse(dasOrder)
 				.customerResponse(dasCustomer)
+				.productSell(dasProductSell)
 				.build();
 		return ApiResponse.<DashboardTop>builder()
 				.result(result)

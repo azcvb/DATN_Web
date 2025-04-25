@@ -37,7 +37,9 @@ public class Warehouse {
 	
 	int da_ban;
 	int ton_kho;
+	int gia_nhap;
 	LocalDate ngay_nhap;
+	String ghi_chu;
 	
 	@ManyToOne
 	@JoinColumn(name = "san_pham_id")

@@ -146,6 +146,7 @@ public class ProductService {
                     .gia((int) row[5])
                     .ton_kho((int) row[6])
                     .hinh_anh((String) row[7])
+                    .loai((String) row[8])
                     .build()
             );
         }
@@ -189,6 +190,7 @@ public class ProductService {
         			.duong_kinh((Float) row[4])
         			.gia((Integer) row[5])
         			.hinh_anh((String) row[6])
+        			.loai((String) row[7])
                     .build()
             );
         }
@@ -244,7 +246,6 @@ public class ProductService {
 			Products product = Products.builder()
 					.ma_san_pham(request.getMaSanPham())
 					.ten_san_pham(request.getTenSanPham())
-					.gia(request.getGia())
 					.mo_ta(request.getMoTa())
 					.loai_may(request.getLoaiMay())
 					.mat_kinh(request.getMatKinh())
@@ -270,6 +271,7 @@ public class ProductService {
 			productRepository.save(product);
 			Warehouse warehouse = Warehouse.builder()
 					.da_ban(0)
+					.gia_nhap(request.getGia())
 					.ton_kho(request.getSoLuong())
 					.products(product)
 					.ngay_nhap(dateNow)
@@ -319,7 +321,7 @@ public class ProductService {
 			log.info(request.getMaSanPham());
 			Products product = productRepository.findById(request.getId())
 		            .orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXIT)); 
-
+			LocalDate date = LocalDate.now();
 		    Products updatedProduct = Products.builder()
 		            .id(product.getId())  
 		            .ma_san_pham(request.getMaSanPham())
@@ -340,7 +342,7 @@ public class ProductService {
 		            .bao_hanh_hang(request.getBaoHanhHang())
 		            .bao_hanh_shop(request.getBaoHanhShop())
 		            .hinh_anh(request.getHinhAnh())
-		            .ngay_tao(request.getNgayTao())
+		            .ngay_tao(date)
 		            .khac(request.getKhac())
 		            .loai(type)  
 		            .build();

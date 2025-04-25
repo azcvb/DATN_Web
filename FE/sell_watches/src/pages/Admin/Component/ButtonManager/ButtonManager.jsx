@@ -11,19 +11,21 @@ function ButtonManager({ item }) {
                 <div>Nhập file</div>
             </div>
             <div className={cx('right')}>
-                {item.map((value, index) =>
-                    value.type === 'add' ? (
-                        <div key={index} className={cx('btn-add')} onClick={() => value.func()}>
-                            <IconPlust />
-                            <span>{value.name}</span>
-                        </div>
-                    ) : value.type === 'remove' ? (
-                        <div key={index} className={cx('btn-remove')} onClick={() => value.func()}>
-                            <IconClose />
-                            <span>{value.name}</span>
-                        </div>
-                    ) : null,
-                )}
+                {item
+                    ? item.map((value, index) =>
+                          value.type === 'add' ? (
+                              <div key={index} className={cx('btn-add')} onClick={() => value.func()}>
+                                  <IconPlust />
+                                  <span>{value.name}</span>
+                              </div>
+                          ) : value.type === 'remove' ? (
+                              <div key={index} className={cx('btn-remove')} onClick={() => value.func()}>
+                                  <IconClose />
+                                  <span>{value.name}</span>
+                              </div>
+                          ) : null,
+                      )
+                    : null}
             </div>
         </div>
     );

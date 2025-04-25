@@ -212,7 +212,7 @@ function ModalAdd({ isVisibale, onClose, item, handlerButton, handlerDataUpdate,
                                 Đóng
                             </button>
                             <button type="submit" className="btn btn-primary">
-                                Thêm
+                                Sửa
                             </button>
                         </div>
                     </form>

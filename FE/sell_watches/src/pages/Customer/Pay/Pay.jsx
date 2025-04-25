@@ -16,6 +16,7 @@ function Pay() {
     const [sum, setSum] = useState(0);
     const [typePayment, setTypePayment] = useState('Thanh toán khi nhận hàng');
     const [dataPayment, setDataPayment] = useState();
+    console.log(products);
     useEffect(() => {
         window.scroll(0, 0);
         if (sessionStorage.getItem('myInfor') && sessionStorage.getItem('cart')) {

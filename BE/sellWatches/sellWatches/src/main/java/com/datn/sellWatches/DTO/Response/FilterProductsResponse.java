@@ -20,4 +20,5 @@ public class FilterProductsResponse {
 	Float duong_kinh;
 	Integer gia;
 	String hinh_anh;
+	String loai;
 }

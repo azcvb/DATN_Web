@@ -106,7 +106,9 @@ function ProductAdmin() {
                 const resDistinctType = await getDistinctType();
                 const resDataTable = await postDataTableAdmin(filter);
                 const listProducts = resDataTable.result;
-                setDataFilter(listProducts);
+                const data = listProducts.filterProductAdminResponses;
+                const totalPage = listProducts.totalPage;
+                setDataFilter({ data, totalPage });
                 SetPage(0);
                 if (resDistinctType.result.length > 0) {
                     let newFilterItem = [...filterItem];
@@ -150,11 +152,11 @@ function ProductAdmin() {
             const fetch = async () => {
                 const res = await postRemoveProduct(listProductRemove);
                 if (res?.result === true) {
-                    const newList = dataFilter.filterProductAdminResponses;
+                    const newList = dataFilter.data;
                     const filteredList = newList.filter((item) => !listProductRemove.includes(item.id));
                     setDataFilter((prev) => ({
                         ...prev,
-                        filterProductAdminResponses: filteredList,
+                        data: filteredList,
                     }));
                     return setModalMessage({
                         status: 'success',
@@ -194,7 +196,9 @@ function ProductAdmin() {
                 if (res?.result === true) {
                     const resDataTable = await postDataTableAdmin(filter);
                     const listProducts = resDataTable.result;
-                    setDataFilter(listProducts);
+                    const data = listProducts.filterProductAdminResponses;
+                    const totalPage = listProducts.totalPage;
+                    setDataFilter({ data, totalPage });
                     return setModalMessage({
                         status: 'success',
                         message: 'Thêm sản phẩm thành công!',
@@ -269,7 +273,9 @@ function ProductAdmin() {
             try {
                 const resDataTable = await postDataTableAdmin(filter);
                 const listProducts = resDataTable.result;
-                setDataFilter(listProducts);
+                const data = listProducts.filterProductAdminResponses;
+                const totalPage = listProducts.totalPage;
+                setDataFilter({ data, totalPage });
             } catch (err) {
                 console.log(err);
             }
@@ -310,11 +316,12 @@ function ProductAdmin() {
                 if (dataUpdate.length !== 0) {
                     try {
                         const res = await postUpdateProduct(dataUpdate);
-                        console.log(res);
                         if (res?.result === true) {
                             const resDataTable = await postDataTableAdmin(filter);
                             const listProducts = resDataTable.result;
-                            setDataFilter(listProducts);
+                            const data = listProducts.filterProductAdminResponses;
+                            const totalPage = listProducts.totalPage;
+                            setDataFilter({ data, totalPage });
                             return setModalMessage({
                                 status: 'success',
                                 message: 'Sửa sản phẩm thành công!',
@@ -339,8 +346,8 @@ function ProductAdmin() {
         }
     }, [modalMessage]);
     return (
-        <div className={cx('productAdmin')}>
-            <div className={cx('title')}>Danh mục sản phẩm</div>
+        <div className="background-admin">
+            <div className="title-admin">Danh mục sản phẩm</div>
             <ButtonManager item={buttonProduct} />
             <FilterAdmin items={filterItem} handlerFilter={handlerFilter} />
             <TableManager

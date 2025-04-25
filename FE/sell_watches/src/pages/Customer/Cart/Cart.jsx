@@ -74,6 +74,7 @@ function Cart() {
                 sumProduct += value.so_luong * value.gia;
             }
         });
+
         setSum(sumProduct);
         setInputValue(so_luong);
         setCookie('cart', listProducts, { path: '/', expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) });
@@ -114,6 +115,7 @@ function Cart() {
             path: '/',
             expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
         });
+        sessionStorage.setItem('cart', JSON.stringify(listProducts));
     }, [listProducts]);
     useEffect(() => {
         sessionStorage.setItem('cart', JSON.stringify(cookies.cart));
@@ -455,10 +457,7 @@ function Cart() {
                                     ? listProducts.map((value) => {
                                           return (
                                               <li key={value.id}>
-                                                  <img
-                                                      src="https://donghoduyanh.com/images/products/2024/03/07/large/l29094776_1709801936.jpg"
-                                                      alt=""
-                                                  />
+                                                  <img src={value.hinh_anh} alt="" />
                                                   <div className={cx('name-product')}>
                                                       <div className={cx('name')}>
                                                           <span>{value.loai}</span>

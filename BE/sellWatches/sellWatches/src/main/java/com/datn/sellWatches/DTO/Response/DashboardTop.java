@@ -16,4 +16,5 @@ public class DashboardTop {
 	DashboardProductResponse productResponse;
 	DashboardOrderResponse orderResponse;
 	DasboardCustomerResponse customerResponse;
+	DashboardRevenueTopResponse productSell;
 }

@@ -39,19 +39,20 @@ public interface ProductRepository extends JpaRepository<Products, String> {
 	    nativeQuery = true)
 		Page<Object[]> getProductsInTypeWhereQuantity(@Param("tenLoai") String tenLoai, Pageable pageable);
 		
-		@Query(value = "SELECT s.id, s.ma_san_pham, s.ten_san_pham, s.loai_may, s.duong_kinh, s.gia, s.hinh_anh " +
+		@Query(value = "SELECT s.id, s.ma_san_pham, s.ten_san_pham, s.loai_may, s.duong_kinh, s.gia, s.hinh_anh, l.ten_loai  " +
 	               "FROM san_pham s " +
-	               "INNER JOIN kho_hang k ON s.id = k.san_pham_id " +
+	               "JOIN loai l ON s.loai_id = l.id " +
 	               "WHERE s.ten_san_pham LIKE CONCAT('%', :tenSanPham, '%')",
 	       countQuery = "SELECT COUNT(*) FROM san_pham s " +
-	                    "INNER JOIN kho_hang k ON s.id = k.san_pham_id " +
+	                    "JOIN loai l ON s.loai_id = l.id " +
 	                    "WHERE s.ten_san_pham LIKE CONCAT('%', :tenSanPham, '%')",
 	       nativeQuery = true)
 	Page<Object[]> findTenSanPham(@Param("tenSanPham") String tenSanPham, Pageable pageable);
 	
 	@Query(value = """
-		    SELECT s.id, s.ma_san_pham, s.ten_san_pham, s.loai_may, s.duong_kinh, s.gia, s.hinh_anh 
+		    SELECT s.id, s.ma_san_pham, s.ten_san_pham, s.loai_may, s.duong_kinh, s.gia, s.hinh_anh, l.ten_loai 
 		    FROM san_pham s
+		    JOIN loai l ON s.loai_id = l.id 
 		    WHERE (:tenSanPham IS NULL OR s.ten_san_pham LIKE CONCAT('%', :tenSanPham, '%')) 
 		    AND (:gioiTinh IS NULL OR s.gioi_tinh = :gioiTinh)
 		    AND (:thuongHieu IS NULL OR s.thuong_hieu = :thuongHieu)

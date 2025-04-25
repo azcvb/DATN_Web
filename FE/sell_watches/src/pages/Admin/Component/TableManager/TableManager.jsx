@@ -14,6 +14,8 @@ function TableManager({
     alterBtnUpdate,
     idUpdate,
     dataUpdate,
+    isCheckTick = true,
+    isUpdate = true,
 }) {
     const handlerAddListRemove = (value, isCheck) => {
         if (isCheck) {
@@ -38,9 +40,11 @@ function TableManager({
             <table className="table">
                 <thead>
                     <tr>
-                        <th scope="col">
-                            <input className="form-check-input" type="checkbox" value="" id="checkDefault" />
-                        </th>
+                        {isCheckTick ? (
+                            <th scope="col">
+                                <input className="form-check-input" type="checkbox" value="" id="checkDefault" />
+                            </th>
+                        ) : null}
                         {Object.values(nameColumn).map((value, index) => (
                             <th scope="col" key={index}>
                                 {value}
@@ -50,20 +54,21 @@ function TableManager({
                     </tr>
                 </thead>
                 <tbody>
-                    {Array.isArray(items?.filterProductAdminResponses) &&
-                    items.filterProductAdminResponses.length > 0 ? (
-                        Object.values(items.filterProductAdminResponses).map((value, index) => (
+                    {Array.isArray(items?.data) && items.data.length > 0 ? (
+                        Object.values(items.data).map((value, index) => (
                             <tr key={index}>
-                                <th scope="row">
-                                    <input
-                                        className="form-check-input"
-                                        type="checkbox"
-                                        id="checkDefault"
-                                        name={value.id}
-                                        checked={listCheck.includes(value.id) ? true : false}
-                                        onChange={(e) => handlerAddListRemove(e.target.name, e.target.checked)}
-                                    />
-                                </th>
+                                {isCheckTick ? (
+                                    <th scope="row">
+                                        <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            id="checkDefault"
+                                            name={value.id}
+                                            checked={listCheck.includes(value.id) ? true : false}
+                                            onChange={(e) => handlerAddListRemove(e.target.name, e.target.checked)}
+                                        />
+                                    </th>
+                                ) : null}
                                 {Object.keys(nameColumn).map((valueChild, indexChild) =>
                                     valueChild === 'gia' ? (
                                         <td key={indexChild}>{formatNumber(value[valueChild])}</td>
@@ -71,11 +76,13 @@ function TableManager({
                                         <td key={indexChild}>{value[valueChild]}</td>
                                     ),
                                 )}
-                                <td>
-                                    <button className={cx('btn-update')} onClick={() => handlerBtnUpdate(value.id)}>
-                                        Sửa
-                                    </button>
-                                </td>
+                                {isUpdate ? (
+                                    <td>
+                                        <button className={cx('btn-update')} onClick={() => handlerBtnUpdate(value.id)}>
+                                            Sửa
+                                        </button>
+                                    </td>
+                                ) : null}
                             </tr>
                         ))
                     ) : (

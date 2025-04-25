@@ -21,4 +21,5 @@ public class SearchProductResponse {
 	float duong_kinh;
 	int ton_kho;
 	String hinh_anh;
+	String loai;
 }

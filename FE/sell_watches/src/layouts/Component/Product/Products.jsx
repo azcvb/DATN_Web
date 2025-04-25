@@ -22,11 +22,11 @@ function Products({ products, linkTo }) {
                         <div key={`group-${groupIndex}`} className={cx('product-group')}>
                             {group.map((value, index) => (
                                 <div key={index} className={cx('product')}>
-                                    <Link to={`dong-ho/${linkTo}/${value.id}`} className={cx('img')}>
-                                        <img
-                                            src="https://donghoduyanh.com/images/products/2024/03/07/resized/l29094776_1709801936.jpg.webp"
-                                            alt=""
-                                        />
+                                    <Link
+                                        to={`/dong-ho/${linkTo || validUrl(value.loai)}/${value.id}`}
+                                        className={cx('img')}
+                                    >
+                                        <img src={value.hinh_anh} alt="" />
                                         <div className={cx('discount')}>-10%</div>
                                         <div className={cx('gift')}>Mua 1 tặng 1</div>
                                     </Link>

@@ -1,7 +1,7 @@
 package com.datn.sellWatches.DTO.Response;
 
-import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -15,14 +15,10 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class FilterProductAdminResponse {
+public class DataPaymentAdminResponse {
 	String id;
-	String tenSanPham;
-	String maSanPham;
-	Integer gia;
 	String loai;
-	Integer tonKho;
-	Integer daBan;
-	Date ngayTao;
-	String tenLoai;
+	Long gia;
+	LocalDate ngayThanhToan;
+	String maDonHang;
 }

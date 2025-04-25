@@ -20,10 +20,12 @@ import com.datn.sellWatches.DTO.Response.SaveOrderResponse;
 import com.datn.sellWatches.Entity.Customer;
 import com.datn.sellWatches.Entity.Order;
 import com.datn.sellWatches.Entity.Order.StatusOrder;
+import com.datn.sellWatches.Entity.Warehouse;
 import com.datn.sellWatches.Exception.AppException;
 import com.datn.sellWatches.Exception.ErrorCode;
 import com.datn.sellWatches.Repository.CustomerRepository;
 import com.datn.sellWatches.Repository.OrdersRepository;
+import com.datn.sellWatches.Repository.WarehouseRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +40,7 @@ public class OrderService {
 	 private final OrderDetailService orderDetailService;
 	 private final CustomerService customerService;
 	 private final PaymentService paymentService;
-
+	 private final WarehouseRepository warehouseRepository;
 
 	 @Transactional
 	    public SaveOrderResponse order(OrderRequest request) {
@@ -104,7 +106,40 @@ public class OrderService {
 	                    .errBy("savePayment")
 	                    .build();
 	        }
-	        log.info("thanhToan");
+	        try {
+	        	for(SaveOrderDetailRequest dto : orderDetailRequest) { 
+	        		int soLuong = dto.getSo_luong();
+	        		List<Warehouse> warehouses = warehouseRepository.getWarehousesWithProduct(dto.getSan_pham_id());
+	        		for(Warehouse warehouse : warehouses) {
+	        			if(warehouse.getTon_kho() > 0) {
+	        				Warehouse newWarehouse = warehouseRepository.findById(warehouse.getId())
+	        						.orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXIT));
+	        				int tonKho = newWarehouse.getTon_kho();
+	        				int daBan = newWarehouse.getDa_ban();
+	        				if(tonKho >= soLuong) {
+		        				newWarehouse.setTon_kho(tonKho - soLuong);
+		        				newWarehouse.setDa_ban(daBan + soLuong);
+		        				warehouseRepository.save(newWarehouse);
+		        				break;
+		        				
+	        				}else {
+	        					soLuong -= tonKho;
+	        					newWarehouse.setTon_kho(0);
+	        					newWarehouse.setDa_ban(daBan + tonKho);
+	        					warehouseRepository.save(newWarehouse);
+	        				}
+	        				
+	        			}
+	        		}
+	        	}
+	        }catch (Exception e) {
+	            log.info(e.toString());
+	            return SaveOrderResponse.builder()
+	                    .isOrder(false)
+	                    .errBy("saveWarehouse")
+	                    .build();
+	        }
+	        
 	        return SaveOrderResponse.builder()
 	                .isOrder(true)
 	                .build();

@@ -42,7 +42,6 @@ function Search() {
     });
     const [notFilter, setNotFilter] = useState(['minGia', 'maxGia', 'minDuongKinh', 'maxDuongKinh']);
     const listFilterProduct = listFilter;
-    const [pageList, setPageList] = useState([]);
     useEffect(() => {
         const searchQuery = searchParams.get('q') || '';
         const formattedQuery = searchQuery.replace(/-/g, ' ');

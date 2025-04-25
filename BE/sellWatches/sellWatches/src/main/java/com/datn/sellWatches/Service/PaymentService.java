@@ -5,7 +5,9 @@ import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -16,21 +18,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.TreeMap;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.datn.sellWatches.Configuration.ConfigPayment;
 import com.datn.sellWatches.DTO.Request.DashboardDayRequest;
+import com.datn.sellWatches.DTO.Request.DataPaymentAdminRequest;
 import com.datn.sellWatches.DTO.Request.PaymentReturnRequest;
 import com.datn.sellWatches.DTO.Response.DashboardBottom;
-import com.datn.sellWatches.DTO.Response.DashboardProductResponse;
-import com.datn.sellWatches.DTO.Response.DayAndDataResponse;
+import com.datn.sellWatches.DTO.Response.DataPaymentAdminResponse;
+import com.datn.sellWatches.DTO.Response.PageDataPaymentAdminResponse;
 import com.datn.sellWatches.DTO.Response.PaymentDayAndDataResponse;
 import com.datn.sellWatches.DTO.Response.PaymentResponse;
 import com.datn.sellWatches.DTO.Response.PaymentReturnResponse;
 import com.datn.sellWatches.Entity.Order;
 import com.datn.sellWatches.Entity.Payment;
-import com.datn.sellWatches.Exception.AppException;
-import com.datn.sellWatches.Exception.ErrorCode;
-import com.datn.sellWatches.Repository.OrdersRepository;
 import com.datn.sellWatches.Repository.PaymentRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -211,5 +215,31 @@ public class PaymentService {
 						.paymentResponse(responsePayment)
 						.build();
 			}
+		 	public PageDataPaymentAdminResponse getDataPaymentAdmin(DataPaymentAdminRequest request) {
+		 		Pageable pageable = PageRequest.of(request.getPage(), 10);
+		 		Page<Object[]> paymentPage = paymentRepository.getDataTablePayment(
+		 				request.getLoai(), 
+		 				request.getMinGia(),
+		 				request.getMaxGia(), 
+		 				request.getNgayBatDau(), 
+		 				request.getNgayKetThuc(), 
+		 				pageable);
+		 		int totalPage = paymentPage.getTotalPages()-1;
+		 		List<DataPaymentAdminResponse> listRes = new ArrayList<>();
+		 		for(Object[] row : paymentPage.getContent()) {
+		 			listRes.add(
+		 					DataPaymentAdminResponse.builder()
+		 					.id((String) row[0])
+		 					.loai((String) row[1])
+		 					.ngayThanhToan( ((Timestamp) row[2]).toLocalDateTime().toLocalDate())
+		 					.gia((Long) row[3])
+		 					.maDonHang((String) row[4])
+		 					.build());
+		 		}
+		 		return PageDataPaymentAdminResponse.builder()
+		 				.totalPage(totalPage)
+		 				.dataPaymentAdminResponses(listRes)
+		 				.build();
+		 	}
 
 }
