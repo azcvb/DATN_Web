@@ -1,23 +1,25 @@
 import Search from '~/components/Search';
-import style from './Header.module.scss'
+import style from './Header.module.scss';
 import classNames from 'classnames/bind';
-import { IconAddress, IconCart, IconPhoneHeader, IconUser } from '~/components/icon/icon';
+import { IconAddress, IconCart, IconPhoneHeader, IconUser } from '~/components/icon';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 
-const cx = classNames.bind(style)
+const cx = classNames.bind(style);
 function Header() {
     const [cart, setCart] = useState({});
     const [cookies] = useCookies();
     useEffect(() => {
-        setCart(cookies.cart)
-    }, [cookies.cart])
+        setCart(cookies.cart);
+    }, [cookies.cart]);
 
     return (
         <div className={cx('header')}>
             <div className={`container ${cx('header_')}`}>
-                <div className={cx("logo")}><img src='https://donghoduyanh.com/images/config/logo-da_1726290561.png.webp' alt=''></img></div>
+                <div className={cx('logo')}>
+                    <img src="https://donghoduyanh.com/images/config/logo-da_1726290561.png.webp" alt=""></img>
+                </div>
                 <div className={cx('rightHeader')}>
                     <div className={cx('search')}>
                         <Search />
@@ -37,7 +39,7 @@ function Header() {
                         </Link>
                         <Link to={'/gio-hang'} className={cx('cart')}>
                             <IconCart />
-                            <div className={cx('quantity')}>{cart ? cart.length : "0"}</div>
+                            <div className={cx('quantity')}>{cart ? cart.length : '0'}</div>
                         </Link>
                         <div className={`hiden ${cx('user')}`}>
                             <IconUser />

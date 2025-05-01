@@ -5,12 +5,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.datn.sellWatches.DTO.Response.ProductResponse.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,22 +19,11 @@ import com.datn.sellWatches.DTO.Request.FilterProductAdminRequest;
 import com.datn.sellWatches.DTO.Request.FilterProductsRequest;
 import com.datn.sellWatches.DTO.Request.IdProductRequest;
 import com.datn.sellWatches.DTO.Request.UpdateProductRequest;
-import com.datn.sellWatches.DTO.Response.FilterPageResponse;
-import com.datn.sellWatches.DTO.Response.FilterProductAdminResponse;
-import com.datn.sellWatches.DTO.Response.FilterProductsResponse;
-import com.datn.sellWatches.DTO.Response.GetListProductsHomeResponse;
-import com.datn.sellWatches.DTO.Response.GetProductByIdResponse;
-import com.datn.sellWatches.DTO.Response.GetProductForCar;
-import com.datn.sellWatches.DTO.Response.GetProductTableAdminResponse;
-import com.datn.sellWatches.DTO.Response.ListFilterProductAdminResponse;
-import com.datn.sellWatches.DTO.Response.PageAndSearchProductResponse;
-import com.datn.sellWatches.DTO.Response.SearchProductResponse;
 import com.datn.sellWatches.Entity.Products;
 import com.datn.sellWatches.Entity.Types;
 import com.datn.sellWatches.Entity.Warehouse;
 import com.datn.sellWatches.Exception.AppException;
 import com.datn.sellWatches.Exception.ErrorCode;
-import com.datn.sellWatches.Mapper.ProductsMapper;
 import com.datn.sellWatches.Repository.ProductRepository;
 import com.datn.sellWatches.Repository.TypeRepository;
 import com.datn.sellWatches.Repository.WarehouseRepository;
@@ -54,7 +41,6 @@ import lombok.extern.slf4j.Slf4j;
 public class ProductService {
 
 	final ProductRepository productRepository;
-	final ProductsMapper productsMapper;
 	final TypeRepository typeRepository;
 	final WarehouseRepository warehouseRepository;
 	
@@ -113,7 +99,32 @@ public class ProductService {
 		Products products = productRepository.findById(productId)
 				.orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXIT));
 		
-		return productsMapper.toGetProductById(products);
+		return GetProductByIdResponse.builder()
+				.id(products.getId())
+				.ten_san_pham(products.getTen_san_pham())
+				.ma_san_pham(products.getMa_san_pham())
+				.gia(products.getGia())
+				.mo_ta(products.getMo_ta())
+				.loai_may(products.getLoai_may())
+				.mat_kinh(products.getMat_kinh())
+				.chat_lieu_vo(products.getChat_lieu_vo())
+				.chat_lieu_day(products.getChat_lieu_day())
+				.mau_mat(products.getMau_mat())
+				.xuat_xu(products.getXuat_xu())
+				.kieu_dang(products.getKieu_dang())
+				.phong_cach(products.getPhong_cach())
+				.duong_kinh(products.getDuong_kinh())
+				.do_day(products.getDo_day())
+				.khang_nuoc(products.getKhang_nuoc())
+				.bao_hanh_hang(products.getBao_hanh_hang())
+				.bao_hanh_shop(products.getBao_hanh_shop())
+				.hinh_anh(products.getHinh_anh())
+				.ngay_tao(products.getNgay_tao())
+				.khac(products.getKhac())
+				.thuong_hieu(products.getThuong_hieu())
+				.gioi_tinh(products.getGioi_tinh())
+				.loai(products.getLoai())
+				.build();
 	}
 	
 	public String validListType(String typeCode) {
@@ -284,12 +295,12 @@ public class ProductService {
 		}
 		
 	}
-	public List<GetProductForCar> getProductForCar(List<String> request){
-		List<GetProductForCar> result = new ArrayList<GetProductForCar>();
+	public List<GetProductForCart> getProductForCart(List<String> request){
+		List<GetProductForCart> result = new ArrayList<>();
 		for (String id : request) {
-			 List<Object[]> rows = productRepository.getProductForCar(id);
+			 List<Object[]> rows = productRepository.getProductForCart(id);
 		        for (Object[] row : rows) {
-		            GetProductForCar item = GetProductForCar.builder()
+		            GetProductForCart item = GetProductForCart.builder()
 		                .id((String) row[0])
 		                .ma_san_pham((String) row[1])
 		                .ten_san_pham((String) row[2])
@@ -344,7 +355,8 @@ public class ProductService {
 		            .hinh_anh(request.getHinhAnh())
 		            .ngay_tao(date)
 		            .khac(request.getKhac())
-		            .loai(type)  
+		            .loai(type)
+					.gioi_tinh(request.getGioiTinh())
 		            .build();
 
 		    productRepository.save(updatedProduct);

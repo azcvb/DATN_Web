@@ -1,0 +1,19 @@
+.row {
+    display: flex;
+    div {
+        margin-right: 10px;
+    }
+}
+.modal-custom {
+    min-width: 1000px;
+}
+.drop-box {
+    display: inline-block;
+    margin-bottom: 10px;
+    svg {
+        vertical-align: baseline;
+        color: #555;
+        width: 16px;
+        height: 16px;
+    }
+}

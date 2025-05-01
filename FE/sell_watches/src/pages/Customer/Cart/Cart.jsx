@@ -7,7 +7,7 @@ import Navigation from '~/layouts/Component/Navigation';
 import { useCookies } from 'react-cookie';
 import { formatNumber, validEmail, validPhone } from '~/components/format';
 import ModalMessage from '~/layouts/Component/ModalMessage';
-import { getProductForCar } from '~/apiServices/Product/getProductForCar';
+import { getProductForCart } from '~/apiServices/Product/getProductForCart';
 
 const cx = classNames.bind(style);
 function Cart() {
@@ -33,7 +33,7 @@ function Cart() {
             cookies.cart.map((value) => listProduct.push(value.id));
             async function fetch() {
                 try {
-                    const res = await getProductForCar(listProduct);
+                    const res = await getProductForCart(listProduct);
                     const mergedProducts = res.result.map((item, index) => ({
                         ...item,
                         so_luong: cookies.cart[index].so_luong,

@@ -3,6 +3,8 @@ package com.datn.sellWatches.Controller;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
+import com.datn.sellWatches.DTO.Request.StringRequest;
+import com.datn.sellWatches.DTO.Response.PaymentResponse.BillContentResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.datn.sellWatches.DTO.Request.DataPaymentAdminRequest;
 import com.datn.sellWatches.DTO.Request.PaymentReturnRequest;
 import com.datn.sellWatches.DTO.Response.ApiResponse;
-import com.datn.sellWatches.DTO.Response.PageDataPaymentAdminResponse;
-import com.datn.sellWatches.DTO.Response.PaymentResponse;
-import com.datn.sellWatches.DTO.Response.PaymentReturnResponse;
+import com.datn.sellWatches.DTO.Response.PaymentResponse.PageDataPaymentAdminResponse;
+import com.datn.sellWatches.DTO.Response.PaymentResponse.PaymentResponse;
+import com.datn.sellWatches.DTO.Response.PaymentResponse.PaymentReturnResponse;
 import com.datn.sellWatches.Service.PaymentService;
 
 import lombok.RequiredArgsConstructor;
@@ -64,6 +66,14 @@ public class PaymentController {
     	return ApiResponse.<PageDataPaymentAdminResponse>builder()
     			.result(result)
     			.build();
+    }
+
+    @PostMapping("/billContent")
+    public  ApiResponse<BillContentResponse> getBillContent(@RequestBody StringRequest request) {
+        BillContentResponse resutl = paymentService.getBillContent(request);
+        return ApiResponse.<BillContentResponse>builder()
+                .result(resutl)
+                .build();
     }
 }
  

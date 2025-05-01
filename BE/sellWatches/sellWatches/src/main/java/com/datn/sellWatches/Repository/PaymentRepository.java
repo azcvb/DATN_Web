@@ -2,6 +2,7 @@ package com.datn.sellWatches.Repository;
 
 import java.util.List;
 
+import com.datn.sellWatches.Entity.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -47,5 +48,6 @@ public interface PaymentRepository extends JpaRepository<Payment, String> {
 	        @Param("ngayBatDau") String ngayBatDau,
 	        @Param("ngayKetThuc") String ngayKetThuc,
 	        Pageable pageable);
-
+	@Query(value = "SELECT * FROM thanh_toan WHERE don_hang_id = :maDonHang", nativeQuery = true)
+	Payment getPaymentForBill(@Param("maDonHang") String maDonHang);
 }

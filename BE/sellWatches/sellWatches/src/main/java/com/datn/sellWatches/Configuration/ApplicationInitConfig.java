@@ -1,7 +1,5 @@
 package com.datn.sellWatches.Configuration;
 
-import java.util.HashSet;
-
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +12,7 @@ import com.datn.sellWatches.Exception.ErrorCode;
 import com.datn.sellWatches.Repository.AccountRepository;
 import com.datn.sellWatches.Repository.RoleRepository;
 
-import Enums.Roles;
+import com.datn.sellWatches.Enums.Roles;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

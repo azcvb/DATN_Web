@@ -3,21 +3,16 @@ package com.datn.sellWatches.Service;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.chrono.IsoChronology;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.time.format.ResolverStyle;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import org.springframework.stereotype.Service;
 
 import com.datn.sellWatches.DTO.Request.DashboardDayRequest;
 import com.datn.sellWatches.DTO.Request.SaveCustomerRequest;
-import com.datn.sellWatches.DTO.Response.DasboardCustomerResponse;
+import com.datn.sellWatches.DTO.Response.DasboardResponse.DasboardCustomerResponse;
 import com.datn.sellWatches.DTO.Response.DayAndDataResponse;
-import com.datn.sellWatches.DTO.Response.SaveCustomerResponse;
+import com.datn.sellWatches.DTO.Response.CustomerResponse.SaveCustomerResponse;
 import com.datn.sellWatches.Entity.Customer;
 import com.datn.sellWatches.Repository.CustomerRepository;
 

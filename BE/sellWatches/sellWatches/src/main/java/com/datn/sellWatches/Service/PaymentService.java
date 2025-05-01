@@ -19,22 +19,20 @@ import java.util.Map;
 import java.util.TimeZone;
 import java.util.TreeMap;
 
+import com.datn.sellWatches.DTO.Request.*;
+import com.datn.sellWatches.DTO.Response.OrderDetailResponse.OrderDetailResponse;
+import com.datn.sellWatches.DTO.Response.PaymentResponse.*;
+import com.datn.sellWatches.Entity.*;
+import com.datn.sellWatches.Exception.AppException;
+import com.datn.sellWatches.Exception.ErrorCode;
+import com.datn.sellWatches.Repository.OrderDetailRepository;
+import com.datn.sellWatches.Repository.OrdersRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.datn.sellWatches.Configuration.ConfigPayment;
-import com.datn.sellWatches.DTO.Request.DashboardDayRequest;
-import com.datn.sellWatches.DTO.Request.DataPaymentAdminRequest;
-import com.datn.sellWatches.DTO.Request.PaymentReturnRequest;
-import com.datn.sellWatches.DTO.Response.DashboardBottom;
-import com.datn.sellWatches.DTO.Response.DataPaymentAdminResponse;
-import com.datn.sellWatches.DTO.Response.PageDataPaymentAdminResponse;
-import com.datn.sellWatches.DTO.Response.PaymentDayAndDataResponse;
-import com.datn.sellWatches.DTO.Response.PaymentResponse;
-import com.datn.sellWatches.DTO.Response.PaymentReturnResponse;
-import com.datn.sellWatches.Entity.Order;
-import com.datn.sellWatches.Entity.Payment;
+import com.datn.sellWatches.DTO.Response.DasboardResponse.DashboardBottom;
 import com.datn.sellWatches.Repository.PaymentRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -45,7 +43,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class PaymentService {
 		private final PaymentRepository paymentRepository;
-		
+		private final OrderDetailRepository orderDetailRepository;
+		private final OrdersRepository ordersRepository;
 		public PaymentResponse createPayment(long amount) throws UnsupportedEncodingException {
 			String vnp_Version = "2.1.0";
 	          String vnp_Command = "pay";
@@ -242,4 +241,34 @@ public class PaymentService {
 		 				.build();
 		 	}
 
+		public BillContentResponse getBillContent(StringRequest request) {
+			Order order = ordersRepository.findById(request.getName())
+					.orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_EXIT));
+			List<OrderDetail> orderDetailList = order.getOrderDetails();
+			List<OrderDetailResponse> orderDetailResponseList = new ArrayList<>();
+			for(OrderDetail orderDetail : orderDetailList) {
+				Products products = orderDetail.getSan_pham();
+				OrderDetailResponse dto = OrderDetailResponse.builder()
+						.sanPhamId(products.getId())
+						.maSanPham(products.getMa_san_pham())
+						.tenSanPham(products.getTen_san_pham())
+						.loaiSanPham(products.getLoai().getTenLoai())
+						.soLuong(orderDetail.getSo_luong())
+						.gia(products.getGia())
+						.build();
+				orderDetailResponseList.add(dto);
+			}
+			Customer customer = order.getKhach_hang();
+			Payment payment = order.getThanh_toan();
+
+			return BillContentResponse.builder()
+					.maDonHang(order.getId())
+					.soDienThoai(customer.getSoDienThoai())
+					.tenKhachHang(customer.getTen_khach_hang())
+					.diaChi(customer.getDia_chi())
+					.ngay(payment.getNgay_thanh_toan().toLocalDate())
+					.loaiThanhToan(payment.getLoai())
+					.orderDetailResponseList(orderDetailResponseList)
+					.build();
+		}
 }

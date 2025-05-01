@@ -74,6 +74,8 @@ public class Products {
 	private List<Warehouse> warehouse;
 	
 	@OneToMany(mappedBy = "san_pham", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+
+	@JsonManagedReference
 	List<OrderDetail> orderDetails;
 	
 }

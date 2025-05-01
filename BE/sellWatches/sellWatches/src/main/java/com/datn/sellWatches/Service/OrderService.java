@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.datn.sellWatches.DTO.Request.DashboardDayRequest;
@@ -12,11 +11,10 @@ import com.datn.sellWatches.DTO.Request.OrderRequest;
 import com.datn.sellWatches.DTO.Request.SaveCustomerRequest;
 import com.datn.sellWatches.DTO.Request.SaveOrderDetailRequest;
 import com.datn.sellWatches.DTO.Request.SaveOrderRequest;
-import com.datn.sellWatches.DTO.Response.DashboardOrderResponse;
-import com.datn.sellWatches.DTO.Response.DashboardProductResponse;
+import com.datn.sellWatches.DTO.Response.DasboardResponse.DashboardOrderResponse;
 import com.datn.sellWatches.DTO.Response.DayAndDataResponse;
-import com.datn.sellWatches.DTO.Response.SaveCustomerResponse;
-import com.datn.sellWatches.DTO.Response.SaveOrderResponse;
+import com.datn.sellWatches.DTO.Response.CustomerResponse.SaveCustomerResponse;
+import com.datn.sellWatches.DTO.Response.OrderResponse.SaveOrderResponse;
 import com.datn.sellWatches.Entity.Customer;
 import com.datn.sellWatches.Entity.Order;
 import com.datn.sellWatches.Entity.Order.StatusOrder;

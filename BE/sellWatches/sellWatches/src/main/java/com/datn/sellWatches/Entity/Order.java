@@ -3,6 +3,8 @@ package com.datn.sellWatches.Entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -48,14 +50,17 @@ public class Order {
 	
 	@ManyToOne
 	@JoinColumn(name = "khach_hang_id")
+	@JsonBackReference
 	Customer khach_hang;
 	
 	@OneToOne(mappedBy = "don_hang", cascade = CascadeType.ALL)
 	Ship van_chuyen;
-	
+
+	@JsonManagedReference
 	@OneToOne(mappedBy = "don_hang", cascade = CascadeType.ALL)
 	Payment thanh_toan;
-	
+
+	@JsonManagedReference
 	@OneToMany(mappedBy = "don_hang", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	List<OrderDetail> orderDetails;
 	

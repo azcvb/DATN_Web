@@ -23,7 +23,7 @@ public class SecurityConfig {
     private final String[] PUBLIC_POST_ENDPOINT = {
             "/products/filter", "/order", "/payment/**", "/dashboard/top", "/dashboard/bottom",
             "/auth/token", "/auth/introspect", "/auth/logout", "/auth/refresh", "/products/filterAdmin", "/products/type", "/products/addProduct",
-            "/products/forCart","/products/remove", "/products/update", "/products/idAdmin", "/payment/dataAdmin"
+            "/products/forCart","/products/remove", "/products/update", "/products/idAdmin", "/payment/dataAdmin", "/type/addType", "/payment/billContent"
     };
     private final String[] PUBLIC_GET_ENDPOINT = {
             "/products", "/products/**","/payment/**"

@@ -5,6 +5,8 @@ import TableManager from '../../Component/TableManager';
 import { useEffect, useState } from 'react';
 import { formatFilterValue } from '~/components/format';
 import { postDataPaymentAdmin } from '~/apiServices/Payment/postDataPaymentAdmin';
+import ModalBill from '../../Component/ModalBill';
+import { postBillContent } from '~/apiServices/Payment/postBillContent';
 
 function PaymentAdmin() {
     const [filterItem, setFilterItem] = useState([
@@ -32,7 +34,9 @@ function PaymentAdmin() {
         message: '',
         display: 'hiden',
     });
-
+    const [isVisibale, setIsVisible] = useState(false);
+    const [item, setItem] = useState({});
+    const [itemModal, setItemModal] = useState({});
     useEffect(() => {
         (async () => {
             try {
@@ -85,6 +89,24 @@ function PaymentAdmin() {
             display: 'hiden',
         }));
     };
+    const handlerBill = (data) => {
+        itemModal.title = 'Hóa đơn sản phẩm';
+        (async () => {
+            try {
+                const res = await postBillContent(data);
+                if (res?.result) {
+                    setItemModal(res.result);
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        })();
+        setIsVisible(true);
+    };
+    const handlerCloseModal = () => {
+        setItemModal({});
+        setIsVisible(false);
+    };
     return (
         <div>
             <div className="background-admin">
@@ -97,7 +119,8 @@ function PaymentAdmin() {
                     nameColumn={nameColumn}
                     page={page}
                     isCheckTick={false}
-                    isUpdate={false}
+                    isPayment={true}
+                    handlerBill={handlerBill}
                 />
                 {isModalMessage ? (
                     <ModalMessage
@@ -107,6 +130,12 @@ function PaymentAdmin() {
                         onClose={handlerClose}
                     />
                 ) : null}
+                <ModalBill
+                    isVisibale={isVisibale}
+                    onClose={handlerCloseModal}
+                    item={itemModal}
+                    //  handlerButton={typeAdd === 'product' ? handlerAddProductDb : handlerAddTypeDb}
+                />
             </div>
         </div>
     );

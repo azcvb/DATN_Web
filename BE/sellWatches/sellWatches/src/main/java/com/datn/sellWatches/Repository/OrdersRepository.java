@@ -22,4 +22,5 @@ public interface OrdersRepository extends JpaRepository<Order, String> {
 	        + "GROUP BY DATE(ngay_dat) "
 	        + "ORDER BY order_day ASC", nativeQuery = true)
 	List<Object[]> getOrderCancel(@Param("startDay") String startDay, @Param("endDay") String endDay);
+
 }

@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.datn.sellWatches.DTO.Response.GetProductForCar;
 import com.datn.sellWatches.Entity.Products;
 
 @Repository
@@ -19,11 +18,11 @@ public interface ProductRepository extends JpaRepository<Products, String> {
 		@Query(value = "SELECT s.id, s.hinh_anh, s.ten_san_pham, s.ma_san_pham, s.loai_may, s.duong_kinh, s.gia " +
 	            "FROM san_pham s " +
 	            "JOIN loai l ON s.loai_id = l.id " + 
-	            "WHERE l.ten_loai = :tenLoai " +
+	            "WHERE l.ten_loai = :tenLoai AND s.gia > 0 " +
 	            "ORDER BY s.ngay_tao DESC",
 	    countQuery = "SELECT COUNT(*) FROM san_pham s " +
 	            "JOIN loai l ON s.loai_id = l.id " + 
-	            "WHERE l.ten_loai = :tenLoai",
+	            "WHERE l.ten_loai = :tenLoai AND s.gia > 0",
 	    nativeQuery = true)
 		Page<Object[]> getProductsInTypeWhereNew(@Param("tenLoai") String tenLoai, Pageable pageable);
 		
@@ -31,21 +30,21 @@ public interface ProductRepository extends JpaRepository<Products, String> {
 	            "FROM san_pham s " +
 	            "JOIN loai l ON s.loai_id = l.id " + 
 	            "JOIN kho_hang kh ON s.id = kh.san_pham_id " +
-	            "WHERE l.ten_loai = :tenLoai " +
+	            "WHERE l.ten_loai = :tenLoai AND s.gia > 0 " +
 	            "ORDER BY s.ngay_tao DESC",
 	    countQuery = "SELECT COUNT(*) FROM san_pham s " +
 	            "JOIN loai l ON s.loai_id = l.id " + 
-	            "WHERE l.ten_loai = :tenLoai",
+	            "WHERE l.ten_loai = :tenLoai AND s.gia > 0 ",
 	    nativeQuery = true)
 		Page<Object[]> getProductsInTypeWhereQuantity(@Param("tenLoai") String tenLoai, Pageable pageable);
 		
 		@Query(value = "SELECT s.id, s.ma_san_pham, s.ten_san_pham, s.loai_may, s.duong_kinh, s.gia, s.hinh_anh, l.ten_loai  " +
 	               "FROM san_pham s " +
 	               "JOIN loai l ON s.loai_id = l.id " +
-	               "WHERE s.ten_san_pham LIKE CONCAT('%', :tenSanPham, '%')",
+	               "WHERE s.ten_san_pham LIKE CONCAT('%', :tenSanPham, '%') AND s.gia > 0",
 	       countQuery = "SELECT COUNT(*) FROM san_pham s " +
 	                    "JOIN loai l ON s.loai_id = l.id " +
-	                    "WHERE s.ten_san_pham LIKE CONCAT('%', :tenSanPham, '%')",
+	                    "WHERE s.ten_san_pham LIKE CONCAT('%', :tenSanPham, '%') AND s.gia > 0",
 	       nativeQuery = true)
 	Page<Object[]> findTenSanPham(@Param("tenSanPham") String tenSanPham, Pageable pageable);
 	
@@ -68,6 +67,7 @@ public interface ProductRepository extends JpaRepository<Products, String> {
 		    AND (:phongCach IS NULL OR s.phong_cach = :phongCach)
 		    AND (:kieuDang IS NULL OR s.kieu_dang = :kieuDang)
 		    AND (:xuatXu IS NULL OR s.xuat_xu = :xuatXu)
+		    AND s.gia > 0
 		""", nativeQuery = true)
 		Page<Object[]> filterProducts(
 		        @Param("tenSanPham") String tenSanPham,
@@ -108,8 +108,8 @@ public interface ProductRepository extends JpaRepository<Products, String> {
 			     Pageable pageable);
 	
 		@Query(value = "SELECT s.id, s.ma_san_pham, s.ten_san_pham, s.gia, s.hinh_anh FROM san_pham s "
-				+ "WHERE s.id = :id", nativeQuery = true)
-		List<Object[]> getProductForCar(@Param("id") String id);
+				+ "WHERE s.id = :id  AND s.gia > 0", nativeQuery = true)
+		List<Object[]> getProductForCart(@Param("id") String id);
 		
 		@Query(value = "SELECT s.id, s.ma_san_pham, s.ten_san_pham, s.gia, s.mo_ta, s.loai_may, s.mat_kinh, s.chat_lieu_vo, s.chat_lieu_day, s.mau_mat, "
 				+ "s.xuat_xu, s.kieu_dang, s.phong_cach, s.duong_kinh, s.do_day, s.khang_nuoc, s.bao_hanh_hang, s.bao_hanh_shop, s.hinh_anh, s.khac, "

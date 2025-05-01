@@ -2,6 +2,7 @@ package com.datn.sellWatches.Entity;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,5 +35,6 @@ public class Payment {
 	
 	@OneToOne
 	@JoinColumn(name = "don_hang_id")
+	@JsonBackReference
 	Order don_hang;
 }

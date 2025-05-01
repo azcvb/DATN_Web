@@ -14,6 +14,7 @@ import { postRemoveProduct } from '~/apiServices/Product/postRemoveProduct';
 import { postUpdateProduct } from '~/apiServices/Product/postUpdateProduct';
 import { postGetProductId } from '~/apiServices/Product/postGetProductId';
 import ModalUpdate from '../../Component/UpdateRowTable';
+import { postAddType } from '~/apiServices/Type/postAddType';
 
 const cx = classNames.bind(style);
 function ProductAdmin() {
@@ -99,6 +100,7 @@ function ProductAdmin() {
     const [dataUpdate, setDataUpdate] = useState({});
     const [idUpdateProduct, setIdUpdateProduct] = useState({});
     const [isUpdate, setIsUpdate] = useState(false);
+    const [typeAdd, setTypeAdd] = useState('product');
     // Khởi tạo
     useEffect(() => {
         async function fetchData() {
@@ -126,12 +128,14 @@ function ProductAdmin() {
     }, []);
     // Xử lý các nút thêm, xóa, đóng bên ButtonManager
     const handlerAddProduct = () => {
+        setTypeAdd('product');
         item.title = 'Thêm sản phẩm';
         setItemModal(item);
         setTypeModal('add');
         setIsVisible(true);
     };
     const handlerAddTypeProduct = () => {
+        setTypeAdd('type');
         const itemTypeProduct = {
             title: 'Thêm loại sản phẩm',
             input: ['Tên loại'],
@@ -345,6 +349,29 @@ function ProductAdmin() {
             setIsModalMessage(true);
         }
     }, [modalMessage]);
+
+    const handlerAddTypeDb = (data) => {
+        try {
+            (async () => {
+                const res = await postAddType(data.tenLoai);
+                if (res.result) {
+                    setModalMessage({
+                        status: 'success',
+                        message: 'Thêm loại sản phẩm thành công!',
+                        display: 'block',
+                    });
+                } else {
+                    setModalMessage({
+                        status: 'error',
+                        message: 'Loại sản phẩm đã tồn tại!',
+                        display: 'block',
+                    });
+                }
+            })();
+        } catch (err) {
+            console.log(err);
+        }
+    };
     return (
         <div className="background-admin">
             <div className="title-admin">Danh mục sản phẩm</div>
@@ -365,7 +392,7 @@ function ProductAdmin() {
                     isVisibale={isVisibale}
                     onClose={handlerCloseModal}
                     item={itemModal}
-                    handlerButton={handlerAddProductDb}
+                    handlerButton={typeAdd === 'product' ? handlerAddProductDb : handlerAddTypeDb}
                 />
             ) : (
                 <ModalUpdate

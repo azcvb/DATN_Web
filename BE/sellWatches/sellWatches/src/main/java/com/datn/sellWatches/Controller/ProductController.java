@@ -3,8 +3,8 @@ package com.datn.sellWatches.Controller;
 import java.util.List;
 import java.util.Map;
 
+import com.datn.sellWatches.DTO.Response.ProductResponse.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.MergedAnnotations.Search;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,15 +19,6 @@ import com.datn.sellWatches.DTO.Request.FilterProductsRequest;
 import com.datn.sellWatches.DTO.Request.IdProductRequest;
 import com.datn.sellWatches.DTO.Request.UpdateProductRequest;
 import com.datn.sellWatches.DTO.Response.ApiResponse;
-import com.datn.sellWatches.DTO.Response.FilterPageResponse;
-import com.datn.sellWatches.DTO.Response.GetListProductsHomeResponse;
-import com.datn.sellWatches.DTO.Response.GetProductByIdResponse;
-import com.datn.sellWatches.DTO.Response.GetProductForCar;
-import com.datn.sellWatches.DTO.Response.GetProductTableAdminResponse;
-import com.datn.sellWatches.DTO.Response.ListFilterProductAdminResponse;
-import com.datn.sellWatches.DTO.Response.PageAndSearchProductResponse;
-import com.datn.sellWatches.DTO.Response.SearchProductResponse;
-import com.datn.sellWatches.Entity.Products;
 import com.datn.sellWatches.Service.ProductService;
 import com.datn.sellWatches.Service.TypeService;
 
@@ -104,9 +95,9 @@ public class ProductController {
 				.build();
 	}
 	@PostMapping("/forCart")
-	public ApiResponse<List<GetProductForCar>> getProductForCart(@RequestBody List<String> request) {
-		List<GetProductForCar> result = productService.getProductForCar(request);
-		return ApiResponse.<List<GetProductForCar>>builder()
+	public ApiResponse<List<GetProductForCart>> getProductForCart(@RequestBody List<String> request) {
+		List<GetProductForCart> result = productService.getProductForCart(request);
+		return ApiResponse.<List<GetProductForCart>>builder()
 				.result(result)
 				.build();
 	}

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.datn.sellWatches.DTO.Request.OrderRequest;
 import com.datn.sellWatches.DTO.Response.ApiResponse;
-import com.datn.sellWatches.DTO.Response.SaveOrderResponse;
+import com.datn.sellWatches.DTO.Response.OrderResponse.SaveOrderResponse;
 import com.datn.sellWatches.Service.OrderService;
 
 import lombok.extern.slf4j.Slf4j;

@@ -1,5 +1,6 @@
 package com.datn.sellWatches.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,11 +31,13 @@ public class OrderDetail {
 	long gia;
 	
 	@ManyToOne
-    @JoinColumn(name = "don_hang_id", nullable = false) 
+    @JoinColumn(name = "don_hang_id", nullable = false)
+	@JsonBackReference
     Order don_hang; 
 
 	@ManyToOne
-	@JoinColumn(name = "san_pham_id", nullable = false) 
+	@JoinColumn(name = "san_pham_id", nullable = false)
+	@JsonBackReference
 	Products san_pham;
 	
 }

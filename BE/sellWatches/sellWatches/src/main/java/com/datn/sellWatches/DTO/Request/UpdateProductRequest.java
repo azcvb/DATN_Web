@@ -37,6 +37,7 @@ public class UpdateProductRequest {
 	String hinhAnh;
 	LocalDate ngayTao;
 	String khac;
+	String gioiTinh;
 	String loaiSanPham;
 }
 
