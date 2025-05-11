@@ -21,6 +21,7 @@ import WarehouseAdmin from "~/pages/Admin/Layout/WarehouseAdmin";
 import EmployeeAdmin from "~/pages/Admin/Layout/EmployeeAdmin";
 import CustomerAdmin from "~/pages/Admin/Layout/CustomerAdmin";
 import CustomWeb from "~/pages/Admin/Layout/CustomWeb";
+import Register from "~/pages/Admin/Register";
 
 const publicRouters = [
     { path: config.routes.home, component: Home, layout: DefaultLayout },
@@ -42,7 +43,8 @@ const publicRouters = [
     { path: config.routes.warehouseAdmin, component: WarehouseAdmin, layout: PageAdmin },
     { path: config.routes.employeeAdmin, component: EmployeeAdmin, layout: PageAdmin },
     { path: config.routes.customerAdmin, component: CustomerAdmin, layout: PageAdmin },
-    { path: config.routes.customWeb, component: CustomWeb, layout: PageAdmin }
+    { path: config.routes.customWeb, component: CustomWeb, layout: PageAdmin },
+    { path: config.routes.register, component: Register, layout: null }
 
 ]
 

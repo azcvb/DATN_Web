@@ -2,10 +2,9 @@ package com.datn.sellWatches.Service;
 
 import java.util.List;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.datn.sellWatches.DTO.Request.SaveOrderDetailRequest;
+import com.datn.sellWatches.DTO.Request.Order.SaveOrderDetailRequest;
 import com.datn.sellWatches.Entity.Order;
 import com.datn.sellWatches.Entity.OrderDetail;
 import com.datn.sellWatches.Entity.Products;

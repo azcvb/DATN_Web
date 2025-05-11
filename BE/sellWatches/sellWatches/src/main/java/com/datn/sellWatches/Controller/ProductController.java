@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.HandlerMapping;
 
-import com.datn.sellWatches.DTO.Request.AddProductRequest;
-import com.datn.sellWatches.DTO.Request.FilterProductAdminRequest;
-import com.datn.sellWatches.DTO.Request.FilterProductsRequest;
-import com.datn.sellWatches.DTO.Request.IdProductRequest;
-import com.datn.sellWatches.DTO.Request.UpdateProductRequest;
+import com.datn.sellWatches.DTO.Request.Product.AddProductRequest;
+import com.datn.sellWatches.DTO.Request.Product.FilterProductAdminRequest;
+import com.datn.sellWatches.DTO.Request.Product.FilterProductsRequest;
+import com.datn.sellWatches.DTO.Request.Product.IdProductRequest;
+import com.datn.sellWatches.DTO.Request.Product.UpdateProductRequest;
 import com.datn.sellWatches.DTO.Response.ApiResponse;
 import com.datn.sellWatches.Service.ProductService;
 import com.datn.sellWatches.Service.TypeService;

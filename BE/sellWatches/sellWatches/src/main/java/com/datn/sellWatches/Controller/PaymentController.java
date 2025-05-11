@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.datn.sellWatches.DTO.Request.DataPaymentAdminRequest;
-import com.datn.sellWatches.DTO.Request.PaymentReturnRequest;
+import com.datn.sellWatches.DTO.Request.Payment.DataPaymentAdminRequest;
+import com.datn.sellWatches.DTO.Request.Payment.PaymentReturnRequest;
 import com.datn.sellWatches.DTO.Response.ApiResponse;
 import com.datn.sellWatches.DTO.Response.PaymentResponse.PageDataPaymentAdminResponse;
 import com.datn.sellWatches.DTO.Response.PaymentResponse.PaymentResponse;

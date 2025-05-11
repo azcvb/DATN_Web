@@ -67,9 +67,9 @@ function ProductDetail() {
                 so_luong: 1,
             });
         }
-
         setCookie('cart', cartItems, { path: '/', expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) });
     };
+
     return (
         <div className={`container`}>
             <Navigation path={location.pathname} />

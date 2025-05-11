@@ -11,4 +11,5 @@ import com.datn.sellWatches.Entity.Account;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, String>{
 	Optional<Account> findByTenTaiKhoan(String name);
+	Boolean existsByTenTaiKhoan(String tentaiKhoan);
 }

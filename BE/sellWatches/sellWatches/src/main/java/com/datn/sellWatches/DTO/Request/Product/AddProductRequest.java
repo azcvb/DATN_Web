@@ -1,4 +1,4 @@
-package com.datn.sellWatches.DTO.Request;
+package com.datn.sellWatches.DTO.Request.Product;
 
 import java.time.LocalDate;
 

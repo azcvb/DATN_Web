@@ -17,7 +17,8 @@ const routes = {
     warehouseAdmin: '/admin/kho-hang',
     employeeAdmin: '/admin/nhan-vien',
     customerAdmin: '/admin/khach-hang',
-    customWeb: '/admin/tuy-chinh-trang'
+    customWeb: '/admin/tuy-chinh-trang',
+    register: '/register'
 
 };
 export default routes;

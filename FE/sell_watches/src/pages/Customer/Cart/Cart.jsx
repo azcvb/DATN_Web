@@ -16,7 +16,7 @@ function Cart() {
     const [inputValue, setInputValue] = useState('');
     const [listProducts, setListProducts] = useState(undefined);
     const [sum, setSum] = useState(0);
-    const [cookies, setCookie] = useCookies();
+    const [cookies, setCookie, removeCookie] = useCookies();
     const [infor, setInfor] = useState();
     const [agree, setAgree] = useState(false);
     const [linkPay, setLinkPay] = useState('/pay');
@@ -29,11 +29,17 @@ function Cart() {
     useEffect(() => {
         window.scroll(0, 0);
         if (cookies.cart) {
-            const listProduct = [];
-            cookies.cart.map((value) => listProduct.push(value.id));
+            const productIds = [];
+            let cart = [];
+            try {
+                cart = typeof cookies.cart === 'string' ? JSON.parse(cookies.cart) : cookies.cart;
+            } catch {
+                return;
+            }
+            cart.map((value) => productIds.push(value.id));
             async function fetch() {
                 try {
-                    const res = await getProductForCart(listProduct);
+                    const res = await getProductForCart(productIds);
                     const mergedProducts = res.result.map((item, index) => ({
                         ...item,
                         so_luong: cookies.cart[index].so_luong,
@@ -77,11 +83,8 @@ function Cart() {
 
         setSum(sumProduct);
         setInputValue(so_luong);
-        setCookie('cart', listProducts, { path: '/', expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) });
-        sessionStorage.setItem('cart', JSON.stringify(listProducts));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [listProducts]);
-
     // set thông tin người dùng nhập vào để gửi qua trang thanh toáng bằng session
     useEffect(() => {
         if (infor) {
@@ -111,11 +114,20 @@ function Cart() {
         setListProducts(updatedList);
     };
     useEffect(() => {
-        setCookie('cart', listProducts, {
+        const newCart = [];
+        if (listProducts) {
+            listProducts.map((value) =>
+                newCart.push({
+                    id: value.id,
+                    so_luong: value.so_luong,
+                }),
+            );
+        }
+        setCookie('cart', newCart, {
             path: '/',
             expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
         });
-        sessionStorage.setItem('cart', JSON.stringify(listProducts));
+        sessionStorage.setItem('cart', JSON.stringify(newCart));
     }, [listProducts]);
     useEffect(() => {
         sessionStorage.setItem('cart', JSON.stringify(cookies.cart));
@@ -174,6 +186,11 @@ function Cart() {
             ...modal,
             display: 'hidden',
         });
+    };
+
+    const handlerRemoveAll = () => {
+        setListProducts([]);
+        removeCookie('cart');
     };
     return (
         <div className="container">
@@ -453,7 +470,7 @@ function Cart() {
                     <div className={cx('right')}>
                         <div className={cx('products')}>
                             <ul>
-                                {listProducts
+                                {listProducts && listProducts.length > 0
                                     ? listProducts.map((value) => {
                                           return (
                                               <li key={value.id}>
@@ -469,8 +486,10 @@ function Cart() {
 
                                                   <div className={cx('price')}>
                                                       <input
-                                                          type="text"
+                                                          type="number"
                                                           value={inputValue[value.id] || ''}
+                                                          min="1"
+                                                          step="1"
                                                           className={cx('sl')}
                                                           onChange={(e) =>
                                                               handleQuantityChange(value.id, e.target.value)
@@ -489,8 +508,9 @@ function Cart() {
                         </div>
                         <div className={cx('btn')}>
                             <Link className={cx('btn-buy')}>Tiếp tuc mua hàng</Link>
-                            <div className={cx('btn-agian')}>Tính lại</div>
-                            <div className={cx('btn-delete')}>Xóa hết</div>
+                            <div className={cx('btn-delete')} onClick={handlerRemoveAll}>
+                                Xóa hết
+                            </div>
                             <Link onClick={handlerPayment} to={linkPay} className={cx('btn-pay')}>
                                 Thanh toán
                             </Link>

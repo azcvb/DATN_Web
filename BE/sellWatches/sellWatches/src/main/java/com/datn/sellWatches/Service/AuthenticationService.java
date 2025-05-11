@@ -1,22 +1,30 @@
 package com.datn.sellWatches.Service;
 import java.text.ParseException;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.StringJoiner;
 import java.util.UUID;
 
+import com.datn.sellWatches.DTO.Request.Authentication.*;
+import com.datn.sellWatches.DTO.Request.Customer.SaveCustomerRequest;
+import com.datn.sellWatches.DTO.Request.StringRequest;
+import com.datn.sellWatches.DTO.Response.CustomerResponse.SaveCustomerResponse;
+import com.datn.sellWatches.Entity.Role;
+import com.datn.sellWatches.Repository.CustomerRepository;
+import com.datn.sellWatches.Repository.RoleRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.datn.sellWatches.DTO.Request.AuthenticationRequest;
-import com.datn.sellWatches.DTO.Request.IntrospectRequest;
-import com.datn.sellWatches.DTO.Request.LogoutRequest;
-import com.datn.sellWatches.DTO.Request.RefreshRequest;
-import com.datn.sellWatches.DTO.Response.AuthencationResponse.AuthenticationResponse;
-import com.datn.sellWatches.DTO.Response.AuthencationResponse.IntrospectResponse;
+import com.datn.sellWatches.DTO.Response.AuthenticationResponse.AuthenticationResponse;
+import com.datn.sellWatches.DTO.Response.AuthenticationResponse.IntrospectResponse;
 import com.datn.sellWatches.Entity.Account;
 import com.datn.sellWatches.Entity.InvalidatedToken;
 import com.datn.sellWatches.Exception.AppException;
@@ -47,7 +55,9 @@ import lombok.extern.slf4j.Slf4j;
 public class AuthenticationService {
     AccountRepository accountRepository;
     InvalidatedTokenRepository invalidatedTokenRepository;
-    
+    CustomerService customerService;
+    RoleRepository roleRepository;
+    CustomerRepository customerRepository;
     @NonFinal
     @Value("${jwt.signerKey}")
     protected String SIGNER_KEY;
@@ -56,28 +66,41 @@ public class AuthenticationService {
             throws JOSEException, ParseException {
         var token = request.getToken();
         boolean isValid = true;
+        String role = null;
         try {
-            verifyToken(token);
+            SignedJWT jwt = verifyToken(token);
+            role = jwt.getJWTClaimsSet().getStringClaim("scope");
         } catch (AppException e) {
             isValid = false;
         }
         return IntrospectResponse.builder()
                 .valid(isValid)
+                .role(role)
                 .build();
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public AuthenticationResponse authenticate(LoginRequest request) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
-        var user = accountRepository.findByTenTaiKhoan(request.getUsername())
+        log.info((request.toString()));
+        var user = accountRepository.findByTenTaiKhoan(request.getTenTaiKhoan())
                 .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_EXISTED));
-        boolean authenticated = passwordEncoder.matches(request.getPassword(),
+        boolean authenticated = passwordEncoder.matches(request.getMatKhau(),
                 user.getMatKhau());
         if (!authenticated)
             throw new AppException(ErrorCode.UNAUTHENTICATED);
         var token = generateToken(user);
-        return AuthenticationResponse.builder()
+        String location = "";
+
+        if(user.getQuyen().getTenQuyen().equals("ADMIN")) {
+            log.info(user.getQuyen().getTenQuyen());
+            location = "/admin/thong-ke";
+        }else{
+            location = "/";
+        }
+        return  AuthenticationResponse.builder()
                 .token(token)
                 .authenticated(true)
+                .localtion(location)
                 .build();
     }
 
@@ -106,6 +129,7 @@ public class AuthenticationService {
         var account = accountRepository.findByTenTaiKhoan(username)
                 .orElseThrow(() -> new AppException(ErrorCode.UNAUTHENTICATED));
         var token = generateToken(account);
+
         return AuthenticationResponse.builder()
                 .token(token)
                 .authenticated(true)
@@ -148,8 +172,43 @@ public class AuthenticationService {
     }
 
     private String buildScope(Account acount) {
-        StringJoiner stringJoiner = new StringJoiner(" ");
-        stringJoiner.add("ROLE_" + acount.getQuyen().getTenQuyen());
-        return stringJoiner.toString();
+        return acount.getQuyen().getTenQuyen();
     }
+    @Transactional
+    public Boolean register(RegisterRequest request) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        if(!customerRepository.existsById(request.getSoDienThoai())){
+            SaveCustomerRequest saveCustomerRequest = SaveCustomerRequest.builder()
+                    .so_dien_thoai(request.getSoDienThoai())
+                    .ten_khach_hang(request.getTenNguoiDung())
+                    .email(request.getEmail())
+                    .dia_chi("")
+                    .ngay_sinh(request.getNgaySinh())
+                    .gioi_tinh(request.getGioiTinh())
+                    .build();
+            SaveCustomerResponse saveCustomerResponse = customerService.saveCustomerByOrder(saveCustomerRequest);
+            boolean isCustomer = saveCustomerResponse.isCustomer();
+            if(!isCustomer) {
+                return false;
+            }
+        }
+       try{
+           if(accountRepository.existsByTenTaiKhoan(request.getSoDienThoai())){
+               return false;
+           }
+           Role role = roleRepository.findByTenQuyen("CUSTOMER")
+                   .orElseThrow(() -> new AppException(ErrorCode.ROLE_NOT_EXIT));
+           Account account = Account.builder()
+                   .tenTaiKhoan(request.getSoDienThoai())
+                   .matKhau(passwordEncoder.encode(request.getMatKhau()))
+                   .quyen(role)
+                   .build();
+           accountRepository.save(account);
+       }catch(Exception err) {
+           log.info(err.toString());
+           return false;
+       }
+        return true;
+    }
+
 }

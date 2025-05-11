@@ -7,6 +7,7 @@ const cx = classNames.bind(style);
 function ModalAdd({ isVisibale, onClose, item, handlerButton, handlerDataUpdate, inputUpdate }) {
     const [imgUrl, setImgUrl] = useState('');
     const [inputPrice, setInputPrice] = useState('');
+    const [selectedValue, setSelectedValue] = useState();
     useEffect(() => {
         if (inputUpdate?.gia) {
             setInputPrice(formatNumber(inputUpdate.gia));
@@ -47,7 +48,10 @@ function ModalAdd({ isVisibale, onClose, item, handlerButton, handlerDataUpdate,
             setInputPrice(price);
         }
     };
-    const handlerChangeInput = (value, key) => {
+    const handlerChangeInput = (value, key, isDropbox) => {
+        if (isDropbox) {
+            setSelectedValue(value);
+        }
         handlerDataUpdate((prev) => ({
             ...prev,
             [key]: value,
@@ -63,7 +67,8 @@ function ModalAdd({ isVisibale, onClose, item, handlerButton, handlerDataUpdate,
                             className="form-select"
                             aria-label="Default select example"
                             name={nameKey}
-                            defaultValue={inputUpdate.nameKey}
+                            value={selectedValue}
+                            onChange={(e) => handlerChangeInput(e.target.value, e.target.name, true)}
                             required
                         >
                             <option value="" disabled>

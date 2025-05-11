@@ -1,4 +1,4 @@
-package com.datn.sellWatches.DTO.Request;
+package com.datn.sellWatches.DTO.Request.Authentication;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -11,8 +11,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@FieldDefaults(level = AccessLevel.PRIVATE )
-public class DashboardDayRequest {
-	String startDay;
-	String endDay;
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class RefreshRequest {
+    String token;
 }

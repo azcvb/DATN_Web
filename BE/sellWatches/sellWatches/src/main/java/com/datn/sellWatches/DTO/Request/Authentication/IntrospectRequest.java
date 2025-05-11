@@ -1,4 +1,4 @@
-package com.datn.sellWatches.DTO.Request;
+package com.datn.sellWatches.DTO.Request.Authentication;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,8 +12,6 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class SaveOrderDetailRequest {
-	String san_pham_id;
-	int so_luong;
-	long gia;
+public class IntrospectRequest {
+    String token;
 }

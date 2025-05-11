@@ -1,4 +1,4 @@
-package com.datn.sellWatches.DTO.Request;
+package com.datn.sellWatches.DTO.Request.Product;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,6 +12,13 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class RefreshRequest {
-    String token;
+public class FilterProductAdminRequest {
+	 String tenSanPham;
+	 Integer minGia;
+     Integer maxGia;
+     String loai;
+     String tonKho;
+     String ngayBatDau;
+     String ngayKetThuc;
+     int page;
 }

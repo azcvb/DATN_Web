@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { formatDob, formatNumber } from '~/components/format';
 import { order } from '~/apiServices/Order/order';
 import { payment } from '~/apiServices/Payment/payment';
+import { getProductForCart } from '~/apiServices/Product/getProductForCart';
 
 const cx = classNames.bind(style);
 function Pay() {
@@ -16,15 +17,28 @@ function Pay() {
     const [sum, setSum] = useState(0);
     const [typePayment, setTypePayment] = useState('Thanh toán khi nhận hàng');
     const [dataPayment, setDataPayment] = useState();
-    console.log(products);
     useEffect(() => {
         window.scroll(0, 0);
         if (sessionStorage.getItem('myInfor') && sessionStorage.getItem('cart')) {
             try {
+                const productIds = [];
                 const infor = JSON.parse(sessionStorage.getItem('myInfor'));
                 const cart = JSON.parse(sessionStorage.getItem('cart'));
+                cart.map((value) => productIds.push(value.id));
+                async function fetch() {
+                    try {
+                        const res = await getProductForCart(productIds);
+                        const mergedProducts = res.result.map((item, index) => ({
+                            ...item,
+                            so_luong: cart[index].so_luong,
+                        }));
+                        setProducts(mergedProducts);
+                    } catch (err) {
+                        console.log(err);
+                    }
+                }
+                fetch();
                 setInfor(infor);
-                setProducts(cart);
             } catch (err) {
                 console.log(err);
             }

@@ -27,7 +27,6 @@
 .warning {
     .header,
     .body {
-        border: 1px solid #f7c700;
         background-color: rgba($color: #f7c700, $alpha: 0.1);
     }
     .header {
@@ -42,7 +41,6 @@
 .error {
     .header,
     .body {
-        border: 1px solid #ff1818;
         background-color: rgba($color: #ff1818, $alpha: 0.1);
     }
     .header {
@@ -57,7 +55,6 @@
 .success {
     .header,
     .body {
-        border: 1px solid #40c025;
         background-color: rgba($color: #40c025, $alpha: 0.1);
     }
     .header {

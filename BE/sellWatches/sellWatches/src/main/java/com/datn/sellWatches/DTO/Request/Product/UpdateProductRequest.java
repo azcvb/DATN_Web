@@ -1,7 +1,6 @@
-package com.datn.sellWatches.DTO.Request;
+package com.datn.sellWatches.DTO.Request.Product;
 
 import java.time.LocalDate;
-import com.datn.sellWatches.Entity.Types;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -39,5 +38,6 @@ public class UpdateProductRequest {
 	String khac;
 	String gioiTinh;
 	String loaiSanPham;
+	String thuongHieu;
 }
 

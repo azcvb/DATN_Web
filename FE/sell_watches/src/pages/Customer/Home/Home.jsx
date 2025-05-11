@@ -30,7 +30,6 @@ function Home() {
             try {
                 const res = await getListProductsHome();
                 setListProducts(res.result);
-                console.log(res);
                 setProductNew(res.result['newNam']);
                 setProductQua(res.result['quaNam']);
             } catch (err) {

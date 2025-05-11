@@ -1,6 +1,4 @@
-package com.datn.sellWatches.DTO.Request;
-
-import java.util.List;
+package com.datn.sellWatches.DTO.Request.Product;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

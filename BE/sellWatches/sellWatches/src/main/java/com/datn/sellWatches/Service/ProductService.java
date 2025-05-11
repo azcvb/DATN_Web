@@ -14,11 +14,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.datn.sellWatches.DTO.Request.AddProductRequest;
-import com.datn.sellWatches.DTO.Request.FilterProductAdminRequest;
-import com.datn.sellWatches.DTO.Request.FilterProductsRequest;
-import com.datn.sellWatches.DTO.Request.IdProductRequest;
-import com.datn.sellWatches.DTO.Request.UpdateProductRequest;
+import com.datn.sellWatches.DTO.Request.Product.AddProductRequest;
+import com.datn.sellWatches.DTO.Request.Product.FilterProductAdminRequest;
+import com.datn.sellWatches.DTO.Request.Product.FilterProductsRequest;
+import com.datn.sellWatches.DTO.Request.Product.IdProductRequest;
+import com.datn.sellWatches.DTO.Request.Product.UpdateProductRequest;
 import com.datn.sellWatches.Entity.Products;
 import com.datn.sellWatches.Entity.Types;
 import com.datn.sellWatches.Entity.Warehouse;
@@ -250,6 +250,7 @@ public class ProductService {
 	}
 	@Transactional
 	public boolean addProduct(AddProductRequest request) {
+		log.info(request.getThuongHieu());
 		try {
 			LocalDate dateNow = LocalDate.now();
 			Types loai = typeRepository.findByTenLoai(request.getLoaiSanPham())
@@ -272,7 +273,6 @@ public class ProductService {
 					.bao_hanh_hang(request.getBaoHanhHang())
 					.bao_hanh_shop(request.getBaoHanhShop())
 					.hinh_anh(request.getHinhAnh())
-					.ngay_tao(request.getNgayTao())
 					.khac(request.getKhac())
 					.thuong_hieu(request.getThuongHieu())
 					.gioi_tinh(request.getGioiTinh())
@@ -357,6 +357,7 @@ public class ProductService {
 		            .khac(request.getKhac())
 		            .loai(type)
 					.gioi_tinh(request.getGioiTinh())
+					.thuong_hieu(request.getThuongHieu())
 		            .build();
 
 		    productRepository.save(updatedProduct);

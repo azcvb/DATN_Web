@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.datn.sellWatches.DTO.Request.DashboardDayRequest;
+import com.datn.sellWatches.DTO.Request.Dashboard.DashboardDayRequest;
 import com.datn.sellWatches.DTO.Response.ApiResponse;
 import com.datn.sellWatches.DTO.Response.DasboardResponse.DasboardCustomerResponse;
 import com.datn.sellWatches.DTO.Response.DasboardResponse.DashboardBottom;

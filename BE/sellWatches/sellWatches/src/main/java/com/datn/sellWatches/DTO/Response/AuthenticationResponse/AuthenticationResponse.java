@@ -1,4 +1,4 @@
-package com.datn.sellWatches.DTO.Request;
+package com.datn.sellWatches.DTO.Response.AuthenticationResponse;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,11 +12,8 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class DataPaymentAdminRequest {
-	String loai;
-	Integer minGia;
-	Integer maxGia;
-	String ngayBatDau;
-	String ngayKetThuc;
-	int page;
+public class AuthenticationResponse {
+    String token;
+    boolean authenticated;
+    String localtion;
 }

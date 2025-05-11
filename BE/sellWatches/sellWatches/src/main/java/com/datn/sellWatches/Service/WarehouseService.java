@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.datn.sellWatches.DTO.Request.DashboardDayRequest;
+import com.datn.sellWatches.DTO.Request.Dashboard.DashboardDayRequest;
 import com.datn.sellWatches.DTO.Response.DasboardResponse.DashboardProductSell;
 import com.datn.sellWatches.DTO.Response.DasboardResponse.DashboardRevenueTopResponse;
 import com.datn.sellWatches.Repository.WarehouseRepository;

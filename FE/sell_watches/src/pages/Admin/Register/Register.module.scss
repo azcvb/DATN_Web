@@ -1,0 +1,66 @@
+.login {
+    background: url('https://i.imgur.com/lnT0oSN.jpg') no-repeat center/cover fixed;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login-container {
+    .logo,
+    .title {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .title {
+        font-size: 24px;
+        font-weight: bold;
+    }
+    .password {
+        a {
+            margin-top: 10px;
+            display: block;
+            width: 100%;
+            text-align: end;
+        }
+    }
+    .btn {
+        margin: 10px 0;
+        border: none;
+        background-color: var(--button-color);
+        color: #fff;
+        padding: 8px 24px;
+        border-radius: 20px;
+    }
+}
+form {
+    .form-input {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        input {
+            width: 300px;
+        }
+        .left,
+        .right {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .left {
+            margin-right: 20px;
+        }
+    }
+}
+.select {
+    width: 300px !important;
+    div {
+        display: flex;
+        div {
+            margin-right: 10px;
+        }
+        input {
+            width: 15px;
+        }
+    }
+}

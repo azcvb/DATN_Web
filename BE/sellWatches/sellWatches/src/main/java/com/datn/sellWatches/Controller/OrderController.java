@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.datn.sellWatches.DTO.Request.OrderRequest;
+import com.datn.sellWatches.DTO.Request.Order.OrderRequest;
 import com.datn.sellWatches.DTO.Response.ApiResponse;
 import com.datn.sellWatches.DTO.Response.OrderResponse.SaveOrderResponse;
 import com.datn.sellWatches.Service.OrderService;

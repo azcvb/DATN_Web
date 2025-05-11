@@ -35,7 +35,6 @@ public class Customer {
 	
 	String ten_khach_hang;
 	String email;
-	String mat_khau;
 	String dia_chi;
 	String gioi_tinh;
 	LocalDate ngay_sinh;
@@ -46,6 +45,6 @@ public class Customer {
 	List<Order> orders = new ArrayList<>();
 	
 	@OneToOne
-	@JoinColumn(name= "khach_hang")
+	@JoinColumn(name= "tai_khoan_id")
 	Account tai_khoan_id;
 }

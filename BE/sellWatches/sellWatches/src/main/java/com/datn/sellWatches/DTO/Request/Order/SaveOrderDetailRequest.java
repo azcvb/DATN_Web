@@ -1,4 +1,4 @@
-package com.datn.sellWatches.DTO.Request;
+package com.datn.sellWatches.DTO.Request.Order;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,9 +12,8 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class SaveOrderRequest {
-	long tong_gia;
-	String muc_dich;
-	String khac;
-	String loai_thanh_toan;
+public class SaveOrderDetailRequest {
+	String san_pham_id;
+	int so_luong;
+	long gia;
 }

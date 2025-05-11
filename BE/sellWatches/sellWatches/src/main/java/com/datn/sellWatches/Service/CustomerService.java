@@ -8,8 +8,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.datn.sellWatches.DTO.Request.DashboardDayRequest;
-import com.datn.sellWatches.DTO.Request.SaveCustomerRequest;
+import com.datn.sellWatches.DTO.Request.Dashboard.DashboardDayRequest;
+import com.datn.sellWatches.DTO.Request.Customer.SaveCustomerRequest;
 import com.datn.sellWatches.DTO.Response.DasboardResponse.DasboardCustomerResponse;
 import com.datn.sellWatches.DTO.Response.DayAndDataResponse;
 import com.datn.sellWatches.DTO.Response.CustomerResponse.SaveCustomerResponse;
@@ -36,6 +36,7 @@ public class CustomerService {
 				.dia_chi(request.getDia_chi())
 				.ngay_sinh(dob)
 				.ngay_tao(LocalDateTime.now())
+				.gioi_tinh(request.getGioi_tinh())
 				.build();
 		try {
 			customer = customerRepository.save(customer);

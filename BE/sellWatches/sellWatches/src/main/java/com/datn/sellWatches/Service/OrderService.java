@@ -6,11 +6,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.datn.sellWatches.DTO.Request.DashboardDayRequest;
-import com.datn.sellWatches.DTO.Request.OrderRequest;
-import com.datn.sellWatches.DTO.Request.SaveCustomerRequest;
-import com.datn.sellWatches.DTO.Request.SaveOrderDetailRequest;
-import com.datn.sellWatches.DTO.Request.SaveOrderRequest;
+import com.datn.sellWatches.DTO.Request.Dashboard.DashboardDayRequest;
+import com.datn.sellWatches.DTO.Request.Order.OrderRequest;
+import com.datn.sellWatches.DTO.Request.Customer.SaveCustomerRequest;
+import com.datn.sellWatches.DTO.Request.Order.SaveOrderDetailRequest;
+import com.datn.sellWatches.DTO.Request.Order.SaveOrderRequest;
 import com.datn.sellWatches.DTO.Response.DasboardResponse.DashboardOrderResponse;
 import com.datn.sellWatches.DTO.Response.DayAndDataResponse;
 import com.datn.sellWatches.DTO.Response.CustomerResponse.SaveCustomerResponse;

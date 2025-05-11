@@ -1,4 +1,4 @@
-package com.datn.sellWatches.DTO.Response.AuthencationResponse;
+package com.datn.sellWatches.DTO.Request.Customer;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,6 +12,11 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class IntrospectResponse {
-    boolean valid;
+public class SaveCustomerRequest {
+	String so_dien_thoai;
+	String ten_khach_hang;
+	String email;
+	String dia_chi;
+	String ngay_sinh;
+	String gioi_tinh;
 }

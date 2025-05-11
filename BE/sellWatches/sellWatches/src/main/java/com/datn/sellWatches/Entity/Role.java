@@ -1,19 +1,14 @@
 package com.datn.sellWatches.Entity;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+
+import java.util.List;
 
 @Entity
 @Table(name = "quyen")
@@ -28,6 +23,6 @@ public class Role {
 	String id;
 	String tenQuyen;
 	
-	@OneToOne(mappedBy = "quyen", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	Account account;
+	@OneToMany(mappedBy = "quyen", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	List<Account> account;
 }
