@@ -6,6 +6,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.datn.sellWatches.ComponentFunction.ComponentFun;
+import com.datn.sellWatches.DTO.Request.StringRequest;
+import com.datn.sellWatches.DTO.Response.CustomerResponse.GetInfoCustomerResponse;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import com.datn.sellWatches.DTO.Request.Dashboard.DashboardDayRequest;
@@ -22,9 +27,10 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class CustomerService {
-	private final CustomerRepository customerRepository;
-	
+	CustomerRepository customerRepository;
+	ComponentFun componentFun;
 	SaveCustomerResponse saveCustomerByOrder(SaveCustomerRequest request) {
 		boolean isCustomer = false;
 	
@@ -63,6 +69,20 @@ public class CustomerService {
 			return DasboardCustomerResponse.builder()
 					.customerRes(resDay)
 					.build();
+	}
+	public GetInfoCustomerResponse getInfoCustomer(StringRequest reuqest) {
+		Customer customer = customerRepository.findBySoDienThoai(reuqest.getName());
+		if(customer == null){
+			return null;
+		}
+        return GetInfoCustomerResponse.builder()
+				.soDienThoai(customer.getSoDienThoai())
+				.tenKhachHang(customer.getTen_khach_hang())
+				.diaChi(customer.getDia_chi())
+				.gioiTinh(customer.getGioi_tinh())
+				.ngaySinh(componentFun.safeToString(customer.getNgay_sinh()))
+				.email(customer.getEmail())
+				.build();
 	}
 
 }

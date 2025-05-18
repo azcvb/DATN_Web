@@ -31,8 +31,8 @@ public class PaymentController {
 
 
     @GetMapping
-    public ApiResponse<?> createPayment(@RequestParam("amount") long amount) throws UnsupportedEncodingException{
-    	PaymentResponse result = paymentService.createPayment(amount);
+    public ApiResponse<?> createPayment(@RequestParam("amount") long amount, @RequestParam("orderId") String orderId) throws UnsupportedEncodingException{
+    	PaymentResponse result = paymentService.createPayment(amount, orderId);
         return ApiResponse.builder()
         		  .result(result)
         		  .build();

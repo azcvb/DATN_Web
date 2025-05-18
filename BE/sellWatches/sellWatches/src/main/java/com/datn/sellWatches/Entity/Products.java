@@ -27,7 +27,8 @@ public class Products {
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	String id;
-	
+
+	@Column(unique = true)
 	String ma_san_pham;
 	String ten_san_pham;
 	int gia;

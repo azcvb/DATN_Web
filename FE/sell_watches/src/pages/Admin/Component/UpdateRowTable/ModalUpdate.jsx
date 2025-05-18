@@ -4,10 +4,21 @@ import { useEffect, useState } from 'react';
 import { formatFilterValue, formatNumber } from '~/components/format';
 
 const cx = classNames.bind(style);
-function ModalAdd({ isVisibale, onClose, item, handlerButton, handlerDataUpdate, inputUpdate }) {
+function ModalAdd({ isVisibale, onClose, item, handlerButton = false, handlerDataUpdate, inputUpdate }) {
     const [imgUrl, setImgUrl] = useState('');
     const [inputPrice, setInputPrice] = useState('');
-    const [selectedValue, setSelectedValue] = useState();
+    const [selectedValue, setSelectedValue] = useState({});
+    useEffect(() => {
+        if (Object.keys(item).length > 0) {
+            item?.input.map((value) => {
+                if (value.type === 'dropBox') {
+                    const key = formatFilterValue(value.name);
+                    setSelectedValue((prev) => ({ ...prev, [key]: inputUpdate[key] }));
+                }
+                return null;
+            });
+        }
+    }, [inputUpdate, item]);
     useEffect(() => {
         if (inputUpdate?.gia) {
             setInputPrice(formatNumber(inputUpdate.gia));
@@ -50,7 +61,7 @@ function ModalAdd({ isVisibale, onClose, item, handlerButton, handlerDataUpdate,
     };
     const handlerChangeInput = (value, key, isDropbox) => {
         if (isDropbox) {
-            setSelectedValue(value);
+            setSelectedValue((prev) => ({ ...prev, [key]: value }));
         }
         handlerDataUpdate((prev) => ({
             ...prev,
@@ -67,7 +78,7 @@ function ModalAdd({ isVisibale, onClose, item, handlerButton, handlerDataUpdate,
                             className="form-select"
                             aria-label="Default select example"
                             name={nameKey}
-                            value={selectedValue}
+                            value={selectedValue[nameKey] || ''}
                             onChange={(e) => handlerChangeInput(e.target.value, e.target.name, true)}
                             required
                         >
@@ -87,13 +98,13 @@ function ModalAdd({ isVisibale, onClose, item, handlerButton, handlerDataUpdate,
                 return (
                     <div key={index} className={cx('row')}>
                         {value.itemRow.map((valueRow, indexRow) =>
-                            valueRow === 'Giá' ? (
+                            valueRow.name === 'Giá' ? (
                                 <div className="mb-3" key={indexRow}>
-                                    <label className="form-label">{valueRow}</label>
+                                    <label className="form-label">{valueRow.name}</label>
                                     <input
                                         type="text"
                                         className="form-control"
-                                        name={formatFilterValue(valueRow)}
+                                        name={formatFilterValue(valueRow.name)}
                                         required
                                         value={inputPrice}
                                         onChange={(e) => handlerInputPrice(e.target.value)}
@@ -101,12 +112,12 @@ function ModalAdd({ isVisibale, onClose, item, handlerButton, handlerDataUpdate,
                                 </div>
                             ) : (
                                 <div className="mb-3" key={indexRow}>
-                                    <label className="form-label">{valueRow}</label>
+                                    <label className="form-label">{valueRow.name}</label>
                                     <input
                                         type="text"
                                         className="form-control"
-                                        name={formatFilterValue(valueRow)}
-                                        value={inputUpdate[formatFilterValue(valueRow)] || ''}
+                                        name={formatFilterValue(valueRow.name)}
+                                        value={inputUpdate[formatFilterValue(valueRow.name)] || ''}
                                         onChange={(e) => handlerChangeInput(e.target.value, e.target.name)}
                                         required
                                     />
@@ -161,12 +172,12 @@ function ModalAdd({ isVisibale, onClose, item, handlerButton, handlerDataUpdate,
         return (
             <div key={index}>
                 <div className="mb-3">
-                    <label className="form-label">{value}</label>
+                    <label className="form-label">{value.name}</label>
                     <input
                         type="text"
                         className="form-control"
-                        name={formatFilterValue(value)}
-                        value={inputUpdate[formatFilterValue(value)] || ''}
+                        name={formatFilterValue(value.name)}
+                        value={inputUpdate[formatFilterValue(value.name)] || ''}
                         onChange={(e) => handlerChangeInput(e.target.value, e.target.name)}
                         required
                     />

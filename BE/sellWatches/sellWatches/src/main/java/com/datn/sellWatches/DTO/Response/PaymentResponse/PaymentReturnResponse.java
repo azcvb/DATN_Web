@@ -20,4 +20,5 @@ public class PaymentReturnResponse {
     String orderId;
     String amount;
     String typePay;
+    String idOrder;
 }

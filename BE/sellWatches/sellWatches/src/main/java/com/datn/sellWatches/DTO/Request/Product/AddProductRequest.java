@@ -17,7 +17,7 @@ import lombok.experimental.FieldDefaults;
 public class AddProductRequest {
 	String maSanPham;
 	String tenSanPham;
-	Integer gia;
+	Integer giaNhap;
 	String moTa;
 	String loaiMay;
 	String matKinh;

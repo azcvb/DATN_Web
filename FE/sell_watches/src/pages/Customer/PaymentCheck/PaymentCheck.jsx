@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { formatNumber } from '~/components/format';
 import { order } from '~/apiServices/Order/order';
 import { Cookies, useCookies } from 'react-cookie';
+import { postUpdateStatusOrder } from '~/apiServices/Order/postUpdateStatusOrder';
 
 const cx = classNames.bind(style);
 function PaymentCheck() {
@@ -31,14 +32,14 @@ function PaymentCheck() {
             async function fetch() {
                 try {
                     if (dataPayment && dataPayment.kieu_thanh_toan === 'Thanh toán khi nhận hàng') {
-                        setResult({
+                        return setResult({
                             status: 'success',
                             message: 'Đặt đơn hàng thành công',
                             ma_giao_dich: '',
                             tong_tien: dataPayment.tong_tien * 100,
                             kieu_thanh_toan: dataPayment.kieu_thanh_toan,
                         });
-                    } else if (dataPayment) {
+                    } else {
                         const res = await paymentReturn(queryString);
                         setResult({
                             status: res.result.status,
@@ -46,6 +47,7 @@ function PaymentCheck() {
                             ma_giao_dich: res.result.orderId,
                             tong_tien: res.result.amount,
                             kieu_thanh_toan: res.result.typePay,
+                            orderId: res.result.idOrder,
                         });
                         if (res.result.message === 'Giao dịch thất bại!') {
                             setResult({
@@ -66,7 +68,10 @@ function PaymentCheck() {
                             });
                         }
                         if (res.result.status && res.result.status === 'success') {
-                            await order(dataPayment);
+                            await postUpdateStatusOrder({
+                                status: true,
+                                orderId: res.result.idOrder,
+                            });
                         }
                     }
                     sessionStorage.removeItem('myInfor');

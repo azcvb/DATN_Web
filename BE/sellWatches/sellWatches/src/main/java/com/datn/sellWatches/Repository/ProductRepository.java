@@ -2,6 +2,7 @@ package com.datn.sellWatches.Repository;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +15,9 @@ import com.datn.sellWatches.Entity.Products;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Products, String> {
-	
+
+		@Query(value= "SELECT * FROM san_pham WHERE ma_san_pham = :maSanPham", nativeQuery = true)
+		Optional<Products> getProductCode(@Param("maSanPham") String maSanPham);
 		@Query(value = "SELECT s.id, s.hinh_anh, s.ten_san_pham, s.ma_san_pham, s.loai_may, s.duong_kinh, s.gia " +
 	            "FROM san_pham s " +
 	            "JOIN loai l ON s.loai_id = l.id " + 

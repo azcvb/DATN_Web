@@ -38,6 +38,6 @@ public class GetProductTableAdminResponse {
 	String khac;
 	String thuongHieu;
 	String gioiTinh;
-	String loai;
+	String loaiSanPham;
 	int soLuong;
 }

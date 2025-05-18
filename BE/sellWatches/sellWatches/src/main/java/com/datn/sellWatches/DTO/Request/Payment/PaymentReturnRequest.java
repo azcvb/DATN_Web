@@ -13,16 +13,16 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PaymentReturnRequest {
-	private String vnp_TxnRef;
-    private String vnp_Amount;
-    private String vnp_BankCode;
-    private String vnp_BankTranNo;
-    private String vnp_CardType;
-    private String vnp_OrderInfo;
-    private String vnp_PayDate;              // thời gian thanh toán (vnp_PayDate)
-    private String vnp_ResponseCode;
-    private String vnp_TmnCode;
-    private String vnp_TransactionNo;
-    private String vnp_TransactionStatus;
-    private String vnp_SecureHash;
+    String vnp_TxnRef;
+    String vnp_Amount;
+    String vnp_BankCode;
+    String vnp_BankTranNo;
+    String vnp_CardType;
+    String vnp_OrderInfo;
+    String vnp_PayDate;
+    String vnp_ResponseCode;
+    String vnp_TmnCode;
+    String vnp_TransactionNo;
+    String vnp_TransactionStatus;
+    String vnp_SecureHash;
 }

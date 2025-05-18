@@ -3,6 +3,8 @@ package com.datn.sellWatches.Controller;
 import java.util.List;
 import java.util.Map;
 
+import com.datn.sellWatches.DTO.Request.Product.*;
+import com.datn.sellWatches.DTO.Request.StringRequest;
 import com.datn.sellWatches.DTO.Response.ProductResponse.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.AntPathMatcher;
@@ -13,11 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.HandlerMapping;
 
-import com.datn.sellWatches.DTO.Request.Product.AddProductRequest;
-import com.datn.sellWatches.DTO.Request.Product.FilterProductAdminRequest;
-import com.datn.sellWatches.DTO.Request.Product.FilterProductsRequest;
-import com.datn.sellWatches.DTO.Request.Product.IdProductRequest;
-import com.datn.sellWatches.DTO.Request.Product.UpdateProductRequest;
 import com.datn.sellWatches.DTO.Response.ApiResponse;
 import com.datn.sellWatches.Service.ProductService;
 import com.datn.sellWatches.Service.TypeService;
@@ -120,6 +117,18 @@ public class ProductController {
 		GetProductTableAdminResponse result = productService.getProductIdAdmin(request);
 		return ApiResponse.<GetProductTableAdminResponse>builder()
 				.result(result)
+				.build();
+	}
+	@PostMapping("/productCode")
+	public  ApiResponse<GetProductCodeResponse> getProductCode(@RequestBody StringRequest request){
+		GetProductCodeResponse result = productService.getProductCode(request);
+		if(result != null){
+			return ApiResponse.<GetProductCodeResponse>builder()
+				.result(result)
+				.build();
+		}
+		return ApiResponse.<GetProductCodeResponse>builder()
+				.message("PRODUCT_NOT_EXIT")
 				.build();
 	}
 }

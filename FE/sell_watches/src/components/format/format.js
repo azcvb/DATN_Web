@@ -59,7 +59,6 @@ export const validDob = (value) => {
 }
 export const formatDob = (value) => {
     const formats = ["dd/MM/yyyy", "dd-MM-yyyy", "yyyy.MM.dd", "dd MM yyyy"];
-
     for (const fmt of formats) {
         try {
             const parsedDate = parse(value, fmt, new Date());
@@ -132,16 +131,18 @@ export const formatDiameter = (value) => {
     return diameter;
 }
 export const formatFilterValue = (value) => {
-    return value
-        .normalize("NFD")
-        .replace(/đ/g, 'd').replace(/Đ/g, 'D')
-        .replace(/[\u0300-\u036f]/g, "")
-        .toLowerCase()
-        .split(" ")
-        .map((word, index) =>
-            index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1)
-        )
-        .join("");
+    if (value) {
+        return value
+            .normalize("NFD")
+            .replace(/đ/g, 'd').replace(/Đ/g, 'D')
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase()
+            .split(" ")
+            .map((word, index) =>
+                index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1)
+            )
+            .join("");
+    }
 
 }
 export const formatDateDashboard = (date) => {

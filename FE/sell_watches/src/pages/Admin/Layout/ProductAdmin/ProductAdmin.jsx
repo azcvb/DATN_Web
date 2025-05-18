@@ -38,8 +38,8 @@ function ProductAdmin() {
     ]);
     const item = {
         input: [
-            'Mã sản phẩm',
-            'Tên sản phẩm',
+            { name: 'Mã sản phẩm' },
+            { name: 'Tên sản phẩm' },
             {
                 type: 'dropBox',
                 name: 'Loại sản phẩm',
@@ -47,7 +47,7 @@ function ProductAdmin() {
             },
             {
                 type: 'row',
-                itemRow: ['Giá', 'Số lượng'],
+                itemRow: [{ name: 'Giá nhập', type: 'price' }, { name: 'Số lượng' }],
             },
             {
                 type: 'dropBox',
@@ -56,22 +56,27 @@ function ProductAdmin() {
             },
             {
                 type: 'row',
-                itemRow: ['Loại máy', 'Mặt kính', 'Đường kính', 'Màu mặt'],
+                itemRow: [{ name: 'Loại máy' }, { name: 'Mặt kính' }, { name: 'Đường kính' }, { name: 'Màu mặt' }],
             },
             {
                 type: 'row',
-                itemRow: ['Chất liệu dây', 'Chất liệu vỏ', 'Độ dày', 'Kháng nước'],
+                itemRow: [
+                    { name: 'Chất liệu dây' },
+                    { name: 'Chất liệu vỏ' },
+                    { name: 'Độ dày' },
+                    { name: 'Kháng nước' },
+                ],
             },
             {
                 type: 'row',
-                itemRow: ['Phong cách', 'Kiểu dáng', 'Xuất xứ', 'Thương hiệu'],
+                itemRow: [{ name: 'Phong cách' }, { name: 'Kiểu dáng' }, { name: 'Xuất xứ' }, { name: 'Thương hiệu' }],
             },
             {
                 type: 'row',
-                itemRow: ['Bảo hành hãng', 'Bảo hành shop'],
+                itemRow: [{ name: 'Bảo hành hãng' }, { name: 'Bảo hành shop' }],
             },
 
-            'Khác',
+            { name: 'Khác' },
             {
                 type: 'bigSize',
                 name: 'Mô tả',
@@ -130,6 +135,9 @@ function ProductAdmin() {
     const handlerAddProduct = () => {
         setTypeAdd('product');
         item.title = 'Thêm sản phẩm';
+        if (item?.input) {
+            item.input[3].itemRow[0].name = 'Giá nhập';
+        }
         setItemModal(item);
         setTypeModal('add');
         setIsVisible(true);
@@ -138,7 +146,7 @@ function ProductAdmin() {
         setTypeAdd('type');
         const itemTypeProduct = {
             title: 'Thêm loại sản phẩm',
-            input: ['Tên loại'],
+            input: [{ name: 'Tên loại' }],
         };
         setItemModal(itemTypeProduct);
         setTypeModal('add');
@@ -288,6 +296,9 @@ function ProductAdmin() {
     }, [page, filter]);
     const handlerUpdateProduct = () => {
         item.title = 'Sửa sản phẩm';
+        if (item?.input) {
+            item.input[3].itemRow[0].name = 'Giá bán';
+        }
         setItemModal(item);
         setTypeModal('uppdate');
         setIsVisible(true);
@@ -326,6 +337,7 @@ function ProductAdmin() {
                             const data = listProducts.filterProductAdminResponses;
                             const totalPage = listProducts.totalPage;
                             setDataFilter({ data, totalPage });
+                            setIsUpdate(false);
                             return setModalMessage({
                                 status: 'success',
                                 message: 'Sửa sản phẩm thành công!',

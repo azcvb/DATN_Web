@@ -8,17 +8,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.datn.sellWatches.DTO.Request.Product.*;
+import com.datn.sellWatches.DTO.Request.StringRequest;
 import com.datn.sellWatches.DTO.Response.ProductResponse.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import com.datn.sellWatches.DTO.Request.Product.AddProductRequest;
-import com.datn.sellWatches.DTO.Request.Product.FilterProductAdminRequest;
-import com.datn.sellWatches.DTO.Request.Product.FilterProductsRequest;
-import com.datn.sellWatches.DTO.Request.Product.IdProductRequest;
-import com.datn.sellWatches.DTO.Request.Product.UpdateProductRequest;
 import com.datn.sellWatches.Entity.Products;
 import com.datn.sellWatches.Entity.Types;
 import com.datn.sellWatches.Entity.Warehouse;
@@ -250,7 +248,6 @@ public class ProductService {
 	}
 	@Transactional
 	public boolean addProduct(AddProductRequest request) {
-		log.info(request.getThuongHieu());
 		try {
 			LocalDate dateNow = LocalDate.now();
 			Types loai = typeRepository.findByTenLoai(request.getLoaiSanPham())
@@ -282,7 +279,7 @@ public class ProductService {
 			productRepository.save(product);
 			Warehouse warehouse = Warehouse.builder()
 					.da_ban(0)
-					.gia_nhap(request.getGia())
+					.gia_nhap(request.getGiaNhap())
 					.ton_kho(request.getSoLuong())
 					.products(product)
 					.ngay_nhap(dateNow)
@@ -329,7 +326,6 @@ public class ProductService {
 		try {
 			Types type = typeRepository.findByTenLoai(request.getLoaiSanPham())
 					.orElseThrow(() -> new AppException(ErrorCode.TYPE_NOT_EXIT));
-			log.info(request.getMaSanPham());
 			Products product = productRepository.findById(request.getId())
 		            .orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXIT)); 
 			LocalDate date = LocalDate.now();
@@ -337,7 +333,7 @@ public class ProductService {
 		            .id(product.getId())  
 		            .ma_san_pham(request.getMaSanPham())
 		            .ten_san_pham(request.getTenSanPham())
-		            .gia(request.getGia())
+		            .gia(request.getGiaBan())
 		            .mo_ta(request.getMoTa())
 		            .loai_may(request.getLoaiMay())
 		            .mat_kinh(request.getMatKinh())
@@ -396,9 +392,18 @@ public class ProductService {
 	        .thuongHieu((String) product[20])
 	        .gioiTinh((String) product[21])
 	        .soLuong((int) product[22])
-	        .loai((String) product[23])
+	        .loaiSanPham((String) product[23])
 	        .build();
 	    return dto;
 	}
-	
+	@PreAuthorize("hasRole('ADMIN')")
+	public GetProductCodeResponse getProductCode(StringRequest request){
+		Products product = productRepository.getProductCode(request.getName())
+				.orElseThrow(()-> new AppException(ErrorCode.PRODUCT_NOT_EXIT));
+		return GetProductCodeResponse.builder()
+				.id(product.getId())
+				.maSanPham(product.getMa_san_pham())
+				.gia(product.getGia())
+				.build();
+	}
 }

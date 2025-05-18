@@ -15,4 +15,5 @@ import lombok.experimental.FieldDefaults;
 public class SaveOrderResponse {
 	boolean isOrder;
 	String errBy;
+	String orderId;
 }

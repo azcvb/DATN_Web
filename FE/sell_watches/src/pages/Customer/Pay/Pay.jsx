@@ -90,7 +90,6 @@ function Pay() {
                 async function fetch() {
                     const res = await order(dataPayment);
 
-                    console.log(res);
                     if (res && res.result.order) {
                         navigator('/pay/check');
                         sessionStorage.setItem(
@@ -109,9 +108,14 @@ function Pay() {
         } else if (typePayment === 'Thanh toán online') {
             try {
                 async function fetch() {
-                    const res = await payment(sum);
-                    window.location.href = res.result.url;
-                    sessionStorage.setItem('payment', JSON.stringify(dataPayment));
+                    const resOrder = await order(dataPayment);
+                    const orderId = resOrder?.result.orderId ?? '';
+                    console.log(dataPayment);
+                    if (orderId !== '') {
+                        const resPayment = await payment(sum, orderId);
+                        window.location.href = resPayment.result.url;
+                        sessionStorage.setItem('payment', JSON.stringify(dataPayment));
+                    }
                 }
                 fetch();
             } catch (err) {

@@ -18,7 +18,7 @@ public class UpdateProductRequest {
 	String id;
 	String maSanPham;
 	String tenSanPham;
-	int gia;
+	int giaBan;
 	String moTa;
 	String loaiMay;
 	String matKinh;

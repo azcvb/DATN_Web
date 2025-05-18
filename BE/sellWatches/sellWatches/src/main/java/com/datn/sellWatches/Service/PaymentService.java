@@ -39,6 +39,7 @@ import com.datn.sellWatches.Repository.PaymentRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -47,7 +48,7 @@ public class PaymentService {
 		private final PaymentRepository paymentRepository;
 		private final OrderDetailRepository orderDetailRepository;
 		private final OrdersRepository ordersRepository;
-		public PaymentResponse createPayment(long amount) throws UnsupportedEncodingException {
+		public PaymentResponse createPayment(long amount, String orderId) throws UnsupportedEncodingException {
 			String vnp_Version = "2.1.0";
 	          String vnp_Command = "pay";
 	          String orderType = "other";
@@ -70,7 +71,7 @@ public class PaymentService {
 //	          if (bankCode != null && !bankCode.isEmpty()) {
 //	              vnp_Params.put("vnp_BankCode", bankCode);
 //	          }
-	          vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
+	          vnp_Params.put("vnp_TxnRef", orderId);
 	          vnp_Params.put("vnp_OrderInfo", "Thanh toan don hang:" + vnp_TxnRef);
 	          vnp_Params.put("vnp_OrderType", orderType);
 
@@ -128,7 +129,7 @@ public class PaymentService {
 	        		  .build();
 			return paymentResponse;
 		}
-
+		@Transactional
 		 public PaymentReturnResponse paymentReturn(PaymentReturnRequest request) throws UnsupportedEncodingException {
 		        Map<String, String> params = new HashMap<>();
 		        params.put("vnp_TxnRef", request.getVnp_TxnRef());
@@ -143,11 +144,11 @@ public class PaymentService {
 		        params.put("vnp_TransactionNo", request.getVnp_TransactionNo());
 		        params.put("vnp_TransactionStatus", request.getVnp_TransactionStatus());
 		        params.put("vnp_SecureHash", request.getVnp_SecureHash());
-		        
+				log.info(request.getVnp_TxnRef());
 		        String receivedHash = params.get("vnp_SecureHash");
 		        params.remove("vnp_SecureHash");
 		        params.remove("vnp_SecureHashType"); 
-		        
+
 		        Map<String, String> sortedParams = new TreeMap<>(params);
 		        StringBuilder hashData = new StringBuilder();
 		        for (Iterator<Map.Entry<String, String>> itr = sortedParams.entrySet().iterator(); itr.hasNext(); ) {
@@ -167,22 +168,24 @@ public class PaymentService {
 		        String computedHash = ConfigPayment.hmacSHA512(ConfigPayment.secretKey, hashData.toString());
 		        boolean validSignature = computedHash.equalsIgnoreCase(receivedHash);
 		        String statusMessage;
+				boolean isPayment = false;
 		        if (validSignature) {
 		            if ("00".equals(request.getVnp_TransactionStatus())) {
 		                statusMessage = "Giao dịch thành công!";
+						isPayment = true;
 		            } else {
 		                statusMessage = "Giao dịch thất bại!";
 		            }
 		        } else {
 		            statusMessage = "Chữ ký không hợp lệ";
 		        }
-		        
 		        return PaymentReturnResponse.builder()
-		                .status(validSignature ? "success" : "error")
+		                .status(isPayment ? "success" : "error")
 		                .message(statusMessage)
 		                .amount(request.getVnp_Amount())
 		                .orderId(request.getVnp_BankTranNo())
 		                .typePay("Thanh toán online")
+						.idOrder(request.getVnp_TxnRef())
 		                .build();
 		    }
 		 	
@@ -212,6 +215,7 @@ public class PaymentService {
 							.build();
 					responsePayment.add(dto);
 				}
+
 				return DashboardBottom.builder()
 						.paymentResponse(responsePayment)
 						.build();
