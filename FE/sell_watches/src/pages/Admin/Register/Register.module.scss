@@ -8,6 +8,9 @@
 .login-container {
     .logo,
     .title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         text-align: center;
         margin-bottom: 20px;
     }

@@ -22,6 +22,7 @@ import EmployeeAdmin from "~/pages/Admin/Layout/EmployeeAdmin";
 import CustomerAdmin from "~/pages/Admin/Layout/CustomerAdmin";
 import CustomWeb from "~/pages/Admin/Layout/CustomWeb";
 import Register from "~/pages/Admin/Register";
+import OrderHistory from "~/pages/Customer/OrderHistory";
 
 const publicRouters = [
     { path: config.routes.home, component: Home, layout: DefaultLayout },
@@ -44,7 +45,8 @@ const publicRouters = [
     { path: config.routes.employeeAdmin, component: EmployeeAdmin, layout: PageAdmin },
     { path: config.routes.customerAdmin, component: CustomerAdmin, layout: PageAdmin },
     { path: config.routes.customWeb, component: CustomWeb, layout: PageAdmin },
-    { path: config.routes.register, component: Register, layout: null }
+    { path: config.routes.register, component: Register, layout: null },
+    { path: config.routes.orderHistory, component: OrderHistory, layout: DefaultLayout },
 
 ]
 

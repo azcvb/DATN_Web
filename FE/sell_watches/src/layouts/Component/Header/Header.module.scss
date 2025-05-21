@@ -30,7 +30,7 @@
     justify-content: space-between;
     > div,
     > a {
-        margin-left: 64px;
+        margin-left: 36px;
     }
 }
 .phone {
@@ -90,33 +90,11 @@
         border-radius: 10px;
     }
 }
-.user {
-    position: relative;
-    &:hover {
-        cursor: pointer;
-    }
+.orderHistory {
     svg {
-        width: 32px;
-        height: 32px;
-    }
-    span {
-        position: absolute;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        text-align: center;
-        color: var(--main-color);
-        background-color: #fff;
-        font-size: 14px;
-        width: 72px;
-        padding: 0 2px;
-        top: -25%;
-        right: -190%;
-        border-radius: 10px;
-        border: 1px solid var(--main-color);
+        width: 28px;
     }
 }
-
 @media screen and (min-width: 768px) and (max-width: 1024px) {
     .logo {
         width: 175px;

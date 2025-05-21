@@ -1,10 +1,11 @@
 import Search from '~/components/Search';
 import style from './Header.module.scss';
 import classNames from 'classnames/bind';
-import { IconAddress, IconCart, IconPhoneHeader, IconUser } from '~/components/icon';
+import { IconAddress, IconCart, IconOrderHistory, IconPhoneHeader, IconUser } from '~/components/icon';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
+import AccountInfo from '../AccountInfo';
 
 const cx = classNames.bind(style);
 function Header() {
@@ -41,9 +42,11 @@ function Header() {
                             <IconCart />
                             <div className={cx('quantity')}>{cart ? cart.length : '0'}</div>
                         </Link>
-                        <div className={`hiden ${cx('user')}`}>
-                            <IconUser />
-                            <span>datcongh43</span>
+                        <Link to={'/lich-su'} className={cx('orderHistory')}>
+                            <IconOrderHistory />
+                        </Link>
+                        <div className={`${cx('user')}`}>
+                            <AccountInfo />
                         </div>
                     </div>
                 </div>

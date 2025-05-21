@@ -15,6 +15,9 @@
     }
     .btn-add,
     .btn-remove {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         color: #fff;
         padding: 8px 20px;
         border-radius: 5px;

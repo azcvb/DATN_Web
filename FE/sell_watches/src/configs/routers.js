@@ -1,3 +1,4 @@
+
 const routes = {
     home: '/',
     product: '/dong-ho/:productType/:productId',
@@ -18,7 +19,8 @@ const routes = {
     employeeAdmin: '/admin/nhan-vien',
     customerAdmin: '/admin/khach-hang',
     customWeb: '/admin/tuy-chinh-trang',
-    register: '/register'
+    register: '/register',
+    orderHistory: '/lich-su'
 
 };
 export default routes;
