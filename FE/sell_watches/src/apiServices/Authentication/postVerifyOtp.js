@@ -1,7 +1,7 @@
 import * as request from '~/utils/request';
-export const postOrderHistory = async (data) => {
+export const postVerifyOtp = async (data) => {
     try {
-        const res = await request.post('order/orderHistory', data);
+        const res = await request.post('auth/verifyOtp', data);
         return res;
     } catch (err) {
         console.log(err);

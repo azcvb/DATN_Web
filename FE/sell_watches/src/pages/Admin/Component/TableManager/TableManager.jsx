@@ -18,6 +18,7 @@ function TableManager({
     isUpdate = true,
     isPayment = false,
     handlerBill,
+    buttonEnd,
 }) {
     const handlerAddListRemove = (value, isCheck) => {
         if (isCheck) {
@@ -31,14 +32,17 @@ function TableManager({
             listProductRemove((prev) => prev.filter((item) => item !== value));
         }
     };
-    const handlerBtnUpdate = (e) => {
+    const handlerBtnUpdate = (valueId, e, btn) => {
+        if (btn && btn?.fun) {
+            btn.fun(valueId, e, btn);
+        }
         if (isPayment) {
             const donHangId = items.data[0].maDonHang;
             handlerBill(donHangId);
         } else {
             alterBtnUpdate('update');
             idUpdate({
-                id: e,
+                id: valueId,
             });
         }
     };
@@ -85,8 +89,11 @@ function TableManager({
                                 )}
                                 {isUpdate ? (
                                     <td>
-                                        <button className={cx('btn-update')} onClick={() => handlerBtnUpdate(value.id)}>
-                                            {isPayment ? 'In hóa đơn' : 'Sửa'}
+                                        <button
+                                            className={cx('btn-update')}
+                                            onClick={(e) => handlerBtnUpdate(value.id, e, buttonEnd)}
+                                        >
+                                            {isPayment ? 'In hóa đơn' : buttonEnd?.name ? buttonEnd?.name : 'Sửa'}
                                         </button>
                                     </td>
                                 ) : null}

@@ -4,7 +4,15 @@ import { useEffect, useState } from 'react';
 import { formatFilterValue, formatNumber } from '~/components/format';
 
 const cx = classNames.bind(style);
-function ModalAdd({ isVisibale, onClose, item, handlerButton = false, handlerDataUpdate, inputUpdate }) {
+function ModalAdd({
+    isVisibale,
+    onClose,
+    item,
+    handlerButton = false,
+    handlerDataUpdate,
+    inputUpdate,
+    handlerUpdate = '',
+}) {
     const [imgUrl, setImgUrl] = useState('');
     const [inputPrice, setInputPrice] = useState('');
     const [selectedValue, setSelectedValue] = useState({});
@@ -42,6 +50,9 @@ function ModalAdd({ isVisibale, onClose, item, handlerButton = false, handlerDat
         const formData = new FormData(e.target);
         const data = Object.fromEntries(formData.entries());
         data.id = inputUpdate.id;
+        if (handlerUpdate !== '') {
+            handlerUpdate(data);
+        }
         handlerDataUpdate(data);
         onClose();
         handlerButton(true);
@@ -68,8 +79,27 @@ function ModalAdd({ isVisibale, onClose, item, handlerButton = false, handlerDat
             [key]: value,
         }));
     };
+    const handlerOnClickBtn = (e, valueRow, index, inputPrice, parent, item, sum) => {
+        const key = e.target.name;
+        if (valueRow?.func) {
+            valueRow.func(e, valueRow, index, inputPrice, parent, item, sum);
+        }
+    };
     const handleItem = (value, index) => {
         if (value && typeof input !== 'string' && !Array.isArray(value) && value.type) {
+            if (value.type === 'btn') {
+                return (
+                    <button
+                        type="button"
+                        className={`btn mb-3 ${value.color}`}
+                        key={index}
+                        onClick={(e) => handlerOnClickBtn(e, value, index, inputPrice, value, item)}
+                        name={formatFilterValue(value.name)}
+                    >
+                        {value.name}
+                    </button>
+                );
+            }
             if (value.type === 'dropBox') {
                 const nameKey = formatFilterValue(value.name);
                 return (

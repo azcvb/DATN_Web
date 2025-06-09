@@ -13,6 +13,7 @@ import { postUpdateStatusOrder } from '~/apiServices/Order/postUpdateStatusOrder
 const cx = classNames.bind(style);
 function PaymentCheck() {
     const queryString = window.location.search;
+    console.log(queryString);
     const [result, setResult] = useState({
         status: '',
         message: '',
@@ -39,7 +40,8 @@ function PaymentCheck() {
                             tong_tien: dataPayment.tong_tien * 100,
                             kieu_thanh_toan: dataPayment.kieu_thanh_toan,
                         });
-                    } else {
+                    } else if (queryString !== '') {
+                        console.log(queryString);
                         const res = await paymentReturn(queryString);
                         setResult({
                             status: res.result.status,
@@ -84,19 +86,19 @@ function PaymentCheck() {
             }
             fetch();
         }
-    }, [dataPayment, queryString, removeCookie]);
+    }, [queryString, dataPayment]);
     return (
         <div className={cx('container')}>
-            <div className={cx(result.status)}>
-                {result.status === 'success' ? (
-                    <div>
+            <div className={`${cx(result.status)}`}>
+                <div className="flex justify-center">
+                    {result.status === 'success' ? (
                         <IconSuccess />
-                    </div>
-                ) : result.message !== 'Chữ ký không hợp lệ' ? (
-                    <IconError />
-                ) : (
-                    <IconWarning />
-                )}
+                    ) : result.message !== 'Chữ ký không hợp lệ' ? (
+                        <IconError />
+                    ) : (
+                        <IconWarning />
+                    )}
+                </div>
                 <div className={cx('title')}>{result.message}</div>
                 <div>
                     <ul>

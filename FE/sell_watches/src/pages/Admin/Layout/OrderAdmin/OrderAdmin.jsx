@@ -13,6 +13,11 @@ import { useDebounce } from '~/hook/useDebounce';
 import { postGetProductCode } from '~/apiServices/Product/postGetProductCode';
 import { postSaveOrderByAdmin } from '~/apiServices/Order/postSaveOrderByAdmin';
 import { payment } from '~/apiServices/Payment/payment';
+import { postUpdateProduct } from '~/apiServices/Product/postUpdateProduct';
+import { postUpdateStatusOrder } from '~/apiServices/Order/postUpdateStatusOrder';
+import { order } from '~/apiServices/Order/order';
+import { postGetOrderById } from '~/apiServices/Order/postGetOrderById';
+import { postCancelOrder } from '~/apiServices/Order/postCancelOrder';
 function OrderAdmin() {
     const [filterItem, setFilterItem] = useState([
         {
@@ -42,21 +47,23 @@ function OrderAdmin() {
         message: '',
         display: 'hiden',
     });
-    const [listProductRemove, setListProductRemove] = useState([]);
+    const [listOrderRemove, setListOrderRemove] = useState([]);
     const [isModalMessage, setIsModalMessage] = useState(false);
     const [dataUpdate, setDataUpdate] = useState({});
-    const [idUpdateProduct, setIdUpdateProduct] = useState({});
+    const [idUpdateOrder, setIdUpdateOrder] = useState({});
     const [isUpdate, setIsUpdate] = useState(false);
     const [dataTable, setDataTable] = useState({
         page: 0,
     });
     const [cookies, setCookies] = useCookies();
     const nameColumn = {
+        id: 'Mã đơn hàng',
         soDienThoai: 'Số điện thoại',
         gia: 'Giá',
         ngayDat: 'Ngày đặt',
         mucDich: 'Mục đích',
         khac: 'Khác',
+        diaChi: 'Địa chỉ',
         trangThai: 'Trang thái',
     };
     const [customerPhone, setCustomerPhone] = useState('');
@@ -70,7 +77,9 @@ function OrderAdmin() {
     const productDataRef = useRef({});
     const [productData, setProductData] = useState({});
     const debouncedProductCode = useDebounce(productCode, 500);
+
     // lấy dữ liệu table
+
     useEffect(() => {
         const token = cookies.token;
         (async () => {
@@ -289,7 +298,42 @@ function OrderAdmin() {
             ...productData,
         }));
     }, [productData]);
-    const handlerRemoveOrder = () => {};
+    const handlerRemoveOrder = () => {
+        if (!listOrderRemove || listOrderRemove.length === 0) {
+            return setModalMessage({
+                status: 'warning',
+                message: 'Vui lòng chọn sản phẩm xóa!',
+                display: 'block',
+            });
+        }
+        try {
+            const fetch = async () => {
+                const res = await postCancelOrder(listOrderRemove);
+                if (res?.result === true) {
+                    const newList = dataFilter.data;
+                    const filteredList = newList.filter((item) => !listOrderRemove.includes(item.id));
+                    setDataFilter((prev) => ({
+                        ...prev,
+                        data: filteredList,
+                    }));
+                    getDataTable();
+                    return setModalMessage({
+                        status: 'success',
+                        message: 'Hủy đơn hàng thành công!',
+                        display: 'block',
+                    });
+                }
+                setModalMessage({
+                    status: 'error',
+                    message: 'Hủy đơn hàng thất bại!',
+                    display: 'block',
+                });
+            };
+            fetch();
+        } catch (err) {
+            console.log(err);
+        }
+    };
     const buttonProduct = [
         {
             type: 'add',
@@ -298,7 +342,7 @@ function OrderAdmin() {
         },
         {
             type: 'remove',
-            name: 'Xóa đơn hàng',
+            name: 'Hủy đơn hàng',
             func: handlerRemoveOrder,
         },
     ];
@@ -354,7 +398,96 @@ function OrderAdmin() {
             }
         })();
     };
+    const handlerUpdateOrder = (data) => {
+        if (data) {
+            let trangThai = data.trangThai === 'Đã hủy' ? false : true;
+            if (data.trangThai === 'Đang chờ') {
+                trangThai = null;
+            }
+            const dataUpdate = {
+                id: data.id,
+                diaChi: data.diaChi,
+                status: trangThai,
+            };
+            (async () => {
+                try {
+                    const res = await postUpdateStatusOrder(dataUpdate);
+                    if (res.result) {
+                        getDataTable();
+                        setModalMessage({
+                            status: 'success',
+                            message: 'Cập nhật đơn hàng thành công!',
+                            display: 'block',
+                        });
+                    } else {
+                        setModalMessage({
+                            status: 'error',
+                            message: 'Cập nhật đơn hàng thất bại!',
+                            display: 'block',
+                        });
+                    }
+                } catch (err) {
+                    console.log(err);
+                }
+            })();
+        }
+    };
+    const handlerAlterUpdateOrder = () => {
+        item.title = 'Sửa đơn hàng';
+        setTypeModal('uppdate');
+        setIsVisible(true);
+    };
+    useEffect(() => {
+        (async () => {
+            const token = cookies.token;
+            if (token && Object.keys(idUpdateOrder).length > 0) {
+                try {
+                    const res = await postGetOrderById(
+                        {
+                            name: idUpdateOrder.id,
+                        },
+                        token,
+                    );
 
+                    if (res?.result) {
+                        setDataUpdate({
+                            id: res.result.id,
+                            diaChi: res.result.diaChi,
+                            trangThai:
+                                res.result.trangThai === 'PENDING'
+                                    ? 'Đang chờ'
+                                    : res.result.trangThai === 'CANCEL'
+                                      ? 'Đã hủy'
+                                      : 'Chấp nhận',
+                        });
+                    }
+                } catch (err) {
+                    console.log(err);
+                }
+            }
+        })();
+    }, [idUpdateOrder]);
+    const itemUpdate = {
+        input: [
+            { name: 'Địa chỉ' },
+            { type: 'dropBox', name: 'Trạng thái', drop: ['Chấp nhận', 'Đang chờ', 'Đã hủy'] },
+        ],
+    };
+    const getDataTable = () => {
+        const token = cookies.token;
+        (async () => {
+            try {
+                const res = await postOrderTableAdmin(dataTable, token);
+                if (res?.result?.orderForTableAdminResponses) {
+                    const data = res.result.orderForTableAdminResponses;
+                    const totalPage = res.result.totalPage;
+                    setDataFilter({ data, totalPage });
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        })();
+    };
     return (
         <div className="background-admin">
             <div className="title-admin">Danh mục đơn hàng</div>
@@ -365,10 +498,10 @@ function OrderAdmin() {
                 handlerPage={handlerPage}
                 nameColumn={nameColumn}
                 page={page}
-                listProductRemove={setListProductRemove}
-                listCheck={listProductRemove}
-                // alterBtnUpdate={handlerUpdateProduct}
-                idUpdate={setIdUpdateProduct}
+                listProductRemove={setListOrderRemove}
+                listCheck={listOrderRemove}
+                alterBtnUpdate={handlerAlterUpdateOrder}
+                idUpdate={setIdUpdateOrder}
             />
             {typeModal === 'add' ? (
                 <ModalAdd
@@ -382,20 +515,19 @@ function OrderAdmin() {
                 <ModalUpdate
                     isVisibale={isVisibale}
                     onClose={handlerCloseModal}
-                    item={itemModal}
+                    item={itemUpdate}
                     handlerButton={setIsUpdate}
                     inputUpdate={dataUpdate}
+                    handlerUpdate={handlerUpdateOrder}
                     handlerDataUpdate={setDataUpdate}
                 />
             )}
-            {isModalMessage ? (
-                <ModalMessage
-                    display={modalMessage?.display}
-                    status={modalMessage?.status}
-                    message={modalMessage?.message}
-                    onClose={handlerClose}
-                />
-            ) : null}
+            <ModalMessage
+                display={modalMessage?.display}
+                status={modalMessage?.status}
+                message={modalMessage?.message}
+                onClose={handlerClose}
+            />
         </div>
     );
 }

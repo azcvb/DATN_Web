@@ -154,7 +154,6 @@ function Cart() {
                 return;
             }
         }
-
         if (!validPhone(infor.sdt)) {
             setModal({
                 display: 'block',
@@ -196,10 +195,12 @@ function Cart() {
         <div className="container">
             <Navigation path={location} />
             {listProducts === undefined || listProducts.length === 0 ? (
-                <div className={cx('cart-empty')}>
+                <div className={`${cx('cart-empty')}`}>
                     <div>Giỏ hàng trống</div>
 
-                    <Link to={'/'}>Mua hàng</Link>
+                    <Link to={'/'} className="underline text-blue-700">
+                        Mua hàng
+                    </Link>
                 </div>
             ) : (
                 <div className={cx('content-container')}>
@@ -507,7 +508,9 @@ function Cart() {
                             </ul>
                         </div>
                         <div className={cx('btn')}>
-                            <Link className={cx('btn-buy')}>Tiếp tuc mua hàng</Link>
+                            <Link to={'/'} className={cx('btn-buy')}>
+                                Tiếp tuc mua hàng
+                            </Link>
                             <div className={cx('btn-delete')} onClick={handlerRemoveAll}>
                                 Xóa hết
                             </div>

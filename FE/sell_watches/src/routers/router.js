@@ -1,4 +1,4 @@
-import config from "~/configs"
+import config from "~/configs/routers/index"
 import DefaultLayout from "~/layouts/DefaultLayout";
 import Login from "~/pages/Admin/Login";
 import Cart from "~/pages/Customer/Cart";

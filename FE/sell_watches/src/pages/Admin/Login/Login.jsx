@@ -1,10 +1,11 @@
 import classNames from 'classnames/bind';
 import style from './Login.module.scss';
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { postLogin } from '~/apiServices/Authentication/postLogin';
 import ModalMessage from '~/layouts/Component/ModalMessage';
 import { useCookies } from 'react-cookie';
+import { postCheckNumberPhone } from '~/apiServices/Account/postCheckNumberPhone';
 
 const cx = classNames.bind(style);
 function Login() {
@@ -15,6 +16,7 @@ function Login() {
     });
     const [cookies, setCookie, removeCookie] = useCookies();
     const location = useNavigate();
+    const inputRef = useRef();
     const handlerLogin = (e) => {
         e.preventDefault();
         const tenTaiKhoan = e.target.tenTaiKhoan.value;
@@ -51,6 +53,18 @@ function Login() {
             display: 'hiden',
         }));
     };
+    const handlerForget = () => {
+        const soDienThoai = inputRef.current.value;
+        (async () => {
+            try {
+                const res = await postCheckNumberPhone({ name: soDienThoai });
+                if (res?.result) {
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        })();
+    };
     return (
         <div className={cx('login')}>
             <div className={`container ${cx('login-container')}`}>
@@ -69,6 +83,7 @@ function Login() {
                             id="exampleFormControlInput1"
                             placeholder="Số điện thoại"
                             name="tenTaiKhoan"
+                            ref={inputRef}
                             required
                         />
                     </div>
@@ -84,7 +99,7 @@ function Login() {
                             name="matKhau"
                             required
                         />
-                        <Link htmlFor="exampleFormControlInput1" className={`form-label`}>
+                        <Link onClick={handlerForget} htmlFor="exampleFormControlInput1" className={`form-label`}>
                             Quên mật khẩu?
                         </Link>
                     </div>

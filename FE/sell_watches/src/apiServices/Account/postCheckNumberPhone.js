@@ -1,7 +1,7 @@
 import * as request from '~/utils/request';
-export const postOrderHistory = async (data) => {
+export const postCheckNumberPhone = async (data) => {
     try {
-        const res = await request.post('order/orderHistory', data);
+        const res = await request.post('account/checkNumberPhone', data);
         return res;
     } catch (err) {
         console.log(err);

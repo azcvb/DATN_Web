@@ -66,7 +66,6 @@ function ModalAdd({ isVisibale, onClose, item, handlerButton, valueItem }) {
         const tempGroups = {};
         const result = {};
 
-        // 1. Gom nhóm theo index
         for (let [key, value] of formData.entries()) {
             const match = key.match(/^(.+?)\.(.+?)(\d+)$/);
             if (match) {
@@ -81,12 +80,16 @@ function ModalAdd({ isVisibale, onClose, item, handlerButton, valueItem }) {
                 tempGroups[group][idx][field] = value;
             } else {
                 if (!tempGroups._plain) tempGroups._plain = {};
+                if (/^\d+(\.\d+)*$/.test(value)) {
+                    value = value.replace(/\./g, '');
+                }
                 tempGroups._plain[key] = value;
             }
         }
         for (let [group, items] of Object.entries(tempGroups)) {
             if (group === '_plain') continue;
             const arr = Object.values(items);
+
             result[group] = arr;
         }
         if (tempGroups._plain) {
@@ -95,7 +98,6 @@ function ModalAdd({ isVisibale, onClose, item, handlerButton, valueItem }) {
                 result[cleanKey] = value;
             }
         }
-
         handlerButton(result);
         hanlderClose();
         setInputPrice({});
@@ -150,7 +152,7 @@ function ModalAdd({ isVisibale, onClose, item, handlerButton, valueItem }) {
             return update;
         });
     };
-    const handlerOclickBtn = (e, valueRow, index, inputItem, inputPrice, parent, item, sum) => {
+    const handlerOnClickBtn = (e, valueRow, index, inputItem, inputPrice, parent, item, sum) => {
         const key = e.target.name;
         if (valueRow?.func) {
             valueRow.func(e, valueRow, index, inputItem, inputPrice, parent, item, sum);
@@ -167,7 +169,7 @@ function ModalAdd({ isVisibale, onClose, item, handlerButton, valueItem }) {
                     type="button"
                     className={`btn mb-3 ${value.color}`}
                     key={index}
-                    onClick={(e) => handlerOclickBtn(e, value, index, inputItem, inputPrice, value, item)}
+                    onClick={(e) => handlerOnClickBtn(e, value, index, inputItem, inputPrice, value, item)}
                     name={formatFilterValue(value.name)}
                 >
                     {value.name}
@@ -266,7 +268,7 @@ function ModalAdd({ isVisibale, onClose, item, handlerButton, valueItem }) {
                                     className={`btn mb-3 ${valueRow.color}`}
                                     key={indexRow}
                                     onClick={(e) =>
-                                        handlerOclickBtn(
+                                        handlerOnClickBtn(
                                             e,
                                             valueRow,
                                             index,

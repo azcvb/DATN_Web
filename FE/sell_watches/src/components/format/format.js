@@ -27,11 +27,14 @@ export const formatLink = (link) => {
     return `/${link}`;
 }
 export const formatNumber = (number) => {
-    if (typeof number === 'string') {
-        number = Number(number.replace(/\D/g, ""));
+    if (number) {
+        if (typeof number === 'string') {
+            number = Number(number.replace(/\D/g, ""));
+            return number.toLocaleString('vi-VN');
+        }
         return number.toLocaleString('vi-VN');
     }
-    return number.toLocaleString('vi-VN');
+    return 0;
 }
 export const validEmail = (value) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
