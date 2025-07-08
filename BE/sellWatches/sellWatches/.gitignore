@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+sellWatches/sellWatches/src/main/resources/application-secret.yaml
+sellWatches/sellWatches/src/main/resources/application.yaml
+sellWatches/sellWatches/src/main/resources/firebase-adminsdk.json

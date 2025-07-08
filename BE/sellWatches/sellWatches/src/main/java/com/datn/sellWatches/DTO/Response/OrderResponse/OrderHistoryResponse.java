@@ -1,6 +1,5 @@
-package com.datn.sellWatches.DTO.Response.OrderDetailResponse;
+package com.datn.sellWatches.DTO.Response.OrderResponse;
 
-import com.datn.sellWatches.DTO.Response.ProductResponse.GetProductForHistoryResponse;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
